@@ -1,0 +1,100 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|c:\\users\\vectio\\source\\repos\\workshopmanager\\workshopmanager.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|solutionrelative:workshopmanager.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|c:\\users\\vectio\\source\\repos\\workshopmanager\\workshopmanager.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|solutionrelative:workshopmanager.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|c:\\users\\vectio\\source\\repos\\workshopmanager\\workshopmanager.api\\workshopmanager.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|solutionrelative:workshopmanager.api\\workshopmanager.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|c:\\users\\vectio\\source\\repos\\workshopmanager\\workshopmanager.api\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C80D3AEC-B21D-487F-844E-36CE7526F9B5}|WorkshopManager.api\\WorkshopManager.api.csproj|solutionrelative:workshopmanager.api\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\Program.cs",
+              "RelativeDocumentMoniker": "WorkshopManager.api\\Program.cs",
+              "ToolTip": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\Program.cs",
+              "RelativeToolTip": "WorkshopManager.api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-11T17:46:35.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WorkshopManager.api.http",
+              "DocumentMoniker": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\WorkshopManager.api.http",
+              "RelativeDocumentMoniker": "WorkshopManager.api\\WorkshopManager.api.http",
+              "ToolTip": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\WorkshopManager.api.http",
+              "RelativeToolTip": "WorkshopManager.api\\WorkshopManager.api.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2024-09-11T17:46:23.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\appsettings.json",
+              "RelativeDocumentMoniker": "WorkshopManager.api\\appsettings.json",
+              "ToolTip": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\appsettings.json",
+              "RelativeToolTip": "WorkshopManager.api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-11T17:46:13.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "WorkshopManager.api\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "WorkshopManager.api\\Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-11T17:45:55.587Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
