@@ -4528,9 +4528,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vectio\\Source\\Repos\\WorkshopManager\\WorkshopManager.api\\WorkshopManager.api.csproj",
+      "projectUniqueName": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\WorkshopManager.api.csproj",
       "projectName": "WorkshopManager.api",
-      "projectPath": "C:\\Users\\vectio\\Source\\Repos\\WorkshopManager\\WorkshopManager.api\\WorkshopManager.api.csproj",
+      "projectPath": "C:\\Users\\vectio\\source\\repos\\WorkshopManager\\WorkshopManager.api\\WorkshopManager.api.csproj",
       "packagesPath": "C:\\Users\\vectio\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\vectio\\Source\\Repos\\WorkshopManager\\WorkshopManager.api\\obj\\",
       "projectStyle": "PackageReference",
