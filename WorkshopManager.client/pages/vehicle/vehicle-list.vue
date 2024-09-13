@@ -17,7 +17,7 @@ const vehicles = ref([])
 
 onMounted(async () => {
     try {
-        vehicles.value = await $fetch('/api/vehicles')
+        vehicles.value = await $fetch('https://localhost:7038/api/Vehicle')
     } catch (error) {
         alert('Błąd podczas ładowania listy pojazdów')
     }

@@ -17,6 +17,18 @@ builder.Services.AddDbContext<WorkshopContext>(options =>
 // Dodaj inne us³ugi
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNuxtApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
+
 
 var app = builder.Build();
 
@@ -26,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowNuxtApp");
 
 app.UseHttpsRedirection();
 
