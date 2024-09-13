@@ -8,6 +8,5 @@
     public int ExperienceLevel { get; set; }
     public DateTime DateJoined { get; set; }
 
-    // Navigation properties
-    public ICollection<ServiceSchedule> ServiceSchedules { get; set; }
+    
 }

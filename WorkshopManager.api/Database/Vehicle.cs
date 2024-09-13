@@ -6,6 +6,7 @@
     public string Model { get; set; }
     public int Year { get; set; }
     public string LicensePlate { get; set; }
+    public string VIN { get; set; }
 
     // Dane właściciela
     public string OwnerName { get; set; }

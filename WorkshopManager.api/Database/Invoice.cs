@@ -6,6 +6,4 @@
     public decimal TotalAmount { get; set; }
     public string PaymentStatus { get; set; }
 
-    // Navigation properties
-    public Order Order { get; set; }
 }

@@ -11,6 +11,12 @@
         <li>
           <NuxtLink to="/vehicle/vehicle-list">Lista pojazdów</NuxtLink>
         </li>
+        <li>
+          <NuxtLink to="/mechanic/add-mechanic">Dodaj mechanika</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/mechanic/mechanic-list">Lista mechaników</NuxtLink>
+        </li>
       </ul>
     </nav>
     <NuxtPage />

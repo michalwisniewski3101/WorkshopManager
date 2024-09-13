@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WorkshopManager.api.Migrations
 {
     [DbContext(typeof(WorkshopContext))]
-    partial class WorkshopContextModelSnapshot : ModelSnapshot
+    [Migration("20240913121311_updates")]
+    partial class updates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,10 +35,6 @@ namespace WorkshopManager.api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -78,6 +77,8 @@ namespace WorkshopManager.api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
                     b.ToTable("Invoices");
                 });
 
@@ -101,12 +102,12 @@ namespace WorkshopManager.api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ServiceScheduleId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Specialty")
                         .IsRequired()
@@ -114,7 +115,7 @@ namespace WorkshopManager.api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceScheduleId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Mechanics");
                 });
@@ -161,18 +162,21 @@ namespace WorkshopManager.api.Migrations
                     b.Property<Guid>("InventoryItemId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<Guid?>("ServiceScheduleId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceScheduleId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
                 });
@@ -181,6 +185,9 @@ namespace WorkshopManager.api.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("ServiceCost")
@@ -195,6 +202,8 @@ namespace WorkshopManager.api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
                     b.ToTable("Services");
                 });
 
@@ -204,27 +213,20 @@ namespace WorkshopManager.api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("OrderId")
+                    b.Property<Guid>("MechanicId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ServiceDateEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ServiceDateStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ServiceId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ServiceDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ServiceStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ServiceId");
 
                     b.ToTable("ServiceSchedules");
                 });
@@ -275,11 +277,22 @@ namespace WorkshopManager.api.Migrations
                     b.ToTable("Vehicles");
                 });
 
+            modelBuilder.Entity("Invoice", b =>
+                {
+                    b.HasOne("Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Mechanic", b =>
                 {
-                    b.HasOne("ServiceSchedule", null)
+                    b.HasOne("Order", null)
                         .WithMany("Mechanics")
-                        .HasForeignKey("ServiceScheduleId");
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Order", b =>
@@ -295,36 +308,29 @@ namespace WorkshopManager.api.Migrations
 
             modelBuilder.Entity("OrderItem", b =>
                 {
-                    b.HasOne("ServiceSchedule", null)
+                    b.HasOne("Order", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("ServiceScheduleId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("ServiceSchedule", b =>
+            modelBuilder.Entity("Service", b =>
                 {
                     b.HasOne("Order", null)
                         .WithMany("Services")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Order", b =>
                 {
-                    b.Navigation("Services");
-                });
-
-            modelBuilder.Entity("ServiceSchedule", b =>
-                {
                     b.Navigation("Mechanics");
 
                     b.Navigation("OrderItems");
+
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

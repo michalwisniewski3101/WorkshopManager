@@ -18,6 +18,25 @@
                 <label for="licensePlate">Numer rejestracyjny:</label>
                 <input type="text" v-model="vehicle.licensePlate" id="licensePlate" required />
             </div>
+
+            <!-- Dane właściciela -->
+            <div>
+                <label for="ownerName">Imię i nazwisko właściciela:</label>
+                <input type="text" v-model="vehicle.ownerName" id="ownerName" required />
+            </div>
+            <div>
+                <label for="ownerPhoneNumber">Numer telefonu właściciela:</label>
+                <input type="tel" v-model="vehicle.ownerPhoneNumber" id="ownerPhoneNumber" required />
+            </div>
+            <div>
+                <label for="ownerEmail">Email właściciela:</label>
+                <input type="email" v-model="vehicle.ownerEmail" id="ownerEmail" required />
+            </div>
+            <div>
+                <label for="ownerAddress">Adres właściciela:</label>
+                <input type="text" v-model="vehicle.ownerAddress" id="ownerAddress" required />
+            </div>
+
             <button type="submit">Dodaj pojazd</button>
         </form>
     </div>
@@ -30,12 +49,16 @@ const vehicle = ref({
     make: '',
     model: '',
     year: '',
-    licensePlate: ''
+    licensePlate: '',
+    ownerName: '',
+    ownerPhoneNumber: '',
+    ownerEmail: '',
+    ownerAddress: ''
 })
 
 const submitForm = async () => {
     try {
-        await $fetch('/api/vehicles', {
+        await $fetch('/api/Vehicle', {
             method: 'POST',
             body: vehicle.value
         })
