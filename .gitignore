@@ -361,3 +361,27 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+bin/
+obj/
+/WorkshopManager.api/bin/Debug/net8.0/WorkshopManager.api.dll
+/WorkshopManager.api/bin/Debug/net8.0/WorkshopManager.api.exe
+/WorkshopManager.api/bin/Debug/net8.0/WorkshopManager.api.pdb
+/WorkshopManager.api/obj/Debug/net8.0/ref/WorkshopManager.api.dll
+/WorkshopManager.api/obj/Debug/net8.0/refint/WorkshopManager.api.dll
+/WorkshopManager.api/obj/Debug/net8.0/ApiEndpoints.json
+/WorkshopManager.api/obj/Debug/net8.0/apphost.exe
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.AssemblyInfo.cs
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.AssemblyInfoInputs.cache
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.assets.cache
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.csproj.AssemblyReference.cache
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.csproj.CoreCompileInputs.cache
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.csproj.FileListAbsolute.txt
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.dll
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.GeneratedMSBuildEditorConfig.editorconfig
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.genruntimeconfig.cache
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.pdb
+/WorkshopManager.api/obj/Debug/net8.0/WorkshopManager.api.sourcelink.json
+/WorkshopManager.api/obj/project.assets.json
+/WorkshopManager.api/obj/project.nuget.cache
+/WorkshopManager.api/obj/WorkshopManager.api.csproj.nuget.dgspec.json
+/WorkshopManager.api/obj/WorkshopManager.api.csproj.nuget.g.props
