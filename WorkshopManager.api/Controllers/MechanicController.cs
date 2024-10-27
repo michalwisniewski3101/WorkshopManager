@@ -15,14 +15,14 @@ public class MechanicController : ControllerBase
     }
 
     // GET: api/Mechanic
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Mechanic>>> GetMechanics()
+    [HttpGet("GetMechanicsList")]
+    public async Task<ActionResult<IEnumerable<Mechanic>>> GetMechanicsList()
     {
         return await _context.Mechanics.ToListAsync();
     }
 
     // GET: api/Mechanic/{id}
-    [HttpGet("{id}")]
+    [HttpGet("GetMechanicById{id}")]
     public async Task<ActionResult<Mechanic>> GetMechanic(Guid id)
     {
         var mechanic = await _context.Mechanics.FindAsync(id);
@@ -47,13 +47,8 @@ public class MechanicController : ControllerBase
 
     // PUT: api/Mechanic/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutMechanic(Guid id, Mechanic mechanic)
+    public async Task<IActionResult> PutMechanic(Mechanic mechanic)
     {
-        if (id != mechanic.Id)
-        {
-            return BadRequest();
-        }
-
         _context.Entry(mechanic).State = EntityState.Modified;
 
         try
@@ -62,7 +57,7 @@ public class MechanicController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!MechanicExists(id))
+            if (!MechanicExists(mechanic.Id))
             {
                 return NotFound();
             }

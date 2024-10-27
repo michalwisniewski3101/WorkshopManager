@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WorkshopManager.api.Database;
 
 public class WorkshopContext : DbContext
 {
@@ -12,9 +13,10 @@ public class WorkshopContext : DbContext
     public DbSet<ServiceSchedule> ServiceSchedules { get; set; }
     public DbSet<Mechanic> Mechanics { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
+    public DbSet<MechanicSpecialty> MechanicSpecialties { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Tutaj możesz dodać specjalne konfiguracje, np. indeksy czy klucze unikalne
+        modelBuilder.Entity<MechanicSpecialty>().ToTable("dict_MechanicSpecialties");
     }
 }

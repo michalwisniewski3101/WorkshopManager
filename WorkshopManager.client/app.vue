@@ -17,6 +17,9 @@
         <li>
           <NuxtLink to="/mechanic/mechanic-list">Lista mechaników</NuxtLink>
         </li>
+        <li>
+          <NuxtLink to="/dictionaries/">Słowniki</NuxtLink>
+        </li>
       </ul>
     </nav>
     <NuxtPage />

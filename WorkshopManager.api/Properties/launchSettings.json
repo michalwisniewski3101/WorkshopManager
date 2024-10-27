@@ -3,9 +3,14 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "launchBrowser": true,
+    "launchUrl": "swagger",
     "iisExpress": {
-      "applicationUrl": "http://localhost:40264",
+      "applicationUrl": "http://localhost:5241",
       "sslPort": 44347
+    },
+    "environmentVariables": {
+      "ASPNETCORE_ENVIRONMENT": "Development"
     }
   },
   "profiles": {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WorkshopManager.api.Migrations
 {
     [DbContext(typeof(WorkshopContext))]
-    partial class WorkshopContextModelSnapshot : ModelSnapshot
+    [Migration("20241027140642_mechanicspecialties_addes")]
+    partial class mechanicspecialties_addes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,6 +117,8 @@ namespace WorkshopManager.api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ServiceScheduleId");
+
+                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("Mechanics");
                 });
@@ -294,6 +299,14 @@ namespace WorkshopManager.api.Migrations
                     b.HasOne("ServiceSchedule", null)
                         .WithMany("Mechanics")
                         .HasForeignKey("ServiceScheduleId");
+
+                    b.HasOne("WorkshopManager.api.Database.MechanicSpecialty", "Specialty")
+                        .WithMany()
+                        .HasForeignKey("SpecialtyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Specialty");
                 });
 
             modelBuilder.Entity("Order", b =>
