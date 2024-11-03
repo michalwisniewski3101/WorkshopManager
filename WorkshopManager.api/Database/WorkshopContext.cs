@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using WorkshopManager.api.Database;
 
-public class WorkshopContext : DbContext
+public class WorkshopContext : IdentityDbContext<IdentityUser>
 {
     public WorkshopContext(DbContextOptions<WorkshopContext> options) : base(options) { }
 
@@ -17,6 +19,7 @@ public class WorkshopContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<MechanicSpecialty>().ToTable("dict_MechanicSpecialties");
     }
 }
