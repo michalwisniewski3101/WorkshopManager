@@ -86,7 +86,15 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Administrator"));
+    options.AddPolicy("RequireSeniorMechanicRole", policy => policy.RequireRole("Starszy Mechanik"));
+    options.AddPolicy("RequireJuniorMechanicRole", policy => policy.RequireRole("M³odszy Mechanik"));
+    options.AddPolicy("RequireClientRole", policy => policy.RequireRole("Klient"));
+    options.AddPolicy("RequireMechanicRole", policy => policy.RequireRole("Starszy Mechanik", "M³odszy Mechanik"));
+});
+
 
 
 var app = builder.Build();
@@ -95,12 +103,43 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
     string[] roleNames = { "Administrator", "Starszy Mechanik", "M³odszy Mechanik", "Klient" };
     foreach (var roleName in roleNames)
     {
         if (!await roleManager.RoleExistsAsync(roleName))
         {
             await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+
+    // Dodanie testowych u¿ytkowników
+    var testUsers = new[]
+    {
+        new { UserName = "admin", Email = "admin@example.com", Role = "Administrator" },
+        new { UserName = "mechanic", Email = "mechanic@example.com", Role = "Starszy Mechanik" },
+        new { UserName = "mechanicjr", Email = "mechanicjr@example.com", Role = "M³odszy Mechanik" },
+        new { UserName = "client", Email = "client@example.com", Role = "Klient" }
+    };
+
+    foreach (var testUser in testUsers)
+    {
+        var user = await userManager.FindByNameAsync(testUser.UserName);
+        if (user == null)
+        {
+            user = new IdentityUser
+            {
+                UserName = testUser.UserName,
+                Email = testUser.Email,
+                EmailConfirmed = true // Potwierdzenie e-mail, jeœli to konieczne
+            };
+            var result = await userManager.CreateAsync(user, "Qaz123!@");
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, testUser.Role);
+            }
         }
     }
 }
