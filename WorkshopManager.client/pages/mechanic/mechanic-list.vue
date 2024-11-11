@@ -54,7 +54,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
+definePageMeta({
+  middleware: 'auth'
+})
 const mechanics = ref([])
 const specialties = ref([])
 const showMechanicModal = ref(false)

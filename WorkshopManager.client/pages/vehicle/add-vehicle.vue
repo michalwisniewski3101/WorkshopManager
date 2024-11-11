@@ -44,7 +44,9 @@
 
 <script setup>
 import { ref } from 'vue'
-
+definePageMeta({
+  middleware: 'auth'
+})
 const vehicle = ref({
     make: '',
     model: '',
