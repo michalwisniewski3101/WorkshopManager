@@ -1,102 +1,75 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using WorkshopManager.api.Model;
+using WorkshopManager.api.Repos.Interfaces;
 
-[ApiController]
-[Route("api/[controller]")]
-public class OrderController : ControllerBase
+namespace WorkshopManager.api.Controllers
 {
-    private readonly WorkshopContext _context;
-
-    public OrderController(WorkshopContext context)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class OrderController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly IOrderRepository _orderRepository;
 
-    // GET: api/Order
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
-    {
-        return await _context.Orders
-                             .Include(o => o.Vehicle)  // Dołączenie powiązanego pojazdu
-                             .Include(o => o.Services) // Dołączenie powiązanych usług
-                             .ToListAsync();
-    }
-
-    // GET: api/Order/{id}
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Order>> GetOrder(Guid id)
-    {
-        var order = await _context.Orders
-                                  .Include(o => o.Vehicle)  // Dołączenie powiązanego pojazdu
-                                  .Include(o => o.Services) // Dołączenie powiązanych usług
-                                  .FirstOrDefaultAsync(o => o.Id == id);
-
-        if (order == null)
+        public OrderController(IOrderRepository orderRepository)
         {
-            return NotFound();
+            _orderRepository = orderRepository;
         }
 
-        return order;
-    }
-
-    // POST: api/Order
-    [HttpPost]
-    public async Task<ActionResult<Order>> PostOrder(Order order)
-    {
-        _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
-    }
-
-    // PUT: api/Order/{id}
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutOrder(Guid id, Order order)
-    {
-        if (id != order.Id)
+        // GET: api/Order
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return BadRequest();
+            var orders = await _orderRepository.GetAllOrdersAsync();
+            return Ok(orders);
         }
 
-        _context.Entry(order).State = EntityState.Modified;
-
-        try
+        // GET: api/Order/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Order>> GetOrder(Guid id)
         {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!OrderExists(id))
+            var order = await _orderRepository.GetOrderByIdAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+            return Ok(order);
         }
 
-        return NoContent();
-    }
-
-    // DELETE: api/Order/{id}
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteOrder(Guid id)
-    {
-        var order = await _context.Orders.FindAsync(id);
-        if (order == null)
+        // POST: api/Order
+        [HttpPost]
+        public async Task<ActionResult<Order>> PostOrder(CreateOrderDto orderDto)
         {
-            return NotFound();
+            var newOrder = await _orderRepository.AddOrderAsync(orderDto);
+            return CreatedAtAction(nameof(GetOrder), new { id = newOrder.Id }, newOrder);
         }
 
-        _context.Orders.Remove(order);
-        await _context.SaveChangesAsync();
+        // PUT: api/Order/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutOrder(Guid id, Order order)
+        {
+            if (id != order.Id)
+            {
+                return BadRequest();
+            }
 
-        return NoContent();
-    }
+            if (!await _orderRepository.UpdateOrderAsync(order))
+            {
+                return NotFound();
+            }
 
-    private bool OrderExists(Guid id)
-    {
-        return _context.Orders.Any(e => e.Id == id);
+            return NoContent();
+        }
+
+        // DELETE: api/Order/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(Guid id)
+        {
+            if (!await _orderRepository.DeleteOrderAsync(id))
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

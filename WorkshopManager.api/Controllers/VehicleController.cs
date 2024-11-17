@@ -1,42 +1,47 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WorkshopManager.api.Repos.Interfaces;
 
 [ApiController]
 [Route("api/[controller]")]
 public class VehicleController : ControllerBase
 {
-    private readonly WorkshopContext _context;
+    private readonly IVehicleRepository _vehicleRepository;
 
-    public VehicleController(WorkshopContext context)
+    public VehicleController(IVehicleRepository vehicleRepository)
     {
-        _context = context;
+        _vehicleRepository = vehicleRepository;
     }
 
+    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles()
     {
-        return await _context.Vehicles.ToListAsync();
+        var vehicles = await _vehicleRepository.GetAllVehiclesAsync();
+        return Ok(vehicles);
     }
 
+    // Pobierz pojazd po ID
     [HttpGet("{id}")]
     public async Task<ActionResult<Vehicle>> GetVehicle(Guid id)
     {
-        var vehicle = await _context.Vehicles.FindAsync(id);
+        var vehicle = await _vehicleRepository.GetVehicleByIdAsync(id);
 
         if (vehicle == null)
         {
             return NotFound();
         }
 
-        return vehicle;
+        return Ok(vehicle);
     }
 
+    // Dodaj nowy pojazd
     [HttpPost]
     public async Task<ActionResult<Vehicle>> PostVehicle(Vehicle vehicle)
     {
-        _context.Vehicles.Add(vehicle);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetVehicle), new { id = vehicle.Id }, vehicle);
+        var createdVehicle = await _vehicleRepository.AddVehicleAsync(vehicle);
+        return CreatedAtAction(nameof(GetVehicle), new { id = createdVehicle.Id }, createdVehicle);
     }
 }

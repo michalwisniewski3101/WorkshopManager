@@ -8,10 +8,5 @@
     public string LicensePlate { get; set; }
     public string VIN { get; set; }
 
-    // Dane właściciela
-    public string OwnerName { get; set; }
-    public string OwnerPhoneNumber { get; set; }
-    public string OwnerEmail { get; set; }
-    public string OwnerAddress { get; set; }
 
 }

@@ -13,7 +13,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
+  auth: {
+    roles: ["Administrator", "Starszy Mechanik", "Młodszy Mechanik"]
+  }
 })
 const vehicles = ref([])
 

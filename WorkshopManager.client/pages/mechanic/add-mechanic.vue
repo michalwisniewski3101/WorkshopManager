@@ -35,7 +35,10 @@
 <script setup>
 import { ref } from 'vue'
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
+  auth: {
+    roles: ["Administrator", "Starszy Mechanik"]
+  }
 })
 const mechanic = ref({
     firstName: '',

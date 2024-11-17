@@ -32,27 +32,27 @@ const logout = async () => {
 }
 </script>
 
+
+authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'||authStore.roles=='Klient'
+
+
 <template>
   <nav>
-    <ul>
-      <li><NuxtLink to="/">Strona główna</NuxtLink></li>
-      <li><NuxtLink to="/vehicle/add-vehicle">Dodaj pojazd</NuxtLink></li>
-      <li><NuxtLink to="/vehicle/vehicle-list">Lista pojazdów</NuxtLink></li>
-      <li><NuxtLink to="/mechanic/add-mechanic">Dodaj mechanika</NuxtLink></li>
-      <li><NuxtLink to="/mechanic/mechanic-list">Lista mechaników</NuxtLink></li>
-      <li><NuxtLink to="/dictionaries/">Słowniki</NuxtLink></li>
-
+    <ul >
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'||authStore.roles=='Klient'"><NuxtLink to="/">Strona główna</NuxtLink></li>
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'"><NuxtLink to="/vehicle/add-vehicle">Dodaj pojazd</NuxtLink></li>
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'"><NuxtLink to="/vehicle/vehicle-list">Lista pojazdów</NuxtLink></li>
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'"><NuxtLink to="/mechanic/add-mechanic">Dodaj mechanika</NuxtLink></li>
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'"><NuxtLink to="/mechanic/mechanic-list">Lista mechaników</NuxtLink></li>
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'"><NuxtLink to="/order">Zamówienia</NuxtLink></li>
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'"><NuxtLink to="/dictionaries/">Słowniki</NuxtLink></li>
+      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Klient'"><NuxtLink to="/client/">Klient</NuxtLink></li>
       <!-- Sekcja logowania i wylogowania -->
       <li v-if="authStore.isLoggedIn">
         <span><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
         <button @click="logout">
           <font-awesome-icon icon="sign-out-alt" /> Wyloguj
         </button>
-      </li>
-      <li v-else>
-        <NuxtLink to="/auth/login">
-          <font-awesome-icon icon="sign-in-alt" /> Zaloguj
-        </NuxtLink>
       </li>
     </ul>
   </nav>

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using WorkshopManager.api.Repos.Interfaces;
+using WorkshopManager.api.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,6 +96,10 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("RequireClientRole", policy => policy.RequireRole("Klient"));
     options.AddPolicy("RequireMechanicRole", policy => policy.RequireRole("Starszy Mechanik", "M³odszy Mechanik"));
 });
+
+
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 
 

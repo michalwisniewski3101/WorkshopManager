@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WorkshopManager.api.Database;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,15 +34,24 @@ public class ServiceController : ControllerBase
         return service;
     }
 
-    // POST: api/Service
-    [HttpPost]
-    public async Task<ActionResult<Service>> PostService(Service service)
+
+
+    [HttpPost("AddService")]
+    public async Task<ActionResult<Service>> AddService([FromBody] Service service)
     {
+        if (service == null)
+        {
+            return BadRequest("Nazwa usługi serwisowej nie może być pusta.");
+        }
+
+        service.Id = Guid.NewGuid();
+
         _context.Services.Add(service);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetService), new { id = service.Id }, service);
+        return Ok(service);
     }
+
 
     // PUT: api/Service/{id}
     [HttpPut("{id}")]

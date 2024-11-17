@@ -7,7 +7,10 @@
 
 <script setup>
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
+  auth: {
+    roles: ["Administrator", "Starszy Mechanik", "Młodszy Mechanik", "Klient"]
+  }
 })
 </script>
 
