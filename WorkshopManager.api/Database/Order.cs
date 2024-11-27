@@ -1,7 +1,7 @@
 ﻿public class Order : IEntity
 {
     public Guid Id { get; set; }  // GUID jako identyfikator
-    public Vehicle Vehicle { get; set; }  // Relacja z Vehicle (też GUID
+    public Vehicle Vehicle { get; set; }  
     public List<ServiceSchedule> Services { get; set; } = new List<ServiceSchedule>();
     public DateTime OrderDate { get; set; }
     public DateTime? EstimatedCompletionDate { get; set; }

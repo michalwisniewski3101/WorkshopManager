@@ -18,6 +18,10 @@
                 <label for="licensePlate">Numer rejestracyjny:</label>
                 <input type="text" v-model="vehicle.licensePlate" id="licensePlate" required />
             </div>
+            <div>
+                <label for="VIN">VIN:</label>
+                <input type="text" v-model="vehicle.vin" id="vin" required />
+            </div>
 
             <!-- Dane właściciela -->
             <div>
@@ -50,6 +54,7 @@ const vehicle = ref({
     model: '',
     year: '',
     licensePlate: '',
+    vin: '',
     ownerName: '',
     ownerPhoneNumber: '',
     ownerEmail: '',
