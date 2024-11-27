@@ -12,7 +12,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
+definePageMeta({
+  middleware: 'auth'
+})
 const vehicles = ref([])
 
 onMounted(async () => {

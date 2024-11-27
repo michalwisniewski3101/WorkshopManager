@@ -4,7 +4,7 @@
         <ul>
             <li v-for="mechanic in mechanics" :key="mechanic.id">
                 <strong>{{ mechanic.firstName }} {{ mechanic.lastName }}</strong> - Specjalność: {{
-                    mechanic.specialtyId }}, Doświadczenie: {{ mechanic.experienceLevel }} lat
+                    getSpecialtyName(mechanic.specialtyId) }}, Doświadczenie: {{ mechanic.experienceLevel }} lat
             </li>
         </ul>
 
@@ -54,7 +54,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
+definePageMeta({
+  middleware: 'auth'
+})
 const mechanics = ref([])
 const specialties = ref([])
 const showMechanicModal = ref(false)
@@ -82,7 +84,10 @@ const closeMechanicModal = () => {
         dateJoined: ''
     }
 }
-
+const getSpecialtyName = (specialtyId) => {
+    const specialty = specialties.value.find(s => s.id === specialtyId)
+    return specialty ? specialty.specialtyName : 'Nieznana specjalność'
+}
 const fetchMechanics = async () => {
     try {
         mechanics.value = await $fetch('/api/Mechanic/GetMechanicsList')

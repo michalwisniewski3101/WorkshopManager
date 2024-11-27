@@ -32,7 +32,9 @@
   
   <script setup>
   import { ref, onMounted } from 'vue'
-  
+  definePageMeta({
+  middleware: 'auth'
+})
   // Lista specjalności
   const specialties = ref([])
   

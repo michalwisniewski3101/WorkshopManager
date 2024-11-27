@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  plugins: [
+    '~/plugins/fontawesome.js',
+    '~/plugins/pinia.js',
+  ], 
+  router: {
+    middleware: ['auth'],
+  },
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   runtimeConfig: {
@@ -7,6 +14,7 @@ export default defineNuxtConfig({
       apiBase: 'https://localhost:44347' // Domyślny URL API
     }
   },
+  ssr: false,
   vite: {
     server: {
       proxy: {
