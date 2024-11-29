@@ -10,7 +10,6 @@ public class WorkshopContext : IdentityDbContext<IdentityUser>
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<InventoryItem> InventoryItems { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Service> Services { get; set; }
     public DbSet<ServiceSchedule> ServiceSchedules { get; set; }
     public DbSet<Mechanic> Mechanics { get; set; }
@@ -21,5 +20,7 @@ public class WorkshopContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<MechanicSpecialty>().ToTable("dict_MechanicSpecialties");
+        
+        modelBuilder.Entity<ServiceSchedule>().OwnsMany(s => s.OrderItems);
     }
 }

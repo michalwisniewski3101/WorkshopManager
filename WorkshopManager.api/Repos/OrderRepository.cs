@@ -52,16 +52,8 @@ namespace WorkshopManager.api.Repos
             {
                 foreach (var schedule in orderDto.ServiceSchedules)
                 {
-                    newOrder.Services.Add(new ServiceSchedule
-                    {
-                        Id = schedule.Id,
-                        ServiceDateStart = schedule.ServiceDateStart,
-                        ServiceDateEnd = schedule.ServiceDateEnd,
-                        Service = schedule.Service,
-                        Mechanics = schedule.Mechanics,
-                        ServiceStatus = schedule.ServiceStatus,
-                        OrderItems = schedule.OrderItems
-                    });
+                    newOrder.Services.Add(schedule);
+;
 
                 }
 

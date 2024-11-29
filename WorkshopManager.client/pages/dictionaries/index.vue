@@ -18,11 +18,23 @@
       <h2>Serwisy</h2>
       <ul>
         <li v-for="service in services" :key="service.id">
-          {{ service.serviceDescription }} - {{ service.serviceCost.toFixed(2) }} PLN ({{ formatDuration(service.serviceDuration) }})
+          {{ service.serviceDescription }} - {{ service.serviceCost.toFixed(2) }} PLN ({{ service.serviceDuration }} min)
         </li>
       </ul>
       <button @click="openServiceModal">Dodaj nowy serwis</button>
     </section>
+        <!-- Sekcja Magazyn -->
+      <section>
+      <h2>Elementy Magazynu</h2>
+      <ul>
+        <li v-for="item in inventoryItems" :key="item.id">
+          {{ item.name }} - {{ item.description }} - {{ item.unitPrice.toFixed(2) }} PLN
+        </li>
+      </ul>
+      <button @click="openInventoryModal">Dodaj nowy element magazynu</button>
+    </section>
+
+    
 
     <!-- Modal dodawania specjalności -->
     <div v-if="showSpecialtyModal" class="modal">
@@ -56,6 +68,36 @@
         </form>
       </div>
     </div>
+
+<!-- Modal dodawania elementu magazynu -->
+<div v-if="showInventoryModal" class="modal">
+  <div class="modal-content">
+    <h2>Dodaj Element Magazynu</h2>
+    <form @submit.prevent="addInventoryItem">
+      <label for="itemName">Nazwa:</label>
+      <input type="text" id="itemName" v-model="newInventoryItem.name" required />
+
+      <label for="itemDescription">Opis:</label>
+      <input type="text" id="itemDescription" v-model="newInventoryItem.description" required />
+
+      <label for="productNumber">Numer produktu:</label>
+      <input type="text" id="productNumber" v-model="newInventoryItem.productNumber" required />
+
+
+      <label for="unitPrice">Cena jednostkowa (PLN):</label>
+      <input type="number" id="unitPrice" v-model.number="newInventoryItem.unitPrice" step="0.01" required />
+
+      <label for="reorderLevel">Poziom zamawiania:</label>
+      <input type="number" id="reorderLevel" v-model.number="newInventoryItem.reorderLevel" required />
+
+      <label for="supplier">Dostawca:</label>
+      <input type="text" id="supplier" v-model="newInventoryItem.supplier" required />
+
+      <button type="submit">Dodaj</button>
+      <button @click="closeInventoryModal" type="button">Anuluj</button>
+    </form>
+  </div>
+</div>
   </div>
 </template>
 
@@ -101,6 +143,18 @@ const closeServiceModal = () => {
   }
 }
 
+const inventoryItems = ref([])
+const newInventoryItem = ref({
+  name: '',
+  description: '',
+  productNumber: '',
+  unitPrice: 0,
+  reorderLevel: 0,
+  supplier: ''
+})
+const showInventoryModal = ref(false)
+
+
 // Funkcja pobierająca specjalności z backendu
 const fetchSpecialties = async () => {
   try {
@@ -133,6 +187,41 @@ const addSpecialty = async () => {
     alert('Błąd podczas dodawania specjalności')
   }
 }
+// Funkcje modali magazynu
+const openInventoryModal = () => (showInventoryModal.value = true)
+const closeInventoryModal = () => {
+  showInventoryModal.value = false
+  newInventoryItem.value = {
+    name: '',
+    description: '',
+    quantityInStock: 0,
+    unitPrice: 0
+  }
+}
+
+// Funkcja pobierająca elementy magazynu z backendu
+const fetchInventoryItems = async () => {
+  try {
+    inventoryItems.value = await $fetch('/api/InventoryItem')
+  } catch (error) {
+    alert('Błąd podczas ładowania elementów magazynu')
+  }
+}
+
+// Funkcja dodawania elementu magazynu
+const addInventoryItem = async () => {
+  try {
+    await $fetch('/api/InventoryItem', {
+      method: 'POST',
+      body: JSON.stringify(newInventoryItem.value),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    await fetchInventoryItems()
+    closeInventoryModal()
+  } catch (error) {
+    alert('Błąd podczas dodawania elementu magazynu')
+  }
+}
 
 // Funkcja dodawania serwisu
 const addService = async () => {
@@ -140,7 +229,7 @@ const addService = async () => {
     const serviceData = {
       ...newService.value
     }
-    await $fetch('/api/Service', {
+    await $fetch('/api/Service/AddService', {
       method: 'POST',
       body: JSON.stringify(serviceData),
       headers: { 'Content-Type': 'application/json' }
@@ -152,16 +241,12 @@ const addService = async () => {
   }
 }
 
-// Formatowanie czasu trwania serwisu
-const formatDuration = (duration) => {
-  const match = duration.match(/PT(\d+)M/)
-  return match ? `${match[1]} min` : 'N/A'
-}
 
 // Pobieranie danych przy zamontowaniu komponentu
 onMounted(() => {
   fetchSpecialties()
   fetchServices()
+  fetchInventoryItems()
 })
 </script>
 

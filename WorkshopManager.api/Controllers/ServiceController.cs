@@ -51,6 +51,22 @@ public class ServiceController : ControllerBase
 
         return Ok(service);
     }
+    [HttpPost("AddServiceSchedule")]
+    public async Task<ActionResult<ServiceSchedule>> AddServiceSchedule([FromBody] ServiceSchedule serviceSchedule)
+    {
+        if (serviceSchedule == null)
+        {
+            return BadRequest("Nazwa usługi serwisowej nie może być pusta.");
+        }
+
+        serviceSchedule.Id = Guid.NewGuid();
+        
+
+        _context.ServiceSchedules.Add(serviceSchedule);
+        await _context.SaveChangesAsync();
+
+        return Ok(serviceSchedule.Id);
+    }
 
 
     // PUT: api/Service/{id}
