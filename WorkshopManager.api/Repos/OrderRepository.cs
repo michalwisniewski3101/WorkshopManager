@@ -18,7 +18,7 @@ namespace WorkshopManager.api.Repos
         // Pobierz wszystkie zamówienia
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
-            return await _context.Orders.Include(o => o.Services).ToListAsync();
+            return await _context.Orders.ToListAsync();
         }
 
         // Pobierz zamówienie po ID

@@ -12,9 +12,6 @@ public class ServiceSchedule
 
 
 
-
-
-
     public class OrderItem
     {
         public Guid InventoryItemId { get; set; }

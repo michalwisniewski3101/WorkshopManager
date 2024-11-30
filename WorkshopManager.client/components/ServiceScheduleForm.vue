@@ -1,70 +1,44 @@
 <template>
   <div>
-    <button @click="openMechanicModal">Dodaj nowego mechanika</button>
+    <button @click="openScheduleModal">Dodaj usługę serwisową</button>
 
-        
-        <div v-if="showMechanicModal" class="modal">
-          <v-form ref="form" v-model="valid" @submit.prevent="addServiceSchedule">
-            <!-- Service Date Start -->
-            <v-text-field
-              v-model="newServiceSchedule.serviceDateStart"
-              label="Data rozpoczęcia usługi"
-              type="datetime-local"
-              required
-            ></v-text-field>
 
-            <!-- Service Date End -->
-            <v-text-field
-              v-model="newServiceSchedule.serviceDateEnd"
-              label="Data zakończenia usługi"
-              type="datetime-local"
-              required
-            ></v-text-field>
+    <div v-if="showScheduleModal" class="modal">
+      <form @submit.prevent="addServiceSchedule">
 
-            <!-- Service -->
-            <v-select
-              v-model="newServiceSchedule.service"
-              :items="services"
-              item-value="id"
-              item-text="serviceDescription"
-              label="Wybierz usługę"
-              required
-            ></v-select>
+        <div>
+          <label for="service">Rodzaj naprawy:</label>
+          <select v-model="newServiceSchedule.service" id="service" required>
+            <option disabled value="">Wybierz specjalność</option>
+            <option v-for="service in services" :key="service.id" :value="service.id">
+              {{ service.serviceDescription }}
+            </option>
+          </select>
+        </div>
 
-            <!-- Mechanics -->
-            <v-select
-              v-model="newServiceSchedule.mechanics"
-              :items="mechanics"
-              item-value="id"
-              item-text="name"
-              label="Wybierz mechaników"
-              multiple
-              required
-            ></v-select>
+        <!-- Mechanics -->
+        <div>
+          <label for="mechanic">Mechanik:</label>
+          <select v-model="newServiceSchedule.mechanics" id="mechanic" multiple required>
+            <option v-for="mechanic in mechanics" :key="mechanic.id" :value="mechanic.id">
+              {{ mechanic.firstName }}
+            </option>
+          </select>
+        </div>
 
-            <!-- Order Items -->
-            <v-select
-              v-model="newServiceSchedule.orderItems"
-              :items="orderItems"
-              item-value="inventoryItemId"
-              item-text="name"
-              label="Wybierz przedmioty zamówienia"
-              multiple
-            ></v-select>
+        <!-- Order Items -->
+        <select v-model="newServiceSchedule.orderItems" :items="orderItems" item-value="inventoryItemId"
+          item-text="name" label="Wybierz przedmioty zamówienia" multiple></select>
 
-            <!-- Service Status -->
-            <v-select
-              v-model="newServiceSchedule.serviceStatus"
-              :items="serviceStatuses"
-              label="Status usługi"
-              required
-            ></v-select>
-            <button type="submit">Dodaj Mechanika</button>
-            <button @click="closeMechanicModal" type="button">Anuluj</button>
-          </v-form>
-        
+        <!-- Service Status -->
+        <select v-model="newServiceSchedule.serviceStatus" :items="serviceStatuses" label="Status usługi"
+          required></select>
+        <button type="submit">Dodaj usługę serwisowa</button>
+        <button @click="openScheduleModal" type="button">Anuluj</button>
+      </form>
 
-     
+
+
     </div>
   </div>
 </template>
@@ -77,13 +51,11 @@ import { useFetch } from '#app'; // Zamiast axios, jeśli chcesz używać Nuxt 3
 const dialog = ref(false);
 const valid = ref(false);
 const services = ref([]);
-const showMechanicModal = ref(false)
+const showScheduleModal = ref(false)
 const mechanics = ref([]);
 const orderItems = ref([]);
 const serviceStatuses = ref([0, 1, 2]); // Statusy: 0 - oczekujące, 1 - w trakcie, 2 - zakończona
 const newServiceSchedule = ref({
-  serviceDateStart: '',
-  serviceDateEnd: '',
   service: null,
   mechanics: [],
   serviceStatus: null,
@@ -93,34 +65,32 @@ const newServiceSchedule = ref({
 // Funkcja do ładowania danych
 const fetchData = async () => {
   try {
-    const { data: servicesData } = await useFetch('/api/Service');
-    services.value = servicesData;
+    services.value = await $fetch('/api/Service');
+     
 
-    const { data: mechanicsData } = await useFetch('/api/Mechanic/GetMechanicsList');
-    mechanics.value = mechanicsData;
+    mechanics.value = await $fetch('/api/Mechanic/GetMechanicsList');
+     
 
-    const { data: orderItemsData } = await useFetch('/api/InventoryItem');
-    orderItems.value = orderItemsData;
+    orderItems.value  = await $fetch('/api/InventoryItem');
+    
   } catch (error) {
     console.error('Błąd podczas pobierania danych:', error);
   }
 };
 
 // Ładowanie danych po zamontowaniu komponentu
-onMounted(() => {
-  fetchData();
+onMounted(async () => {
+  await fetchData();
 });
 
-// Funkcja do otwarcia dialogu
-const openDialog = () => {
-  dialog.value = true;
-};
+const openScheduleModal = () => {
+  showScheduleModal.value = !showScheduleModal.value
+}
 
 // Funkcja dodająca harmonogram usługi
 const addServiceSchedule = async () => {
   try {
     const payload = {
-      id: new Date().toISOString(), // Możesz użyć GUID, jeśli potrzebujesz unikalnego identyfikatora
       serviceDateStart: newServiceSchedule.value.serviceDateStart,
       serviceDateEnd: newServiceSchedule.value.serviceDateEnd,
       service: newServiceSchedule.value.service,

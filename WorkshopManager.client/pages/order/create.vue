@@ -19,10 +19,7 @@
                 <label for="clientAddress">Adres klienta:</label>
                 <input type="text" v-model="newOrder.clientAddress" id="clientAddress" />
             </div>
-            <div>
-                <label for="clientCode">Kod klienta:</label>
-                <input type="text" v-model="newOrder.clientCode" id="clientCode" />
-            </div>
+
 
             <!-- Dane pojazdu -->
             <div>
@@ -46,17 +43,8 @@
                 <input type="text" v-model="newOrder.licensePlate" id="licensePlate" required />
             </div>
 
-            <div>
-    <service-schedule-form  />
-  </div>
-            <div>
-                <label for="serviceScheduleIds">Usługi (opcjonalne):</label>
-                <select v-model="newOrder.serviceScheduleIds" id="serviceScheduleIds" multiple>
-                    <option v-for="service in services" :key="service.id" :value="service.id">
-                        {{ service.name }}
-                    </option>
-                </select>
-            </div>
+            
+                    
 
             <!-- Opis zamówienia -->
             <div>
@@ -64,21 +52,14 @@
                 <textarea v-model="newOrder.description" id="description"></textarea>
             </div>
 
-            <!-- Daty -->
-            <div>
-                <label for="orderDate">Data zamówienia:</label>
-                <input type="date" v-model="newOrder.orderDate" id="orderDate" required />
-            </div>
-            <div>
-                <label for="estimatedCompletionDate">Szacowana data ukończenia:</label>
-                <input type="date" v-model="newOrder.estimatedCompletionDate" id="estimatedCompletionDate" />
-            </div>
+
 
             <!-- Przyciski -->
             <button type="submit">Dodaj Zamówienie</button>
             <button @click="closeOrderModal" type="button">Anuluj</button>
         <NuxtLink to="/order"><button type="button">Anuluj</button></NuxtLink>
       </form>
+      <service-schedule-form  />
     </div>
 </template>
   
@@ -88,11 +69,17 @@
   
   const router = useRouter()
   const newOrder = ref({
+    services: [],
+    description: '',
     clientName: '',
     clientPhoneNumber: '',
-    description: '',
-    orderDate: '',
-    estimatedCompletionDate: null
+    ClientEmail: '',
+    ClientAddress: '',
+    VIN: '',
+    Make: '',
+    Model: '',
+    Year: '',
+    LicensePlate: '',
   })
   
   const addOrder = async () => {
