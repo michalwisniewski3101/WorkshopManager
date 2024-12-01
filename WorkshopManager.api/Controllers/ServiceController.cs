@@ -1,122 +1,93 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WorkshopManager.api.Database;
+using WorkshopManager.api.Model;
+using WorkshopManager.api.Repos.Interfaces;
 
 [ApiController]
 [Route("api/[controller]")]
 public class ServiceController : ControllerBase
 {
-    private readonly WorkshopContext _context;
+    private readonly IServiceRepository _serviceRepository;
 
-    public ServiceController(WorkshopContext context)
+    public ServiceController(IServiceRepository serviceRepository)
     {
-        _context = context;
+        _serviceRepository = serviceRepository;
     }
 
-    // GET: api/Service
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Service>>> GetServices()
     {
-        return await _context.Services.ToListAsync();
+        return Ok(await _serviceRepository.GetServicesAsync());
     }
 
-    // GET: api/Service/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<Service>> GetService(Guid id)
     {
-        var service = await _context.Services.FindAsync(id);
+        var service = await _serviceRepository.GetServiceByIdAsync(id);
 
         if (service == null)
         {
             return NotFound();
         }
-
-        return service;
-    }
-
-
-
-    [HttpPost("AddService")]
-    public async Task<ActionResult<Service>> AddService([FromBody] Service service)
-    {
-        if (service == null)
-        {
-            return BadRequest("Nazwa usługi serwisowej nie może być pusta.");
-        }
-
-        service.Id = Guid.NewGuid();
-
-        _context.Services.Add(service);
-        await _context.SaveChangesAsync();
 
         return Ok(service);
     }
-    [HttpPost("AddServiceSchedule")]
-    public async Task<ActionResult<ServiceSchedule>> AddServiceSchedule([FromBody] ServiceSchedule serviceSchedule)
+
+    [HttpGet("GetServiceSchedule/{id}")]
+    public async Task<ActionResult<ServiceSchedule>> GetServiceSchedule(Guid id)
     {
+        var serviceSchedule = await _serviceRepository.GetServiceScheduleByIdAsync(id);
+
         if (serviceSchedule == null)
-        {
-            return BadRequest("Nazwa usługi serwisowej nie może być pusta.");
-        }
-
-        serviceSchedule.Id = Guid.NewGuid();
-        
-
-        _context.ServiceSchedules.Add(serviceSchedule);
-        await _context.SaveChangesAsync();
-
-        return Ok(serviceSchedule.Id);
-    }
-
-
-    // PUT: api/Service/{id}
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutService(Guid id, Service service)
-    {
-        if (id != service.Id)
-        {
-            return BadRequest();
-        }
-
-        _context.Entry(service).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!ServiceExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return NoContent();
-    }
-
-    // DELETE: api/Service/{id}
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteService(Guid id)
-    {
-        var service = await _context.Services.FindAsync(id);
-        if (service == null)
         {
             return NotFound();
         }
 
-        _context.Services.Remove(service);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        return Ok(serviceSchedule);
     }
 
-    private bool ServiceExists(Guid id)
+    [HttpGet("GetServiceSchedulesByOrder/{id}")]
+    public async Task<ActionResult<IEnumerable<ServiceSchedule>>> GetServiceSchedulesByOrder(Guid id)
     {
-        return _context.Services.Any(e => e.Id == id);
+        var serviceSchedules = await _serviceRepository.GetServiceSchedulesByOrderIdAsync(id);
+        return Ok(serviceSchedules);
+    }
+
+    [HttpPost("AddService")]
+    public async Task<ActionResult<Guid>> AddService([FromBody] Service service)
+    {
+        if (service == null)
+        {
+            return BadRequest("Nazwa usługi serwisowej nie może być pusta.");
+        }
+
+        var id = await _serviceRepository.AddServiceAsync(service);
+        return Ok(id);
+    }
+
+    [HttpPost("AddServiceSchedule/{id}")]
+    public async Task<ActionResult<Guid>> AddServiceSchedule(Guid id, [FromBody] ServiceSchedule serviceSchedule)
+    {
+        if (serviceSchedule == null)
+        {
+            return BadRequest("Harmonogram serwisowy nie może być pusty.");
+        }
+
+        serviceSchedule.OrderId = id;
+        var scheduleId = await _serviceRepository.AddServiceScheduleAsync(serviceSchedule);
+        return Ok(scheduleId);
+    }
+
+    [HttpPut("UpdateServiceScheduleStatus/{id}")]
+    public async Task<IActionResult> UpdateServiceScheduleStatus(Guid id, [FromBody] ServiceStatus newStatus)
+    {
+        try
+        {
+            await _serviceRepository.UpdateServiceScheduleStatusAsync(id, newStatus);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Wystąpił błąd podczas aktualizacji: {ex.Message}");
+        }
     }
 }

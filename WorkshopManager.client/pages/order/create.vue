@@ -59,7 +59,7 @@
             <button @click="closeOrderModal" type="button">Anuluj</button>
         <NuxtLink to="/order"><button type="button">Anuluj</button></NuxtLink>
       </form>
-      <service-schedule-form  />
+      
     </div>
 </template>
   
@@ -73,33 +73,34 @@
     description: '',
     clientName: '',
     clientPhoneNumber: '',
-    ClientEmail: '',
-    ClientAddress: '',
-    VIN: '',
-    Make: '',
-    Model: '',
-    Year: '',
-    LicensePlate: '',
+    clientEmail: '',
+    clientAddress: '',
+    vin: '',
+    make: '',
+    model: '',
+    year: '',
+    licensePlate: '',
   })
   
   const addOrder = async () => {
-    try {
-      newOrder.value.orderDate = new Date(newOrder.value.orderDate).toISOString()
-      if (newOrder.value.estimatedCompletionDate) {
-        newOrder.value.estimatedCompletionDate = new Date(newOrder.value.estimatedCompletionDate).toISOString()
-      }
-  
-      await $fetch('/api/Order', {
-        method: 'POST',
-        body: JSON.stringify(newOrder.value),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      alert('Zamówienie dodane pomyślnie!')
-      router.push('/order')
-    } catch (error) {
-      alert('Błąd podczas dodawania zamówienia')
-    }
+  try {
+
+    const response = await $fetch('/api/Order', {
+      method: 'POST',
+      body: JSON.stringify(newOrder.value),
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    // Załóżmy, że odpowiedź zawiera obiekt zamówienia, w tym jego ID
+    const orderId = response.id
+
+    alert('Zamówienie dodane pomyślnie!')
+    // Przekierowanie na stronę szczegółów zamówienia
+    router.push(`/order/${orderId}`)
+  } catch (error) {
+    alert('Błąd podczas dodawania zamówienia')
   }
+}
 
   </script>
 

@@ -4,7 +4,6 @@ public class Order : IEntity
 {
     public Guid Id { get; set; }  
     public Guid VehicleId { get; set; }  
-    public List<Guid> Services { get; set; } = new List<Guid>();
     public DateTime OrderDate { get; set; }
     public DateTime? EstimatedCompletionDate { get; set; }
     public decimal? TotalCost { get; set; }

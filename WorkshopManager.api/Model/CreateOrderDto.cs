@@ -2,7 +2,6 @@
 {
     public class CreateOrderDto
     {
-        public List<Guid> ServiceSchedules { get; set; } = new List<Guid>();
         public string? Description { get; set; }  // Opis zamówienia
         public string ClientName { get; set; }  // Imię klienta
         public string ClientPhoneNumber { get; set; }  // Numer telefonu klienta

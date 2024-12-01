@@ -34,6 +34,17 @@ namespace WorkshopManager.api.Controllers
             }
             return Ok(order);
         }
+        // GET: api/Order/{id}
+        [HttpGet("ByCode/{code}")]
+        public async Task<ActionResult<Order>> GetOrderByCode(string code)
+        {
+            var order = await _orderRepository.GetOrderByCodeAsync(code);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return Ok(order);
+        }
 
         // POST: api/Order
         [HttpPost]

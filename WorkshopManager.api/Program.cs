@@ -100,6 +100,8 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+
 
 
 

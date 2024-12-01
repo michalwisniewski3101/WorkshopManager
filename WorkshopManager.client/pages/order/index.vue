@@ -26,10 +26,13 @@
   
   const getOrderStatusName = (status) => {
     const statuses = {
-      0: 'Nowe',
-      1: 'W trakcie realizacji',
-      2: 'Zakończone',
-      3: 'Anulowane'
+    0: 'Oczekujący',
+    1: 'W trakcie',
+    2: 'Zakończony',
+    3: 'Anulowany',
+    4: 'Wstrzymany',
+    5: 'Oczekiwanie na części',
+    6: 'Oczekiwanie na zatwierdzenie',
     }
     return statuses[status] || 'Nieznany status'
   }

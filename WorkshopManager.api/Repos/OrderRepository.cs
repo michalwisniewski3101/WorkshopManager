@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using WorkshopManager.api.Model;
 using WorkshopManager.api.Repos.Interfaces;
 
@@ -26,7 +27,10 @@ namespace WorkshopManager.api.Repos
         {
             return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
         }
-
+        public async Task<Order> GetOrderByCodeAsync(string code)
+        {
+            return await _context.Orders.FirstOrDefaultAsync(o => o.ClientCode == code);
+        }
         // Dodaj nowe zamówienie
         public async Task<Order> AddOrderAsync(CreateOrderDto orderDto)
         {
@@ -44,20 +48,11 @@ namespace WorkshopManager.api.Repos
                 ClientPhoneNumber = orderDto.ClientPhoneNumber,
                 ClientEmail = orderDto.ClientEmail,
                 ClientAddress = orderDto.ClientAddress,
-                ClientCode = orderDto.ClientCode
+                ClientCode = GenerateClientCode()
             };
 
 
-            if (orderDto.ServiceSchedules != null)
-            {
-                foreach (var schedule in orderDto.ServiceSchedules)
-                {
-                    newOrder.Services.Add(schedule);
-;
 
-                }
-
-            }
             await _context.Orders.AddAsync(newOrder);
             await _context.SaveChangesAsync();
 
@@ -86,10 +81,29 @@ namespace WorkshopManager.api.Repos
             return true;
         }
 
+
         // Sprawdź, czy zamówienie istnieje
         public bool OrderExists(Guid id)
         {
             return _context.Orders.Any(e => e.Id == id);
+        }
+        public static string GenerateClientCode()
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var code = new char[6];
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                var bytes = new byte[6];
+                rng.GetBytes(bytes);
+
+                for (int i = 0; i < code.Length; i++)
+                {
+                    code[i] = chars[bytes[i] % chars.Length];
+                }
+            }
+
+            return new string(code);
         }
     }
 }

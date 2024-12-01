@@ -3,9 +3,10 @@
 public class ServiceSchedule
 {
     public Guid Id { get; set; }
+    public Guid OrderId { get; set; }
     public DateTime? ServiceDateStart { get; set; }
     public DateTime? ServiceDateEnd { get; set; }
-    public Service? Service { get; set; }
+    public Guid? ServiceId { get; set; }
     public List<Guid>? Mechanics { get; set; } = new List<Guid>();
     public ServiceStatus? ServiceStatus { get; set; }
     public List<OrderItem>? OrderItems { get; set; } = new List<OrderItem>();
