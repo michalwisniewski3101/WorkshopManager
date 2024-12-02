@@ -3,10 +3,15 @@ export default defineNuxtConfig({
   plugins: [
     '~/plugins/fontawesome.js',
     '~/plugins/pinia.js',
+    '~/plugins/vuetify.ts',
   ], 
   router: {
     middleware: ['auth'],
   },
+  build: {
+    transpile: ['vuetify'],
+  },
+  modules: ['@nuxtjs/vuetify'], // Dodaj moduł Vuetify
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   runtimeConfig: {
@@ -14,6 +19,9 @@ export default defineNuxtConfig({
       apiBase: 'https://localhost:44347' // Domyślny URL API
     }
   },
+  modules: [
+    "vuetify-nuxt-module",
+  ],
   ssr: false,
   vite: {
     server: {
@@ -25,6 +33,14 @@ export default defineNuxtConfig({
           rewrite: (path) => path.replace(/^\/api/, '/api') // Przepisz ścieżkę, aby zgadzała się z backendem
         }
       }
+    },
+    vue: {
+      template: {
+        transformAssetUrls: {
+          base: null, // Dodaj konfigurację transformacji, jeśli jest potrzebna
+        },
+      },
     }
+
   }
 })

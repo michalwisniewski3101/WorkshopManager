@@ -1,70 +1,119 @@
 <template>
-  <div>
-    <h1>Szczegóły zamówienia</h1>
+  <v-container>
+    <h1 class="text-center mb-4">Szczegóły zamówienia</h1>
+
     <div v-if="order">
-      <p><strong>ID:</strong> {{ order.id }}</p>
-      <p><strong>Data zamówienia:</strong> {{ new Date(order.orderDate).toLocaleDateString() }}</p>
-      <p><strong>Klient:</strong> {{ order.clientName }}</p>
-      <p><strong>Telefon:</strong> {{ order.clientPhoneNumber }}</p>
-      <p><strong>Opis:</strong> {{ order.description }}</p>
-      <p><strong>Status:</strong>
-        {{ getOrderStatusName(order.orderStatus) }}
-      </p>
-      <p>
-        <strong>Szacowana data ukończenia:</strong>
-        {{ order.estimatedCompletionDate
-          ? new Date(order.estimatedCompletionDate).toLocaleDateString()
-          : 'Brak' }}
-      </p>
-      <p>
-        <strong>Całkowity koszt:</strong>
-        {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono' }}
-      </p>
+      <v-card class="mb-4">
+        <v-card-title>
+          <v-row>
+            <v-col cols="12" md="6">
+              <span><strong>ID:</strong> {{ order.id }}</span>
+            </v-col>
+            <v-col cols="12" md="6">
+              <span><strong>Data zamówienia:</strong> {{ new Date(order.orderDate).toLocaleDateString() }}</span>
+            </v-col>
+            <v-col cols="12" md="6">
+              <span><strong>Klient:</strong> {{ order.clientName }}</span>
+            </v-col>
+            <v-col cols="12" md="6">
+              <span><strong>Telefon:</strong> {{ order.clientPhoneNumber }}</span>
+            </v-col>
+            <v-col cols="12">
+              <span><strong>Opis:</strong> {{ order.description }}</span>
+            </v-col>
+            <v-col cols="12">
+              <span><strong>Status:</strong> {{ getOrderStatusName(order.orderStatus) }}</span>
+            </v-col>
+            <v-col cols="12" md="6">
+              <span><strong>Szacowana data ukończenia:</strong>
+                {{ order.estimatedCompletionDate ? new Date(order.estimatedCompletionDate).toLocaleDateString() : 'Brak'
+                }}
+              </span>
+            </v-col>
+            <v-col cols="12" md="6">
+              <span><strong>Całkowity koszt:</strong> {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono'
+                }}</span>
+            </v-col>
+          </v-row>
+        </v-card-title>
+      </v-card>
 
       <service-schedule-form @service-schedule-added="fetchServiceSchedules" :orderId="order.id" />
 
+      <v-divider class="my-4"></v-divider>
+
       <div v-if="serviceSchedules && serviceSchedules.length > 0">
-        <h2>Harmonogramy serwisów</h2>
-        <div v-for="schedule in serviceSchedules" :key="schedule.id" class="service-schedule">
-          <p><strong>Harmonogram ID:</strong> {{ schedule.id }}</p>
-          <p><strong>Data rozpoczęcia:</strong> {{ schedule.serviceDateStart ? new
-            Date(schedule.serviceDateStart).toLocaleDateString() : 'Brak' }}</p>
-          <p><strong>Data zakończenia:</strong> {{ schedule.serviceDateEnd ? new
-            Date(schedule.serviceDateEnd).toLocaleDateString() : 'Brak' }}</p>
-          <p><strong>Serwis ID:</strong> {{ schedule.serviceId }}</p>
-          <p><strong>Mechanicy:</strong> {{ schedule.mechanics.join(', ') }}</p>
-          <p><strong>Status serwisu:</strong>
+        <h2 class="text-center mb-4">Harmonogramy serwisów</h2>
+        <v-card v-for="schedule in serviceSchedules" :key="schedule.id" class="service-schedule mb-4">
+          <v-card-title>
+            <v-row>
+              <v-col cols="12" md="6">
+                <span><strong>Harmonogram ID:</strong> {{ schedule.id }}</span>
+              </v-col>
+              <v-col cols="12" md="6">
+                <span><strong>Data rozpoczęcia:</strong> {{ schedule.serviceDateStart ? new
+                  Date(schedule.serviceDateStart).toLocaleDateString() : 'Brak' }}</span>
+              </v-col>
+              <v-col cols="12" md="6">
+                <span><strong>Data zakończenia:</strong> {{ schedule.serviceDateEnd ? new
+                  Date(schedule.serviceDateEnd).toLocaleDateString() : 'Brak' }}</span>
+              </v-col>
+              <v-col cols="12" md="6">
+                <span><strong>Serwis ID:</strong> {{ schedule.serviceId }}</span>
+              </v-col>
+              <v-col cols="12">
+                <span><strong>Mechanicy:</strong> {{ schedule.mechanics.join(', ') }}</span>
+              </v-col>
+            </v-row>
+          </v-card-title>
+
+          <v-card-actions>
             <div v-if="!schedule.showStatusChange">
-              {{ getServiceStatusName(schedule.serviceStatus) }}
-              <button @click="changeServiceStatus(schedule.id)">Zmień status</button>
+              <v-btn @click="changeServiceStatus(schedule.id)" color="primary">
+                <v-icon>mdi-pencil</v-icon>
+                Zmień status
+              </v-btn>
+              <span>{{ getServiceStatusName(schedule.serviceStatus) }}</span>
             </div>
 
             <div v-if="schedule.showStatusChange">
-              <select v-model="schedule.selectedStatus">
-                <option v-for="(status, value) in statusOptions" :key="value" :value="value">{{ status }}</option>
-              </select>
-              <button @click="updateServiceScheduleStatus(schedule.id)">Zapisz zmiany</button>
-              <button @click="schedule.showStatusChange = false">Anuluj</button>
+              <v-select v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'"
+                label="Wybierz status" class="mr-4" />
+              <v-btn @click="updateServiceScheduleStatus(schedule.id)" color="success">Zapisz zmiany</v-btn>
+              <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
             </div>
-          </p>
-          <div>
+          </v-card-actions>
+
+          <v-divider class="my-4"></v-divider>
+
+          <v-card-subtitle>
             <h3>Pozycje zamówienia:</h3>
-            <ul>
-              <li v-for="item in schedule.orderItems" :key="item.inventoryItemId">
-                <p><strong>Pozycja ID:</strong> {{ item.inventoryItemId }}</p>
-                <p><strong>Ilość:</strong> {{ item.quantity }}</p>
-                <p><strong>Całkowita cena:</strong> {{ item.totalPrice }} PLN</p>
-              </li>
-            </ul>
-          </div>
-        </div>
+            <v-list>
+              <v-list-item v-for="item in schedule.orderItems" :key="item.inventoryItemId">
+                <v-list-item-content>
+                  <v-list-item-title><strong>Pozycja ID:</strong> {{ item.inventoryItemId }}</v-list-item-title>
+                  <v-list-item-subtitle>
+                    <span><strong>Ilość:</strong> {{ item.quantity }}</span>
+                    <span><strong>Całkowita cena:</strong> {{ item.totalPrice }} PLN</span>
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card-subtitle>
+
+
+
+
+
+
+        </v-card>
       </div>
     </div>
 
-    <NuxtLink to="/order"><button>Wróć do listy zamówień</button></NuxtLink>
-
-
-  </div>
+    <NuxtLink to="/order">
+      <v-btn color="secondary" class="mt-4">Wróć do listy zamówień</v-btn>
+    </NuxtLink>
+  </v-container>
 </template>
 
 <script setup>
@@ -73,15 +122,16 @@ import { useRoute } from 'vue-router'
 
 const order = ref(null)
 const serviceSchedules = ref([])
+
 const route = useRoute()
 
-const statusOptions = {
-    0: 'Oczekujący',
-    1: 'Oczekiwanie na części',
-    2: 'W trakcie',
-    3: 'Zakończony',
-    4: 'Anulowany'
-}
+const statusOptions = [
+  { name: 'Oczekujący', value: 0 },
+  { name: 'Oczekiwanie na części', value: 1 },
+  { name: 'W trakcie', value: 2 },
+  { name: 'Zakończony', value: 3 },
+  { name: 'Anulowany', value: 4 }
+]
 
 const getOrderStatusName = (status) => {
   const statuses = {
@@ -108,8 +158,8 @@ const fetchServiceSchedules = async () => {
     const schedules = await $fetch(`/api/Service/GetServiceSchedulesByOrder/${route.params.id}`)
     serviceSchedules.value = schedules.map(schedule => ({
       ...schedule,
-      showStatusChange: false, 
-      selectedStatus: schedule.serviceStatus 
+      showStatusChange: false,
+      selectedStatus: schedule.serviceStatus
     }))
   } catch (error) {
     alert('Błąd podczas ładowania serwisów')
@@ -156,16 +206,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.service-schedule {
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-.status-change-form {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-}
+/* Można dodać własne style, jeśli wymagane */
 </style>

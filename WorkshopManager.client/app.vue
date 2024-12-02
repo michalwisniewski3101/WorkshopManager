@@ -3,22 +3,18 @@ import { onMounted } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import { useRouter } from '#app'
 import axios from 'axios'
-  
 
 const authStore = useAuthStore()
 const router = useRouter()
-
-
 
 onMounted(() => {
   authStore.checkLoginStatus()  // Sprawdzamy stan logowania po załadowaniu
 })
 
-
 const logout = async () => {
   try {
     await axios.post('/api/auth/logout', {}, {
-     /* headers: {
+      /* headers: {
         Authorization: `Bearer ${authStore.jwtToken}`,
       },*/
     })
@@ -32,34 +28,83 @@ const logout = async () => {
 }
 </script>
 
-
-authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'||authStore.roles=='Klient'
-
-
 <template>
-  <nav>
-    <ul >
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'||authStore.roles=='Klient'"><NuxtLink to="/">Strona główna</NuxtLink></li>
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'"><NuxtLink to="/vehicle/add-vehicle">Dodaj pojazd</NuxtLink></li>
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'"><NuxtLink to="/vehicle/vehicle-list">Lista pojazdów</NuxtLink></li>
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'"><NuxtLink to="/mechanic/add-mechanic">Dodaj mechanika</NuxtLink></li>
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'"><NuxtLink to="/mechanic/mechanic-list">Lista mechaników</NuxtLink></li>
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'"><NuxtLink to="/order">Zamówienia</NuxtLink></li>
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'"><NuxtLink to="/dictionaries/">Słowniki</NuxtLink></li>
-      <li v-if="authStore.roles=='Administrator'||authStore.roles=='Klient'"><NuxtLink to="/client/">Klient</NuxtLink></li>
-      <!-- Sekcja logowania i wylogowania -->
-      <li v-if="authStore.isLoggedIn">
-        <span><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
-        <button @click="logout">
-          <font-awesome-icon icon="sign-out-alt" /> Wyloguj
-        </button>
-      </li>
-    </ul>
-  </nav>
-  <NuxtPage />
+  <v-app>
+    <!-- Sidebar Navigation -->
+    <v-navigation-drawer app>
+      <v-list>
+        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'||authStore.roles=='Klient'">
+          <v-list-item-title>
+            <NuxtLink to="/">Strona główna</NuxtLink>
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'">
+          <v-list-item-title>
+            <NuxtLink to="/vehicle/vehicle-list">Pojazdy</NuxtLink>
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'">
+          <v-list-item-title>
+            <NuxtLink to="/warehouse/">Magazyn</NuxtLink>
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'">
+          <v-list-item-title>
+            <NuxtLink to="/mechanic/mechanic-list">Pracownicy</NuxtLink>
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'">
+          <v-list-item-title>
+            <NuxtLink to="/order">Zamówienia</NuxtLink>
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'">
+          <v-list-item-title>
+            <NuxtLink to="/dictionaries/">Słowniki</NuxtLink>
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Klient'">
+          <v-list-item-title>
+            <NuxtLink to="/client/">Klient</NuxtLink>
+          </v-list-item-title>
+        </v-list-item>
+
+        <!-- Wylogowanie -->
+        <v-list-item v-if="authStore.isLoggedIn">
+          <v-list-item-title>
+            <span><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
+          </v-list-item-title>
+          <v-btn @click="logout" color="red">
+            <font-awesome-icon icon="sign-out-alt" /> Wyloguj
+          </v-btn>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <!-- App Bar -->
+    <v-app-bar app>
+      <v-toolbar-title>Workshop Manager</v-toolbar-title>
+    </v-app-bar>
+
+    <!-- Main Content Area -->
+    <v-main>
+      <NuxtPage />
+    </v-main>
+
+    <!-- Footer -->
+    <v-footer app>
+      <span>&copy; 2024 Workshop Manager</span>
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
+<style scoped>
 nav ul {
   display: flex;
   gap: 1rem;

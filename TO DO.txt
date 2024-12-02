@@ -1,3 +1,4 @@
 -wyswietlanie aktualnie potrzebnych czesci kwerenda z bazy (odjac service item ilosc i inventory item)
 -sekcja magazyn z dodawaniem ilosci 
 -endpoint do dodawania i odejmowania ilosci w magazynie
+ 
