@@ -4,7 +4,8 @@ export default defineNuxtConfig({
     '~/plugins/fontawesome.js',
     '~/plugins/pinia.js',
     '~/plugins/vuetify.ts',
-  ], 
+  ],
+ 
   router: {
     middleware: ['auth'],
   },
@@ -42,5 +43,32 @@ export default defineNuxtConfig({
       },
     }
 
-  }
+  },
+  vuetify: {
+    vuetifyOptions: {
+      theme: {
+        defaultTheme: "dark",
+        themes: {
+          light: {
+            dark: false,
+            colors: {
+              primary: "#c42222",
+              secondary: "#8b8b8b",
+              surface: "#fff",
+              appBar: "#fff",
+            },
+          },
+          dark: {
+            dark: true,
+            colors: {
+              primary: "#c42222",
+              surface: "#333",
+              secondary: "#eee",
+              appBar: "#333",
+            },
+          },
+        },
+      },
+    },
+  },
 })

@@ -26,13 +26,11 @@
             </v-col>
             <v-col cols="12" md="6">
               <span><strong>Szacowana data ukończenia:</strong>
-                {{ order.estimatedCompletionDate ? new Date(order.estimatedCompletionDate).toLocaleDateString() : 'Brak'
-                }}
+                {{ order.estimatedCompletionDate ? new Date(order.estimatedCompletionDate).toLocaleDateString() : 'Brak' }}
               </span>
             </v-col>
             <v-col cols="12" md="6">
-              <span><strong>Całkowity koszt:</strong> {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono'
-                }}</span>
+              <span><strong>Całkowity koszt:</strong> {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono' }}</span>
             </v-col>
           </v-row>
         </v-card-title>
@@ -51,12 +49,10 @@
                 <span><strong>Harmonogram ID:</strong> {{ schedule.id }}</span>
               </v-col>
               <v-col cols="12" md="6">
-                <span><strong>Data rozpoczęcia:</strong> {{ schedule.serviceDateStart ? new
-                  Date(schedule.serviceDateStart).toLocaleDateString() : 'Brak' }}</span>
+                <span><strong>Data rozpoczęcia:</strong> {{ schedule.serviceDateStart ? new Date(schedule.serviceDateStart).toLocaleDateString() : 'Brak' }}</span>
               </v-col>
               <v-col cols="12" md="6">
-                <span><strong>Data zakończenia:</strong> {{ schedule.serviceDateEnd ? new
-                  Date(schedule.serviceDateEnd).toLocaleDateString() : 'Brak' }}</span>
+                <span><strong>Data zakończenia:</strong> {{ schedule.serviceDateEnd ? new Date(schedule.serviceDateEnd).toLocaleDateString() : 'Brak' }}</span>
               </v-col>
               <v-col cols="12" md="6">
                 <span><strong>Serwis ID:</strong> {{ schedule.serviceId }}</span>
@@ -68,20 +64,22 @@
           </v-card-title>
 
           <v-card-actions>
+            <div v-if="schedule.showStatusChange">
+              <v-select v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'" label="Wybierz status" class="mr-4" />
+              <v-btn @click="updateServiceScheduleStatus(schedule.id)" color="success">Zapisz zmiany</v-btn>
+              <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
+            </div>
             <div v-if="!schedule.showStatusChange">
+
+              <span>{{ getServiceStatusName(schedule.serviceStatus) }}</span>
               <v-btn @click="changeServiceStatus(schedule.id)" color="primary">
                 <v-icon>mdi-pencil</v-icon>
                 Zmień status
               </v-btn>
-              <span>{{ getServiceStatusName(schedule.serviceStatus) }}</span>
+              
             </div>
 
-            <div v-if="schedule.showStatusChange">
-              <v-select v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'"
-                label="Wybierz status" class="mr-4" />
-              <v-btn @click="updateServiceScheduleStatus(schedule.id)" color="success">Zapisz zmiany</v-btn>
-              <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
-            </div>
+
           </v-card-actions>
 
           <v-divider class="my-4"></v-divider>
@@ -100,12 +98,6 @@
               </v-list-item>
             </v-list>
           </v-card-subtitle>
-
-
-
-
-
-
         </v-card>
       </div>
     </div>
