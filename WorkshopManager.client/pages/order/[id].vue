@@ -49,16 +49,12 @@
                 <span><strong>Harmonogram ID:</strong> {{ schedule.id }}</span>
               </v-col>
               <v-col cols="12" md="6">
-                <span><strong>Data rozpoczęcia:</strong> {{ schedule.serviceDateStart ? new Date(schedule.serviceDateStart).toLocaleDateString() : 'Brak' }}</span>
-              </v-col>
-              <v-col cols="12" md="6">
-                <span><strong>Data zakończenia:</strong> {{ schedule.serviceDateEnd ? new Date(schedule.serviceDateEnd).toLocaleDateString() : 'Brak' }}</span>
-              </v-col>
-              <v-col cols="12" md="6">
-                <span><strong>Serwis ID:</strong> {{ schedule.serviceId }}</span>
+                <span><strong>Usługa:</strong> {{ getServiceDescription(schedule.serviceId) }}</span>
               </v-col>
               <v-col cols="12">
-                <span><strong>Mechanicy:</strong> {{ schedule.mechanics.join(', ') }}</span>
+                <span><strong>Mechanicy:</strong>
+                  {{ getMechanicsNames(schedule.mechanics) }}
+                </span>
               </v-col>
             </v-row>
           </v-card-title>
@@ -70,16 +66,12 @@
               <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
             </div>
             <div v-if="!schedule.showStatusChange">
-
               <span>{{ getServiceStatusName(schedule.serviceStatus) }}</span>
               <v-btn @click="changeServiceStatus(schedule.id)" color="primary">
                 <v-icon>mdi-pencil</v-icon>
                 Zmień status
               </v-btn>
-              
             </div>
-
-
           </v-card-actions>
 
           <v-divider class="my-4"></v-divider>
@@ -89,7 +81,9 @@
             <v-list>
               <v-list-item v-for="item in schedule.orderItems" :key="item.inventoryItemId">
                 <v-list-item-content>
-                  <v-list-item-title><strong>Pozycja ID:</strong> {{ item.inventoryItemId }}</v-list-item-title>
+                  <v-list-item-title>
+                    <strong>Pozycja:</strong> {{ getInventoryItemName(item.inventoryItemId) }}
+                  </v-list-item-title>
                   <v-list-item-subtitle>
                     <span><strong>Ilość:</strong> {{ item.quantity }}</span>
                     <span><strong>Całkowita cena:</strong> {{ item.totalPrice }} PLN</span>
@@ -114,6 +108,9 @@ import { useRoute } from 'vue-router'
 
 const order = ref(null)
 const serviceSchedules = ref([])
+const services = ref([])
+const mechanics = ref([])
+const inventoryItems = ref([])
 
 const route = useRoute()
 
@@ -158,6 +155,33 @@ const fetchServiceSchedules = async () => {
   }
 }
 
+const fetchAdditionalData = async () => {
+  try {
+    services.value = await $fetch('/api/Service');
+    mechanics.value = await $fetch('/api/Mechanic/GetMechanicsList');
+    inventoryItems.value = await $fetch('/api/InventoryItem');
+  } catch (error) {
+    alert('Błąd podczas ładowania danych dodatkowych');
+  }
+};
+
+const getServiceDescription = (serviceId) => {
+  const service = services.value.find(s => s.id === serviceId);
+  return service ? service.serviceDescription : 'Nieznana usługa';
+}
+
+const getMechanicsNames = (mechanicIds) => {
+  return mechanicIds.map(id => {
+    const mechanic = mechanics.value.find(m => m.id === id);
+    return mechanic ? `${mechanic.firstName} ${mechanic.lastName}` : 'Nieznany mechanik';
+  }).join(', ');
+}
+
+const getInventoryItemName = (itemId) => {
+  const item = inventoryItems.value.find(i => i.id === itemId);
+  return item ? item.name : 'Nieznana pozycja';
+}
+
 const getServiceStatusName = (status) => {
   const statuses = {
     0: 'Oczekujący',
@@ -194,6 +218,7 @@ const updateServiceScheduleStatus = async (scheduleId) => {
 onMounted(async () => {
   await fetchOrderDetails()
   await fetchServiceSchedules()
+  await fetchAdditionalData()
 })
 </script>
 

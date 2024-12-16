@@ -1,62 +1,99 @@
 <template>
-    <div v-if="isOpen" class="modal-overlay">
-        <div class="modal-content">
-            <h2>Dodaj pojazd</h2>
-            <form @submit.prevent="submitForm">
-                <div>
-                    <label for="make">Marka:</label>
-                    <input type="text" v-model="vehicle.make" id="make" required />
-                </div>
-                <div>
-                    <label for="model">Model:</label>
-                    <input type="text" v-model="vehicle.model" id="model" required />
-                </div>
-                <div>
-                    <label for="year">Rok produkcji:</label>
-                    <input type="number" v-model="vehicle.year" id="year" required />
-                </div>
-                <div>
-                    <label for="licensePlate">Numer rejestracyjny:</label>
-                    <input type="text" v-model="vehicle.licensePlate" id="licensePlate" required />
-                </div>
-                <div>
-                    <label for="VIN">VIN:</label>
-                    <input type="text" v-model="vehicle.vin" id="vin" required />
-                </div>
-
-                <!-- Dane właściciela -->
-                <div>
-                    <label for="ownerName">Imię i nazwisko właściciela:</label>
-                    <input type="text" v-model="vehicle.ownerName" id="ownerName" required />
-                </div>
-                <div>
-                    <label for="ownerPhoneNumber">Numer telefonu właściciela:</label>
-                    <input type="tel" v-model="vehicle.ownerPhoneNumber" id="ownerPhoneNumber" required />
-                </div>
-                <div>
-                    <label for="ownerEmail">Email właściciela:</label>
-                    <input type="email" v-model="vehicle.ownerEmail" id="ownerEmail" required />
-                </div>
-                <div>
-                    <label for="ownerAddress">Adres właściciela:</label>
-                    <input type="text" v-model="vehicle.ownerAddress" id="ownerAddress" required />
-                </div>
-
-                <button type="submit">Dodaj pojazd</button>
-                <button type="button" @click="closeModal">Anuluj</button>
-            </form>
-        </div>
-    </div>
-</template>
-
-<script setup>
+    <v-container>
+      <v-row>
+        <v-col cols="12" class="text-right">
+          <v-btn color="primary" @click="openVehicleModal">Dodaj nowy pojazd</v-btn>
+        </v-col>
+      </v-row>
+  
+      <!-- Modal -->
+      <v-dialog v-model="showVehicleModal" persistent max-width="500">
+        <v-card>
+          <v-card-title class="text-h6">Dodaj Pojazd</v-card-title>
+          <v-card-text>
+            <v-form @submit.prevent="addVehicle">
+              <v-text-field
+                label="Marka"
+                v-model="newVehicle.make"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="Model"
+                v-model="newVehicle.model"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="Rok produkcji"
+                type="number"
+                v-model="newVehicle.year"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="Numer rejestracyjny"
+                v-model="newVehicle.licensePlate"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="VIN"
+                v-model="newVehicle.vin"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="Imię i nazwisko właściciela"
+                v-model="newVehicle.ownerName"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="Numer telefonu właściciela"
+                type="tel"
+                v-model="newVehicle.ownerPhoneNumber"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="Email właściciela"
+                type="email"
+                v-model="newVehicle.ownerEmail"
+                required
+              ></v-text-field>
+  
+              <v-text-field
+                label="Adres właściciela"
+                v-model="newVehicle.ownerAddress"
+                required
+              ></v-text-field>
+  
+              <v-row class="mt-4">
+                <v-col cols="6">
+                  <v-btn color="primary" block type="submit">Dodaj Pojazd</v-btn>
+                </v-col>
+                <v-col cols="6">
+                  <v-btn block @click="closeVehicleModal">Anuluj</v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </v-container>
+  </template>
+  
+  <script setup>
 import { ref, defineEmits } from 'vue'
-import { useToast } from 'vue-toastification'
-const emits = defineEmits(['close', 'refresh'])
-const toast = useToast()
+  import { useToast } from 'vue-toastification'
+  
 
-const isOpen = ref(true)
-const vehicle = ref({
+    const emit = defineEmits(['refresh'])
+  const showVehicleModal = ref(false)
+  const toast = useToast()
+  
+  const newVehicle = ref({
     make: '',
     model: '',
     year: '',
@@ -66,47 +103,46 @@ const vehicle = ref({
     ownerPhoneNumber: '',
     ownerEmail: '',
     ownerAddress: ''
-})
-
-const closeModal = () => {
-    isOpen.value = false
-    emits('close')
-}
-
-const submitForm = async () => {
-    try {
-        await $fetch('/api/Vehicle', {
-            method: 'POST',
-            body: vehicle.value
-        })
-        toast.success('Pojazd dodany pomyślnie!')
-        emits('refresh') // Odświeżenie listy pojazdów
-        closeModal()
-    } catch (error) {
-        toast.error('Błąd podczas dodawania pojazdu')
+  })
+  
+  const openVehicleModal = () => {
+    showVehicleModal.value = true
+  }
+  
+  const closeVehicleModal = () => {
+    showVehicleModal.value = false
+    newVehicle.value = {
+      make: '',
+      model: '',
+      year: '',
+      licensePlate: '',
+      vin: '',
+      ownerName: '',
+      ownerPhoneNumber: '',
+      ownerEmail: '',
+      ownerAddress: ''
     }
-}
-</script>
-
-<style scoped>
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    max-width: 90%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-</style>
+  }
+  
+  const addVehicle = async () => {
+    try {
+      await $fetch('/api/Vehicle', {
+        method: 'POST',
+        body: JSON.stringify(newVehicle.value),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      toast.success('Pojazd dodany pomyślnie!')
+      closeVehicleModal()
+      emit('refresh')
+    } catch (error) {
+      toast.error('Błąd podczas dodawania pojazdu')
+    }
+  }
+  </script>
+  
+  <style scoped>
+  .text-right {
+    text-align: right;
+  }
+  </style>
+  

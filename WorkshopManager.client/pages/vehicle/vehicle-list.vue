@@ -34,11 +34,8 @@
         </template>
       </v-data-table>
   
-      <v-btn color="success" @click="openModal" class="mt-4">
-        Dodaj pojazd
-      </v-btn>
   
-      <AddVehicleForm v-if="isModalOpen" @close="closeModal" @refresh="fetchVehicles" />
+      <AddVehicleForm  @close="closeModal" @refresh="fetchVehicles" />
     </v-container>
   </template>
   

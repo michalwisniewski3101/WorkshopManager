@@ -60,13 +60,13 @@ definePageMeta({
 })
 
 const headers = [
-  { text: 'Nazwa', value: 'name' },
-  { text: 'Opis', value: 'description' },
-  { text: 'Numer produktu', value: 'productNumber' },
-  { text: 'Cena jednostkowa (PLN)', value: 'unitPrice' },
-  { text: 'Poziom zamawiania', value: 'reorderLevel' },
-  { text: 'Dostawca', value: 'supplier' },
-  { text: 'Akcje', value: 'actions', sortable: false }
+  { title: 'Nazwa', key: 'name' },
+  { title: 'Opis', key: 'description' },
+  { title: 'Numer produktu', key: 'productNumber' },
+  { title: 'Cena jednostkowa (PLN)', key: 'unitPrice' },
+  { title: 'Ilość w magazynie', key: 'quantityInStock' },
+  { title: 'Dostawca', key: 'supplier' },
+  { title: 'Akcje', key: 'actions', sortable: false }
 ]
 
 const inventoryItems = ref([])
