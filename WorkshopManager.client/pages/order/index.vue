@@ -1,50 +1,87 @@
 <template>
-    <div>
-      <h1>Lista zamówień</h1>
-      <ul>
-        <li v-for="order in orders" :key="order.id">
-          <strong>Zamówienie ID: {{ order.id }}</strong>
-          <p>Data zamówienia: {{ new Date(order.orderDate).toLocaleDateString() }}</p>
-          <p>Klient: {{ order.clientName }} - Telefon: {{ order.clientPhoneNumber }}</p>
-          <p>Status: {{ getOrderStatusName(order.orderStatus) }}</p>
-          <p>
-            <NuxtLink :to="`/order/${order.id}`">Zobacz szczegóły</NuxtLink>
-          </p>
-        </li>
-      </ul>
-  
-      <NuxtLink to="/order/create">
-        <button>Dodaj nowe zamówienie</button>
-      </NuxtLink>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue'
-  
-  const orders = ref([])
-  
-  const getOrderStatusName = (status) => {
-    const statuses = {
-    0: 'Oczekujący',
-    1: 'W trakcie',
-    2: 'Zakończony',
-    3: 'Anulowany',
-    4: 'Wstrzymany',
-    5: 'Oczekiwanie na części',
-    6: 'Oczekiwanie na zatwierdzenie',
-    }
-    return statuses[status] || 'Nieznany status'
+  <v-container>
+    <h1 class="text-center mb-4">Lista zamówień</h1>
+
+    <v-data-table
+      v-if="orders.length"
+      :headers="tableHeaders"
+      :items="orders"
+      item-key="id"
+      class="elevation-1"
+    >
+      <template v-slot:item.status="{ item }">
+        {{ getOrderStatusName(item.orderStatus) }}
+      </template>
+
+      <template v-slot:item.orderDate="{ item }">
+        {{ new Date(item.orderDate).toLocaleDateString() }}
+      </template>
+
+      <template v-slot:item.clientName="{ item }">
+        {{ item.clientName }} - {{ item.clientPhoneNumber }}
+      </template>
+
+      <template v-slot:item.actions="{ item }">
+        <NuxtLink :to="`/order/${item.id}`">
+          <v-btn color="primary" >
+            <v-icon>mdi-eye</v-icon>
+            Zobacz szczegóły
+          </v-btn>
+        </NuxtLink>
+      </template>
+    </v-data-table>
+
+    <NuxtLink to="/order/create">
+      <v-btn color="success" class="mt-4">
+        Dodaj nowe zamówienie
+      </v-btn>
+    </NuxtLink>
+  </v-container>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const orders = ref([])
+
+const tableHeaders = [
+  { title: 'Zamówienie ID', key: 'id' },
+  { title: 'Data zamówienia', key: 'orderDate' },
+  { title: 'Klient', key: 'clientName' },
+  { title: 'Status', key: 'status' },
+  { title: 'Akcje', key: 'actions', sortable: false }
+]
+
+const getOrderStatusName = (status) => {
+  const statuses = {
+    0: 'Nowe',
+    1: 'W trakcie realizacji',
+    2: 'Oczekiwanie na zatwierdzenie',
+    3: 'Zakończone',
+    4: 'Wstrzymane',
+    5: 'Anulowane'
   }
-  
-  const fetchOrders = async () => {
-    try {
-      orders.value = await $fetch('/api/Order')
-    } catch (error) {
-      alert('Błąd podczas ładowania listy zamówień')
-    }
+  return statuses[status] || 'Nieznany status'
+}
+
+const fetchOrders = async () => {
+  try {
+    orders.value = await $fetch('/api/Order')
+  } catch (error) {
+    alert('Błąd podczas ładowania listy zamówień')
   }
-  
-  onMounted(fetchOrders)
-  </script>
-  
+}
+
+onMounted(fetchOrders)
+</script>
+
+<style scoped>
+/* Dostosowanie do stylu Vuetify */
+.v-btn {
+  margin-top: 1rem;
+}
+
+h1 {
+  color: var(--v-primary-base); /* Kolor z motywu Vuetify */
+}
+</style>

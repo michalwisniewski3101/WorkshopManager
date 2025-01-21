@@ -55,9 +55,9 @@
 
 
             <!-- Przyciski -->
-            <button type="submit">Dodaj Zamówienie</button>
-            <button @click="closeOrderModal" type="button">Anuluj</button>
-        <NuxtLink to="/order"><button type="button">Anuluj</button></NuxtLink>
+            <v-btn type="submit">Dodaj Zamówienie</v-btn>
+            <v-btn @click="closeOrderModal" type="button">Anuluj</v-btn>
+        <NuxtLink to="/order"><v-btn type="button">Anuluj</v-btn></NuxtLink>
       </form>
       
     </div>
