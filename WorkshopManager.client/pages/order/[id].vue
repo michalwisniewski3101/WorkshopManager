@@ -85,8 +85,8 @@
                     <strong>Pozycja:</strong> {{ getInventoryItemName(item.inventoryItemId) }}
                   </v-list-item-title>
                   <v-list-item-subtitle>
-                    <span><strong>Ilość:</strong> {{ item.quantity }}</span>
-                    <span><strong>Całkowita cena:</strong> {{ item.totalPrice }} PLN</span>
+                    <span><strong>Ilość:</strong> {{ item.quantity }} </span>
+                    <span><strong> Całkowita cena:</strong> {{ item.totalPrice }} PLN</span>
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -205,7 +205,7 @@ const updateServiceScheduleStatus = async (scheduleId) => {
   try {
     await $fetch(`/api/Service/UpdateServiceScheduleStatus/${scheduleId}`, {
       method: 'PUT',
-      body: schedule.selectedStatus,
+      body: JSON.stringify(schedule.selectedStatus),
     })
     schedule.showStatusChange = false
     await fetchServiceSchedules()

@@ -52,7 +52,7 @@
               <v-select
                 :items="specialties"
                 item-value="id"
-                item-text="specialtyName"
+                item-title="specialtyName"
                 v-model="newMechanic.specialtyId"
                 label="Specjalność"
                 required
