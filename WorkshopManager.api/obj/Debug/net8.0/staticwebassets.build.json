@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "7aZ+sctmJ4dyGb5Mnc//47m16c3nHeDZ3Q5r4SybaNU=",
+  "Hash": "1kOpX7+YNUq6y5loPWoOguxyyisxQnVcMcIKB+69WWY=",
   "Source": "WorkshopManager.api",
   "BasePath": "_content/WorkshopManager.api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
