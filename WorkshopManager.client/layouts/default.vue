@@ -6,6 +6,8 @@ import axios from 'axios'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const rail = ref(false)
+
 
 onMounted(() => {
   authStore.checkLoginStatus()  // Sprawdzamy stan logowania po załadowaniu
@@ -31,9 +33,23 @@ const logout = async () => {
 <template>
   <v-app>
     <v-layout>
-    <!-- Sidebar Navigation -->
-    <v-navigation-drawer app>
+    <v-navigation-drawer
+        :rail="rail"
+      >
       <v-list>
+                <!-- Wylogowanie -->
+                <v-list-item v-if="authStore.isLoggedIn" >
+          <v-list-item-title>
+          <v-btn @click="rail = !rail"
+  icon
+  tile
+>
+  <v-icon>mdi-chevron-left</v-icon>
+</v-btn>
+          </v-list-item-title>
+
+        </v-list-item>
+        <v-divider></v-divider>
         <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'||authStore.roles=='Klient'">
           <v-list-item-title>
             <NuxtLink to="/">Strona główna</NuxtLink>
@@ -76,21 +92,17 @@ const logout = async () => {
           </v-list-item-title>
         </v-list-item>
 
-        <!-- Wylogowanie -->
-        <v-list-item v-if="authStore.isLoggedIn">
-          <v-list-item-title>
-            <span><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
-          </v-list-item-title>
-          <v-btn @click="logout" color="red">
-            <font-awesome-icon icon="sign-out-alt" /> Wyloguj
-          </v-btn>
-        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
 
     <!-- App Bar -->
     <v-app-bar app>
       <v-toolbar-title>Workshop Manager</v-toolbar-title>
+      <span ><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
+            <v-btn @click="logout" color="red">
+            <font-awesome-icon icon="sign-out-alt" /> Wyloguj
+          </v-btn>
     </v-app-bar>
 
     <!-- Main Content Area -->
@@ -106,64 +118,63 @@ const logout = async () => {
   </v-app>
 </template>
 
-<style scoped>
-/* Nawigacja */
+<style >
+.v-card {
+    padding: 20px;
+    height: 100%; 
+    width: 100%;
+  }
+
 .v-navigation-drawer {
-  background-color: var(--v-theme-surface); /* Kolor `surface` z motywu */
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.v-list-item-title {
-  font-weight: bold;
-  font-size: 1rem;
-  color: var(--v-theme-primary); /* Kolor `primary` z motywu */
-  transition: color 0.3s ease;
-}
-
-.v-list-item-title a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.v-list-item-title:hover {
-  color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
-}
-
-/* Przyciski */
-.v-btn {
-  background-color: var(--v-theme-primary);
-  color: white;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
-}
-
-.v-btn:hover {
-  background-color: rgba(196, 34, 34, 0.8); /* Przyciemnienie koloru przy najechaniu */
-}
-
-/* Górny pasek */
-.v-app-bar {
-  background-color: var(--v-theme-appBar); /* Kolor `appBar` z motywu */
-  color: white;
-}
-
-.v-toolbar-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-/* Tło strony */
-html,
-body {
-  background-color: var(--v-theme-surface); /* Kolor `surface` z motywu */
-  color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
-  font-family: "Roboto", sans-serif;
-}
-
-
-
-
-
+    background-color: var(--v-theme-secondary); /* Kolor `surface` z motywu */
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .v-list-item-title {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--v-theme-primary); /* Kolor `primary` z motywu */
+    transition: color 0.3s ease;
+  }
+  
+  .v-list-item-title a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .v-list-item-title:hover {
+    color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
+  }
+  
+  /* Przyciski */
+  .v-btn {
+    background-color: var(--v-theme-primary);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+  }
+  
+  .v-btn:hover {
+    background-color: rgba(196, 34, 34, 0.8); /* Przyciemnienie koloru przy najechaniu */
+  }
+  
+  /* Górny pasek */
+  .v-app-bar {
+    background-color: var(--v-theme-appBar); /* Kolor `appBar` z motywu */
+    color: white;
+  }
+  
+  .v-toolbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  html,
+  body {
+    background-color: var(--v-theme-surface); /* Kolor `surface` z motywu */
+    color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
+    font-family: "Roboto", sans-serif;
+  }
 </style>
 

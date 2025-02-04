@@ -42,8 +42,23 @@ public class InventoryItemController : ControllerBase
 
         return CreatedAtAction(nameof(GetInventoryItem), new { id = inventoryItem.Id }, inventoryItem);
     }
+    [HttpPost("UpdateQuantityInStock/{id}")]
+    public async Task<ActionResult<InventoryItem>> UpdateQuantityInStock(Guid id, int quantity)
+    {
+        var inventoryItem = await _context.InventoryItems.FindAsync(id);
 
-    // PUT: api/InventoryItem/{id}
+        if (inventoryItem == null)
+        {
+            return NotFound();
+        }
+
+        
+        inventoryItem.QuantityInStock += quantity;
+        await _context.SaveChangesAsync();
+        return inventoryItem;
+
+    }
+        // PUT: api/InventoryItem/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> PutInventoryItem(Guid id, InventoryItem inventoryItem)
     {

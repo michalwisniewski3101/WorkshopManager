@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-card style="height: 100%; width: 100%;">
     <h1 class="text-center mb-4">Lista zamówień</h1>
 
     <v-data-table
@@ -36,7 +36,7 @@
         Dodaj nowe zamówienie
       </v-btn>
     </NuxtLink>
-  </v-container>
+  </v-card>
 </template>
 
 <script setup>

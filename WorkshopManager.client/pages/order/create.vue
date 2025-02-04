@@ -1,5 +1,5 @@
 <template>
-  <v-card style="height: 100%; width: 100%;">
+  <v-card >
     <v-card-title class="text-h6">Dodaj Zamówienie</v-card-title>
     <v-card-text>
       <v-form @submit.prevent="addOrder">

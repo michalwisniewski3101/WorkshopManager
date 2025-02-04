@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-card style="height: 100%; width: 100%;">
       <v-row>
         <v-col cols="12">
           <h1 class="text-center mb-4">Lista mechaników</h1>
@@ -84,7 +84,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-    </v-container>
+    </v-card>
   </template>
   
   <script setup>

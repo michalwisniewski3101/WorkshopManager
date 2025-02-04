@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-card style="height: 100%; width: 100%;">
       <h1 class="text-center mb-4">Lista pojazdów</h1>
   
       <v-data-table
@@ -36,7 +36,7 @@
   
   
       <AddVehicleForm  @close="closeModal" @refresh="fetchVehicles" />
-    </v-container>
+    </v-card>
   </template>
   
   <script setup>
@@ -47,7 +47,8 @@
     middleware: 'auth',
     auth: {
       roles: ["Administrator", "Starszy Mechanik", "Młodszy Mechanik"]
-    }
+    },
+    layout: 'default'
   })
   
   const vehicles = ref([])

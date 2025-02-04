@@ -1,8 +1,8 @@
 <template>
   <v-card style="height: 100%; width: 100%;">
     <v-tabs v-model="tab" bg-color="primary">
-      <v-tab value="specialties">Elementy Magazynu</v-tab>
-      <v-tab value="services">Nowa dostawa</v-tab>
+      <v-tab value="elements">Elementy Magazynu</v-tab>
+      <v-tab value="delivery">Nowa dostawa</v-tab>
     </v-tabs>
 
 
@@ -10,7 +10,7 @@
 
 
     <v-tabs-window v-model="tab">
-      <v-tabs-window-item value="specialties">
+      <v-tabs-window-item value="elements">
         <v-row>
           <v-col cols="12">
             <h2>Elementy Magazynu</h2>
@@ -53,13 +53,13 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-  
-    </v-tabs-window-item>
 
-  <v-tabs-window-item value="services">
-    
-  </v-tabs-window-item>
-  </v-tabs-window>
+      </v-tabs-window-item>
+
+      <v-tabs-window-item value="delivery">
+
+      </v-tabs-window-item>
+    </v-tabs-window>
   </v-card>
 </template>
 
@@ -84,6 +84,7 @@ const headers = [
 ]
 
 const inventoryItems = ref([])
+const tab = ref("elements")
 const newInventoryItem = ref({
   name: '',
   description: '',

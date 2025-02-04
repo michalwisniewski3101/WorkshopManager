@@ -1,14 +1,11 @@
 <template>
-  <v-container>
+  <v-card style="height: 100%; width: 100%;">
     <h1 class="text-center mb-4">Szczegóły zamówienia</h1>
 
     <div v-if="order">
       <v-card class="mb-4">
         <v-card-title>
           <v-row>
-            <v-col cols="12" md="6">
-              <span><strong>ID:</strong> {{ order.id }}</span>
-            </v-col>
             <v-col cols="12" md="6">
               <span><strong>Data zamówienia:</strong> {{ new Date(order.orderDate).toLocaleDateString() }}</span>
             </v-col>
@@ -39,50 +36,49 @@
       <service-schedule-form @service-schedule-added="fetchServiceSchedules" :orderId="order.id" />
 
       <v-divider class="my-4"></v-divider>
-
+      
       <div v-if="serviceSchedules && serviceSchedules.length > 0">
         <h2 class="text-center mb-4">Harmonogramy serwisów</h2>
-        <v-card v-for="schedule in serviceSchedules" :key="schedule.id" class="service-schedule mb-4">
-          <v-card-title>
+
+        <v-expansion-panels>
+          <v-expansion-panel v-for="schedule in serviceSchedules" :key="schedule.id">
+            <v-expansion-panel-title>
             <v-row>
               <v-col cols="12" md="6">
-                <span><strong>Harmonogram ID:</strong> {{ schedule.id }}</span>
+                <span>{{ getServiceDescription(schedule.serviceId) }}</span>
+
               </v-col>
               <v-col cols="12" md="6">
-                <span><strong>Usługa:</strong> {{ getServiceDescription(schedule.serviceId) }}</span>
-              </v-col>
-              <v-col cols="12">
-                <span><strong>Mechanicy:</strong>
-                  {{ getMechanicsNames(schedule.mechanics) }}
-                </span>
+                <span>{{ getServiceStatusName(schedule.serviceStatus) }}</span>
               </v-col>
             </v-row>
-          </v-card-title>
-
-          <v-card-actions>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
+         
             <div v-if="schedule.showStatusChange">
               <v-select v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'" label="Wybierz status" class="mr-4" />
               <v-btn @click="updateServiceScheduleStatus(schedule.id)" color="success">Zapisz zmiany</v-btn>
               <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
             </div>
             <div v-if="!schedule.showStatusChange">
-              <span>{{ getServiceStatusName(schedule.serviceStatus) }}</span>
+              
               <v-btn @click="changeServiceStatus(schedule.id)" color="primary">
                 <v-icon>mdi-pencil</v-icon>
                 Zmień status
               </v-btn>
             </div>
-          </v-card-actions>
-
+            <span><strong>Mechanicy:</strong>
+                  {{ getMechanicsNames(schedule.mechanics) }}
+                </span>
           <v-divider class="my-4"></v-divider>
 
-          <v-card-subtitle>
+          
             <h3>Pozycje zamówienia:</h3>
             <v-list>
               <v-list-item v-for="item in schedule.orderItems" :key="item.inventoryItemId">
                 <v-list-item-content>
                   <v-list-item-title>
-                    <strong>Pozycja:</strong> {{ getInventoryItemName(item.inventoryItemId) }}
+                    {{ getInventoryItemName(item.inventoryItemId) }}
                   </v-list-item-title>
                   <v-list-item-subtitle>
                     <span><strong>Ilość:</strong> {{ item.quantity }} </span>
@@ -91,15 +87,17 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-          </v-card-subtitle>
-        </v-card>
+          
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+        </v-expansion-panels>
       </div>
     </div>
-
+  
     <NuxtLink to="/order">
       <v-btn color="secondary" class="mt-4">Wróć do listy zamówień</v-btn>
     </NuxtLink>
-  </v-container>
+  </v-card>
 </template>
 
 <script setup>

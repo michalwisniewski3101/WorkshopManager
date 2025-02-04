@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     '~/plugins/pinia.js',
     '~/plugins/vuetify.ts',
   ],
- 
+  css: ["@/assets/styles/global.scss"],
   router: {
     middleware: ['auth'],
   },

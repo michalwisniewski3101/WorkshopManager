@@ -1,4 +1,5 @@
 <template>
+  <v-card>
   <div>
     <h1>Szczegóły zamówienia</h1>
 
@@ -67,6 +68,7 @@
       </div>
     </div>
   </div>
+</v-card>
 </template>
 
 <script setup>
@@ -77,6 +79,7 @@ definePageMeta({
   auth: {
     roles: ['Administrator', 'Klient'],
   },
+  layout: 'login'
 })
 
 const order = ref(null)
