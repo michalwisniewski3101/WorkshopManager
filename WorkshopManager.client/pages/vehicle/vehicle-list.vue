@@ -22,16 +22,13 @@
           {{ item.licensePlate }}
         </template>
         <template v-slot:item.actions="{ item }">
-          <!-- Akcje, np. edytowanie, usuwanie pojazdu -->
-          <v-btn color="primary" @click="editVehicle(item)">
-            <v-icon>mdi-pencil</v-icon>
-            Edytuj
+        <NuxtLink :to="`/vehicle/${item.id}`">
+          <v-btn color="primary" >
+            <v-icon>mdi-eye</v-icon>
+            Zobacz szczegóły
           </v-btn>
-          <v-btn color="error"  @click="deleteVehicle(item)">
-            <v-icon>mdi-delete</v-icon>
-            Usuń
-          </v-btn>
-        </template>
+        </NuxtLink>
+      </template>
       </v-data-table>
   
   

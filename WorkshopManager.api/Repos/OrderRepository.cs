@@ -27,6 +27,33 @@ namespace WorkshopManager.api.Repos
         {
             return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
         }
+        public async Task<IEnumerable<Order>> GetOrdersByWorkerId(Guid workerId)
+        {
+
+            var serviceSchedules = await _context.ServiceSchedules.ToListAsync();
+
+            var orderIds = serviceSchedules
+            .Where(ss => ss.Mechanics != null && ss.Mechanics.Contains(workerId))
+            .Select(ss => ss.OrderId)
+            .Distinct()
+            .ToList();
+
+
+
+            return await _context.Orders
+        .Where(o => orderIds.Contains(o.Id))
+        .ToListAsync();
+
+        }
+        public async Task<IEnumerable<Order>> GetOrdersByVehicleId(Guid VehicleId)
+        {
+
+            
+
+            return await _context.Orders
+        .Where(ss => ss.VehicleId == VehicleId)
+                .ToListAsync();
+        }
         public async Task<Order> GetOrderByCodeAsync(string code)
         {
             return await _context.Orders.FirstOrDefaultAsync(o => o.ClientCode == code);

@@ -14,9 +14,18 @@
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   Specjalność: {{ getSpecialtyName(mechanic.specialtyId) }}, Doświadczenie: {{ mechanic.experienceLevel }} lat
+               
+
                 </v-list-item-subtitle>
+                <NuxtLink :to="`/mechanic/${mechanic.id}`">
+          <v-btn color="primary" >
+            <v-icon>mdi-eye</v-icon>
+            Zobacz szczegóły
+          </v-btn>
+        </NuxtLink>
               </v-list-item-content>
             </v-list-item>
+            
           </v-list>
         </v-col>
         

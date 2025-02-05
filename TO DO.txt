@@ -3,6 +3,7 @@
 -kalendarz
 -wyswietlanie historii zlecen dla samochodu
 -wyswietlanie historii zlecen dla pracownika
+-strona id dla auta, pracownika, 
 
 
  

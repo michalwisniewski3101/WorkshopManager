@@ -45,6 +45,24 @@ namespace WorkshopManager.api.Controllers
             }
             return Ok(order);
         }
+        [HttpGet("ByWorker/{workerId}")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByWorker(Guid workerId)
+        {
+            
+
+            var orders = await _orderRepository.GetOrdersByWorkerId(workerId);
+
+            return Ok(orders);
+        }
+        [HttpGet("ByVehicle/{VehicleId}")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByVehicle(Guid VehicleId)
+        {
+
+
+            var orders = await _orderRepository.GetOrdersByVehicleId(VehicleId);
+
+            return Ok(orders);
+        }
 
         // POST: api/Order
         [HttpPost]
