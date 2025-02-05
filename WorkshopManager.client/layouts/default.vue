@@ -104,7 +104,7 @@ const logout = async () => {
             <font-awesome-icon icon="sign-out-alt" /> Wyloguj
           </v-btn>
     </v-app-bar>
-
+    
     <!-- Main Content Area -->
     <v-main class="d-flex align-center justify-center">
       <NuxtPage />
@@ -176,5 +176,14 @@ const logout = async () => {
     color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
     font-family: "Roboto", sans-serif;
   }
+  .no-decoration {
+  text-decoration: none;
+  color: inherit;
+}
+
+.no-decoration:hover {
+  color: inherit !important;
+  background-color: transparent !important;
+}
 </style>
 

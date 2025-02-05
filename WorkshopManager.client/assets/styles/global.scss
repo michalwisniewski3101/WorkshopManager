@@ -1,0 +1,21 @@
+.no-decoration {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .no-decoration:hover {
+    color: rgb(var(--v-theme-primary)) !important;
+    background-color: transparent !important;
+  }
+  .clickable-icon {
+    cursor: pointer;
+    color: inherit; 
+    transition: color 0.2s;
+    margin-left: 15px;
+    
+  
+    &:hover {
+        color: rgb(var(--v-theme-primary)) !important;
+        background-color: transparent !important;
+    }
+  }

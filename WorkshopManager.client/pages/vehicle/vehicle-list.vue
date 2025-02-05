@@ -2,6 +2,7 @@
     <v-card style="height: 100%; width: 100%;">
       <h1 class="text-center mb-4">Lista pojazdów</h1>
   
+      <AddVehicleForm  @close="closeModal" @refresh="fetchVehicles" />
       <v-data-table
         v-if="vehicles.length"
         :headers="tableHeaders"
@@ -22,17 +23,13 @@
           {{ item.licensePlate }}
         </template>
         <template v-slot:item.actions="{ item }">
-        <NuxtLink :to="`/vehicle/${item.id}`">
-          <v-btn color="primary" >
-            <v-icon>mdi-eye</v-icon>
-            Zobacz szczegóły
-          </v-btn>
+        <NuxtLink :to="`/vehicle/${item.id}`" class="no-decoration">
+
+  <v-icon>mdi-eye</v-icon>
+
         </NuxtLink>
       </template>
       </v-data-table>
-  
-  
-      <AddVehicleForm  @close="closeModal" @refresh="fetchVehicles" />
     </v-card>
   </template>
   
@@ -41,11 +38,12 @@
   import AddVehicleForm from '@/components/AddVehicleForm.vue'
   
   definePageMeta({
+    layout: 'default',
     middleware: 'auth',
     auth: {
       roles: ["Administrator", "Starszy Mechanik", "Młodszy Mechanik"]
     },
-    layout: 'default'
+    
   })
   
   const vehicles = ref([])

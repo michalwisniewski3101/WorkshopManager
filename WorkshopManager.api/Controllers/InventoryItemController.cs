@@ -32,6 +32,13 @@ public class InventoryItemController : ControllerBase
 
         return inventoryItem;
     }
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<InventoryItem>>> GetLowStockInventoryItems()
+    {
+        return await _context.InventoryItems
+            .Where(item => item.QuantityInStock <= item.ReorderLevel)
+            .ToListAsync();
+    }
 
     // POST: api/InventoryItem
     [HttpPost]

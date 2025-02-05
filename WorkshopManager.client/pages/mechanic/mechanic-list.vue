@@ -10,19 +10,18 @@
             >
               <v-list-item-content>
                 <v-list-item-title>
-                  <strong>{{ mechanic.firstName }} {{ mechanic.lastName }}</strong>
+                  <strong>{{ mechanic.firstName }} {{ mechanic.lastName }}</strong>                <NuxtLink :to="`/mechanic/${mechanic.id}`" class="no-decoration">
+          
+          <v-icon>mdi-eye</v-icon>
+           
+      </NuxtLink>
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   Specjalność: {{ getSpecialtyName(mechanic.specialtyId) }}, Doświadczenie: {{ mechanic.experienceLevel }} lat
                
 
                 </v-list-item-subtitle>
-                <NuxtLink :to="`/mechanic/${mechanic.id}`">
-          <v-btn color="primary" >
-            <v-icon>mdi-eye</v-icon>
-            Zobacz szczegóły
-          </v-btn>
-        </NuxtLink>
+
               </v-list-item-content>
             </v-list-item>
             
