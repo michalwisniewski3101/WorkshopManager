@@ -1,8 +1,6 @@
--wyswietlanie aktualnie potrzebnych czesci kwerenda z bazy (odjac service item ilosc i inventory item)
+-wyswietlanie aktualnie potrzebnych czesci kwerenda z bazy (odjac service item ilosc i inventory item)(front)
 -sekcja magazyn z dodawaniem ilosci 
 -kalendarz
--wyswietlanie historii zlecen dla samochodu
--wyswietlanie historii zlecen dla pracownika
 -przyciski na góre
 -strona id dla auta, pracownika, 
 
