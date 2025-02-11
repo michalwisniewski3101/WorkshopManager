@@ -32,7 +32,7 @@ public class InventoryItemController : ControllerBase
 
         return inventoryItem;
     }
-    [HttpGet]
+    [HttpGet("GetLowStockInventoryItems")]
     public async Task<ActionResult<IEnumerable<InventoryItem>>> GetLowStockInventoryItems()
     {
         return await _context.InventoryItems

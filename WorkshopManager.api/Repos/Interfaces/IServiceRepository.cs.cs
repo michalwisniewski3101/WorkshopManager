@@ -12,5 +12,6 @@ namespace WorkshopManager.api.Repos.Interfaces
         Task<Guid> AddServiceScheduleAsync(ServiceSchedule serviceSchedule);
         Task UpdateServiceScheduleStatusAsync(Guid id, ServiceStatus newStatus);
         Task<bool> ServiceExistsAsync(Guid id);
+        Task<ServiceSchedule?> DeleteServiceSchedule(Guid id);
     }
 }

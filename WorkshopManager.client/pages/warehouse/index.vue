@@ -156,6 +156,20 @@ const saveInventoryItem = async () => {
     console.error('Błąd podczas zapisywania elementu magazynu', error)
   }
 }
+const updateQuantity = async () => {
+  try {
+    const { id}  = selectedInventoryItem.value
+    await $fetch(`/api/InventoryItem/UpdateQuantityInStock/${id}?quantity=${addedQuantity.value}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    await fetchInventoryItems()
+    closeQuantityModal()
+  } catch (error) {
+    console.error('Błąd podczas aktualizacji ilości w magazynie', error)
+  }
+}
+
 
 const editItem = (item) => {
   isEditMode.value = true

@@ -33,7 +33,7 @@
         </v-card-title>
       </v-card>
 
-      <service-schedule-form @service-schedule-added="fetchServiceSchedules" :orderId="order.id" />
+      <service-schedule-form @service-schedule-added="handleServiceScheduleAdded" :orderId="order.id" />
 
       <v-divider class="my-4"></v-divider>
       
@@ -66,10 +66,13 @@
                 <v-icon>mdi-pencil</v-icon>
                 Zmień status
               </v-btn>
+              <v-icon @click="deleteServiceSchedule(schedule.id)" class="clickable-icon">mdi-delete</v-icon>
             </div>
             <span><strong>Mechanicy:</strong>
                   {{ getMechanicsNames(schedule.mechanics) }}
                 </span>
+
+               
           <v-divider class="my-4"></v-divider>
 
           
@@ -212,7 +215,19 @@ const updateServiceScheduleStatus = async (scheduleId) => {
     alert('Błąd podczas aktualizacji statusu')
   }
 }
-
+const deleteServiceSchedule = async (id) => {
+  try {
+    await $fetch(`/api/Service/DeleteServiceSchedule/${id}`, { method: 'DELETE' })
+    await fetchServiceSchedules()
+    await fetchOrderDetails()
+  } catch (error) {
+    console.error('Błąd podczas usuwania usługi serwisowej', error)
+  }
+}
+const handleServiceScheduleAdded = async () => {
+  await fetchServiceSchedules()
+  await fetchOrderDetails()
+}
 onMounted(async () => {
   await fetchOrderDetails()
   await fetchServiceSchedules()

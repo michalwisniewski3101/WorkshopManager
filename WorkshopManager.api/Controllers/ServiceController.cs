@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WorkshopManager.api.Model;
 using WorkshopManager.api.Repos.Interfaces;
 
@@ -90,4 +91,18 @@ public class ServiceController : ControllerBase
             return StatusCode(500, $"Wystąpił błąd podczas aktualizacji: {ex.Message}");
         }
     }
+    [HttpDelete("DeleteServiceSchedule/{id}")]
+    public async Task<IActionResult> DeleteServiceSchedule(Guid id)
+    {
+        try
+        {
+            await _serviceRepository.DeleteServiceSchedule(id);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Wystąpił błąd podczas aktualizacji: {ex.Message}");
+        }
+    }
+
 }

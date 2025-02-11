@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WorkshopManager.api.Database;
 using WorkshopManager.api.Model;
 using WorkshopManager.api.Repos.Interfaces;
@@ -35,6 +36,23 @@ namespace WorkshopManager.api.Repos
         {
             return await _context.ServiceSchedules.FindAsync(id);
         }
+        public async Task<ServiceSchedule?> DeleteServiceSchedule(Guid id)
+        {
+            var serviceSchedule = await _context.ServiceSchedules.FindAsync(id);
+            
+            if (serviceSchedule != null)
+            {
+                var serviceScheduleOrderId = serviceSchedule.OrderId;
+                _context.ServiceSchedules.Remove(serviceSchedule);
+                await _context.SaveChangesAsync();
+                if (serviceSchedule.OrderId != null)
+                {
+                    await UpdateOrderStatus(serviceSchedule.OrderId);
+                }
+                return serviceSchedule;
+            }
+            return null;
+        }
 
         public async Task<Guid> AddServiceAsync(Service service)
         {
@@ -47,6 +65,7 @@ namespace WorkshopManager.api.Repos
         public async Task<Guid> AddServiceScheduleAsync(ServiceSchedule serviceSchedule)
         {
             serviceSchedule.Id = Guid.NewGuid();
+
             serviceSchedule.ServiceStatus = ServiceStatus.Pending;
             // Iteracja po wszystkich pozycjach zamówienia
             foreach (var orderItem in serviceSchedule.OrderItems)
@@ -59,13 +78,26 @@ namespace WorkshopManager.api.Repos
                 {
                     throw new Exception($"Nie znaleziono przedmiotu o ID {orderItem.InventoryItemId} w magazynie.");
                 }
+                bool isAvailable = await IsOrderItemAvailable(orderItem.InventoryItemId, orderItem.Quantity);
+                if (!isAvailable)
+                {
+                    serviceSchedule.ServiceStatus = ServiceStatus.WaitingForParts;
+                }
+                else
+                {
+                    serviceSchedule.ServiceStatus = ServiceStatus.Pending;
+                }
 
-                // Obliczanie całkowitej ceny na podstawie ilości i ceny jednostkowej
+
                 orderItem.TotalPrice = inventoryItem.UnitPrice * orderItem.Quantity;
             }
 
             _context.ServiceSchedules.Add(serviceSchedule);
             await _context.SaveChangesAsync();
+            if (serviceSchedule.OrderId != null)
+            {
+                await UpdateOrderStatus(serviceSchedule.OrderId);
+            }
             return serviceSchedule.Id;
         }
 
@@ -75,79 +107,91 @@ namespace WorkshopManager.api.Repos
 
             if (serviceSchedule != null)
             {
-                
+
                 serviceSchedule.ServiceStatus = newStatus;
                 await _context.SaveChangesAsync();
-
-                
-                var orderId = serviceSchedule.OrderId;
-                if (orderId != null)
+                if (serviceSchedule.OrderId!=null)
                 {
-                    
-                    var serviceStatuses = await _context.ServiceSchedules
-                        .Where(ss => ss.OrderId == orderId)
-                        .Select(ss => ss.ServiceStatus)
-                        .ToListAsync();
-
-                    
-                    OrderStatus newOrderStatus;
-
-                    if (serviceStatuses.All(status => status == ServiceStatus.Pending))
-                    {
-                        newOrderStatus = OrderStatus.Pending;
-                    }
-                    else if (serviceStatuses.All(status => status == ServiceStatus.Completed))
-                    {
-                        newOrderStatus = OrderStatus.WaitingForApproval;
-                    }
-                    else if (serviceStatuses.All(status => status == ServiceStatus.Canceled))
-                    {
-                        newOrderStatus = OrderStatus.OnHold;
-                    }
-
-
-
-                    else if (serviceStatuses.All(status => status == ServiceStatus.Pending || status == ServiceStatus.Canceled))
-                    {
-                        newOrderStatus = OrderStatus.Pending;
-                    }
-                    else if (serviceStatuses.All(status => status == ServiceStatus.Completed || status == ServiceStatus.Canceled))
-                    {
-                        newOrderStatus = OrderStatus.WaitingForApproval;
-                    }
-
-
-                    else if (serviceStatuses.Any(status => status == ServiceStatus.InProgress))
-                    {
-                        newOrderStatus = OrderStatus.InProgress;
-                    }
-                    else if (serviceStatuses.Any(status => status == ServiceStatus.WaitingForParts))
-                    {
-                        newOrderStatus = OrderStatus.OnHold;
-                    }
-
-                    else
-                    {
-                        // Opcjonalny przypadek dla innych kombinacji statusów
-                        return;
-                    }
-
-                    // Aktualizacja statusu zamówienia
-                    var order = await _context.Orders.FindAsync(orderId);
-                    if (order != null)
-                    {
-                        order.OrderStatus = newOrderStatus;
-                        await _context.SaveChangesAsync();
-                    }
+                    await UpdateOrderStatus(serviceSchedule.OrderId);
                 }
             }
         }
+        
 
 
         public async Task<bool> ServiceExistsAsync(Guid id)
         {
             return await _context.Services.AnyAsync(e => e.Id == id);
         }
-    }
+        public async Task<bool> IsOrderItemAvailable(Guid id, int quantity)
+        {
+            var item = await _context.InventoryItems.FindAsync(id);
+
+            return item != null && item.QuantityInStock >= quantity;
+        }
+        public async Task UpdateOrderStatus(Guid orderId)
+        {
+            
+
+
+                var serviceStatuses = await _context.ServiceSchedules
+                    .Where(ss => ss.OrderId == orderId)
+                    .Select(ss => ss.ServiceStatus)
+                    .ToListAsync();
+
+
+                OrderStatus newOrderStatus;
+
+                if (serviceStatuses.All(status => status == ServiceStatus.Pending))
+                {
+                    newOrderStatus = OrderStatus.Pending;
+                }
+                else if (serviceStatuses.All(status => status == ServiceStatus.Completed))
+                {
+                    newOrderStatus = OrderStatus.WaitingForApproval;
+                }
+                else if (serviceStatuses.All(status => status == ServiceStatus.Canceled))
+                {
+                    newOrderStatus = OrderStatus.OnHold;
+                }
+
+
+
+                else if (serviceStatuses.All(status => status == ServiceStatus.Pending || status == ServiceStatus.Canceled))
+                {
+                    newOrderStatus = OrderStatus.Pending;
+                }
+                else if (serviceStatuses.All(status => status == ServiceStatus.Completed || status == ServiceStatus.Canceled))
+                {
+                    newOrderStatus = OrderStatus.WaitingForApproval;
+                }
+
+
+                else if (serviceStatuses.Any(status => status == ServiceStatus.InProgress))
+                {
+                    newOrderStatus = OrderStatus.InProgress;
+                }
+                else if (serviceStatuses.Any(status => status == ServiceStatus.WaitingForParts))
+                {
+                    newOrderStatus = OrderStatus.OnHold;
+                }
+
+                else
+                {
+                    // Opcjonalny przypadek dla innych kombinacji statusów
+                    return;
+                }
+
+                // Aktualizacja statusu zamówienia
+                var order = await _context.Orders.FindAsync(orderId);
+                if (order != null)
+                {
+                    order.OrderStatus = newOrderStatus;
+                    await _context.SaveChangesAsync();
+                }
+            
+
+        }
+    } 
 }
 
