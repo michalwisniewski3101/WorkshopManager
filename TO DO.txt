@@ -1,8 +1,10 @@
--wyswietlanie aktualnie potrzebnych czesci kwerenda z bazy (odjac service item ilosc i inventory item)(front)
--sekcja magazyn z dodawaniem ilosci 
+
 -kalendarz
 -przyciski na góre
 -strona id dla auta, pracownika, 
+-odejmowanie ilości gdy dodajemy zamówienie oraz wracanie gdy usuniemy
+-poprawić wygląd strony klienta i logowania
+-
 
 
  

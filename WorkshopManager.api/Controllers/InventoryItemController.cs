@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -39,6 +40,37 @@ public class InventoryItemController : ControllerBase
             .Where(item => item.QuantityInStock <= item.ReorderLevel)
             .ToListAsync();
     }
+    [HttpGet("GetMissingInventoryItems")]
+    public async Task<ActionResult<IEnumerable<object>>> GetMissingInventoryItems()
+    {
+        var groupedOrderItems = await _context.ServiceSchedules
+            .SelectMany(s => s.OrderItems)
+            .GroupBy(oi => oi.InventoryItemId)
+            .Select(g => new
+            {
+                InventoryItemId = g.Key,
+                TotalQuantity = g.Sum(oi => oi.Quantity)
+            })
+            .ToListAsync();
+
+        var inventoryItems = await _context.InventoryItems.ToListAsync();
+
+        var missingItems = inventoryItems
+            .Select(inv => new
+            {
+                InventoryItem = inv,
+                RequiredQuantity = groupedOrderItems
+                    .Where(gr => gr.InventoryItemId == inv.Id)
+                    .Select(gr => gr.TotalQuantity - inv.QuantityInStock)
+                    .FirstOrDefault()
+            })
+            .Where(x => x.RequiredQuantity > 0) // Filtrowanie tylko brakujących
+            .ToList();
+
+        return Ok(missingItems);
+    }
+
+
 
     // POST: api/InventoryItem
     [HttpPost]

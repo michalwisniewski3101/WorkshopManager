@@ -12,7 +12,9 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  modules: ['@nuxtjs/vuetify'], // Dodaj moduł Vuetify
+  modules: ['@nuxtjs/vuetify',
+    'vue3-carousel-nuxt'
+  ], // Dodaj moduł Vuetify
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   runtimeConfig: {
