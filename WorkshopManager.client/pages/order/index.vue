@@ -22,7 +22,7 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <NuxtLink :to="`/order/${item.id}`" class="no-decoration">
+        <NuxtLink :to="`/order/${item.id}`" class="clickable-icon">
          
 
   <v-icon>mdi-eye</v-icon>

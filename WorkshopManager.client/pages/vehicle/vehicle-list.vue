@@ -23,7 +23,7 @@
           {{ item.licensePlate }}
         </template>
         <template v-slot:item.actions="{ item }">
-        <NuxtLink :to="`/vehicle/${item.id}`" class="no-decoration">
+        <NuxtLink :to="`/vehicle/${item.id}`" class="clickable-icon">
 
   <v-icon>mdi-eye</v-icon>
 

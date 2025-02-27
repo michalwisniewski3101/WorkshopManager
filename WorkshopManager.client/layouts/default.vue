@@ -86,7 +86,7 @@ const logout = async () => {
           </v-list-item-title>
         </v-list-item>
 
-        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Klient'">
+        <v-list-item v-if="authStore.roles=='Administrator'">
           <v-list-item-title>
             <NuxtLink to="/client/">Klient</NuxtLink>
           </v-list-item-title>
@@ -176,14 +176,6 @@ const logout = async () => {
     color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
     font-family: "Roboto", sans-serif;
   }
-  .no-decoration {
-  text-decoration: none;
-  color: inherit;
-}
 
-.no-decoration:hover {
-  color: inherit !important;
-  background-color: transparent !important;
-}
 </style>
 

@@ -1,6 +1,8 @@
 <template>
   <v-card>
-    <Login /></v-card>
+    <Login />
+    <NuxtLink to="/client/">Strefa Klienta</NuxtLink>
+  </v-card>
   </template>
   
   <script setup>
@@ -14,4 +16,10 @@
 })
 
   </script>
+<style>
+a {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
   

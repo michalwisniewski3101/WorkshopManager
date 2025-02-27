@@ -10,7 +10,7 @@
             >
               <v-list-item-content>
                 <v-list-item-title>
-                  <strong>{{ mechanic.firstName }} {{ mechanic.lastName }}</strong>                <NuxtLink :to="`/mechanic/${mechanic.id}`" class="no-decoration">
+                  <strong>{{ mechanic.firstName }} {{ mechanic.lastName }}</strong>                <NuxtLink :to="`/mechanic/${mechanic.id}`" class="clickable-icon">
           
           <v-icon>mdi-eye</v-icon>
            

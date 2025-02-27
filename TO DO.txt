@@ -4,7 +4,7 @@
 -strona id dla auta, pracownika, 
 -odejmowanie ilości gdy dodajemy zamówienie oraz wracanie gdy usuniemy
 -poprawić wygląd strony klienta i logowania
--
-
-
+-dodać breadcrums
+-dodać płatności
+-dodać obliczanie czasu zamówienia
  
