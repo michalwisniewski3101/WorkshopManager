@@ -32,6 +32,9 @@
             <v-col cols="12" md="6">
               <span><strong>Całkowity koszt:</strong> {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono' }}</span>
             </v-col>
+            <v-col cols="12" md="6">
+              <Payment />
+            </v-col>
           </v-row>
         </v-card-title>
       </v-card>

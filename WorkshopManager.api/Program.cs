@@ -6,9 +6,12 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using WorkshopManager.api.Repos.Interfaces;
 using WorkshopManager.api.Repos;
+using Stripe;
+using WorkshopManager.api;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var stripeSettings = builder.Configuration.GetSection("Stripe").Get<StripeSettings>();
+StripeConfiguration.ApiKey = stripeSettings.SecretKey;
 // Add services to the container.
 
 builder.Services.AddControllers();

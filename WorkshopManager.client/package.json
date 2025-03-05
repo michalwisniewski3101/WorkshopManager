@@ -14,6 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@mdi/font": "^7.4.47",
+    "@stripe/stripe-js": "^5.8.0",
     "@vuetify/loader-shared": "^2.0.3",
     "axios": "^1.7.7",
     "http-proxy-middleware": "^3.0.2",
