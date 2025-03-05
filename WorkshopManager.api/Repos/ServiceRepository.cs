@@ -184,12 +184,21 @@ namespace WorkshopManager.api.Repos
 
                 // Aktualizacja statusu zamówienia
                 var order = await _context.Orders.FindAsync(orderId);
-                if (order != null)
-                {
-                    order.OrderStatus = newOrderStatus;
-                    await _context.SaveChangesAsync();
-                }
-            
+            if (order != null)
+            {
+                order.OrderStatus = newOrderStatus;
+
+                // Sumowanie total price dla wszystkich OrderItems powiązanych z danym OrderId
+                var totalCost = await _context.ServiceSchedules
+                    .Where(ss => ss.OrderId == orderId)
+                    .SelectMany(ss => ss.OrderItems)
+                    .SumAsync(item => item.TotalPrice);
+
+                order.TotalCost = totalCost;
+
+                await _context.SaveChangesAsync();
+            }
+
 
         }
     } 

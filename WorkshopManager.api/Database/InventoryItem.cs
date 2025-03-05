@@ -8,6 +8,7 @@
     public decimal UnitPrice { get; set; }
     public int ReorderLevel { get; set; }
     public string Supplier { get; set; }
+    public int TaxRate { get; set; }
 
 
 }

@@ -33,7 +33,7 @@
               <span><strong>Całkowity koszt:</strong> {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono' }}</span>
             </v-col>
             <v-col cols="12" md="6">
-              <Payment />
+              <Payment :order-id="order.id"/>
             </v-col>
           </v-row>
         </v-card-title>

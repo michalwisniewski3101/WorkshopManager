@@ -35,6 +35,12 @@
             <v-text-field v-model.number="newInventoryItem.unitPrice" label="Cena jednostkowa (PLN)" type="number" required></v-text-field>
             <v-text-field v-model.number="newInventoryItem.reorderLevel" label="Poziom zamawiania" type="number" required></v-text-field>
             <v-text-field v-model="newInventoryItem.supplier" label="Dostawca" required></v-text-field>
+            <v-select
+              v-model.number="newInventoryItem.taxRate"
+              :items="[23, 8, 5, 0]"
+              label="Stawka Podatku"
+              required
+            ></v-select>
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -81,8 +87,10 @@ const headers = [
   { title: 'Numer produktu', key: 'productNumber' },
   { title: 'Cena jednostkowa (PLN)', key: 'unitPrice' },
   { title: 'Ilość w magazynie', key: 'quantityInStock' },
+  { title: 'Stawka podatku', key: 'taxRate' },
   { title: 'Dostawca', key: 'supplier' },
   { title: 'Akcje', key: 'actions', sortable: false, width: '15%' }
+  
 ]
 
 const inventoryItems = ref([])
@@ -94,7 +102,8 @@ const newInventoryItem = ref({
   productNumber: '',
   unitPrice: 0,
   reorderLevel: 0,
-  supplier: ''
+  supplier: '',
+  taxRate: 23
 })
 const selectedInventoryItem = ref({}) // Element, którego ilość jest aktualizowana
 const showInventoryModal = ref(false)
@@ -110,7 +119,8 @@ const openInventoryModal = () => {
     productNumber: '',
     unitPrice: 0,
     reorderLevel: 0,
-    supplier: ''
+    supplier: '',
+    taxRate: 23
   }
   showInventoryModal.value = true
 }
