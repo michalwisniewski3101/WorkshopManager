@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WorkshopManager.api.Database;
 using WorkshopManager.api.Model;
 using WorkshopManager.api.Repos.Interfaces;
+using static ServiceSchedule;
 
 namespace WorkshopManager.api.Repos
 {
@@ -49,8 +50,37 @@ namespace WorkshopManager.api.Repos
                 {
                     await UpdateOrderStatus(serviceSchedule.OrderId);
                 }
+
+
+                if (serviceSchedule.ServiceStatus != ServiceStatus.WaitingForParts)
+                {
+                    foreach (var orderItem in serviceSchedule.OrderItems)
+                    {
+
+                        var inventoryItem = await _context.InventoryItems
+                            .FirstOrDefaultAsync(item => item.Id == orderItem.InventoryItemId);
+
+                        if (inventoryItem == null)
+                        {
+                            throw new Exception($"Nie znaleziono przedmiotu o ID {orderItem.InventoryItemId} w magazynie.");
+                        }
+
+                        inventoryItem.QuantityInStock += orderItem.Quantity;
+
+
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
+
+
+
+
                 return serviceSchedule;
             }
+           
+
             return null;
         }
 
@@ -86,6 +116,7 @@ namespace WorkshopManager.api.Repos
                 else
                 {
                     serviceSchedule.ServiceStatus = ServiceStatus.Pending;
+                    inventoryItem.QuantityInStock -= orderItem.Quantity;
                 }
 
 
@@ -104,11 +135,38 @@ namespace WorkshopManager.api.Repos
         public async Task UpdateServiceScheduleStatusAsync(Guid id, ServiceStatus newStatus)
         {
             var serviceSchedule = await _context.ServiceSchedules.FindAsync(id);
+            bool canChange = true;
 
             if (serviceSchedule != null)
             {
 
-                serviceSchedule.ServiceStatus = newStatus;
+                if (serviceSchedule.ServiceStatus == ServiceStatus.WaitingForParts)
+                {
+
+
+                    foreach (var orderItem in serviceSchedule.OrderItems)
+                    {
+
+                        var inventoryItem = await _context.InventoryItems
+                                .FirstOrDefaultAsync(item => item.Id == orderItem.InventoryItemId);
+
+                        if (orderItem.Quantity > inventoryItem.QuantityInStock)
+                        {
+                            canChange = false;
+                            continue;
+                        }
+
+
+
+
+                    }
+                }
+
+                if (canChange)
+                {
+                    serviceSchedule.ServiceStatus = newStatus;
+                }
+                
                 await _context.SaveChangesAsync();
                 if (serviceSchedule.OrderId!=null)
                 {

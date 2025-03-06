@@ -9,12 +9,12 @@
       <v-container>
         <h2>Brakujące elementy magazynowe</h2>
         <Carousel v-bind="carouselConfig">
-          <Slide v-for="item in missingInventoryItems" :key="item.inventoryItem.id">
+          <Slide v-for="item in missingInventoryItems" :key="item.id">
             <v-card class="inventory-card">
-              <v-card-title>{{ item.inventoryItem.name }}</v-card-title>
+              <v-card-title>{{ item.name }}</v-card-title>
               <v-card-text>
-                <p><strong>Ilość w magazynie:</strong> {{ item.inventoryItem.quantityInStock }}</p>
-                <p><strong>Ilość brakująca:</strong> {{ item.requiredQuantity }}</p>
+                <p><strong>Ilość w magazynie:</strong> {{ item.quantityInStock }}</p>
+                <p><strong>Ilość brakująca:</strong> {{ item.missingStock }}</p>
               </v-card-text>
             </v-card>
           </Slide>
