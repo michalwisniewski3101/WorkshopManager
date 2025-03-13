@@ -1,7 +1,17 @@
 <template>
-  <v-card >
-    <v-card-title class="text-h6">Dodaj Zamówienie</v-card-title>
+  <v-card style="height: 100%; width: 100%;">
+    <v-breadcrumbs :items="items">
+      </v-breadcrumbs>
+      <v-row>
+        <v-col cols="12" class="text-left">
+          <h1>Dodaj Zamówienie</h1>
+        </v-col>
+      </v-row>
+      <v-row>
+
+<v-col>
     <v-card-text>
+
       <v-form @submit.prevent="addOrder">
         <!-- Dane klienta -->
         <v-text-field v-model="newOrder.clientName" label="Imię i nazwisko klienta" required></v-text-field>
@@ -21,9 +31,16 @@
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="primary" @click="addOrder">Dodaj Zamówienie</v-btn>
-      <NuxtLink to="/order"><v-btn type="button">Anuluj</v-btn></NuxtLink>
+      <NuxtLink to="/order"><v-btn color="grey" type="button">Anuluj</v-btn></NuxtLink>
+      <v-btn color="white" @click="addOrder">Dodaj Zamówienie</v-btn>
+      
     </v-card-actions>
+  </v-col>
+        
+       
+          
+       
+      </v-row>
   </v-card>
 </template>
 
@@ -45,7 +62,23 @@ const newOrder = ref({
   year: '',
   licensePlate: '',
 })
-
+const items = ref([
+  {
+    title: 'Dashboard',
+    disabled: false,
+    to: '/',
+  },
+  {
+    title: 'Zamówienia',
+    disabled: false,
+    to: '/order',
+  },
+  {
+    title: 'Nowe Zamówienie',
+    disabled: true,
+    to: '/order/create',
+  },
+]);
 const addOrder = async () => {
   try {
     const response = await $fetch('/api/Order', {

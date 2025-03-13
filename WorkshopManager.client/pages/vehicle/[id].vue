@@ -1,13 +1,31 @@
 <template>
   <v-card style="height: 100%; width: 100%;">
-    <h1 class="text-center mb-4">Historia zamówień dla pojazdu</h1>
+
+    <v-breadcrumbs :items="items">
+      </v-breadcrumbs>
+      <v-row>
+      <v-col cols="12" class="text-left">
+        <h1>Historia zamówień dla pojazdu</h1>
+      </v-col>
+      <v-col cols="12" class="text-right">
+        <v-text-field
+        v-model="search"
+        label="Szukaj"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+      ></v-text-field>
+      </v-col>
+    </v-row>
+
 
     <v-data-table
-      v-if="orders.length"
       :headers="tableHeaders"
       :items="orders"
       item-key="id"
       class="elevation-1"
+      :search="search"
     >
       <template v-slot:item.status="{ item }">
         {{ getOrderStatusName(item.orderStatus) }}
@@ -122,23 +140,35 @@
         </v-expansion-panels>
       </div>
     </div>
-  
-    <NuxtLink to="/order">
-      <v-btn color="secondary" class="mt-4">Wróć do listy zamówień</v-btn>
-    </NuxtLink>
   </v-card>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-
+const search = ref("")
 const orders = ref([])
 const serviceSchedules = ref([])
 const services = ref([])
 const mechanics = ref([])
 const inventoryItems = ref([])
-
+const items = ref([
+  {
+    title: 'Dashboard',
+    disabled: false,
+    to: '/',
+  },
+  {
+    title: 'Pojazdy',
+    disabled: false,
+    to: 'vehicle-list',
+  },
+  {
+    title: 'Zamówienia',
+    disabled: true,
+    to: '',
+  },
+]);
 const route = useRoute()
 const tableHeaders = [
   { title: 'Zamówienie ID', key: 'id' },

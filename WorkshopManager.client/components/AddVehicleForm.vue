@@ -1,7 +1,7 @@
 <template>
     <v-container>
       <v-row>
-        <v-col cols="12" class="text-right">
+        <v-col cols="12" class="text-left">
           <v-btn color="primary" @click="openVehicleModal">Dodaj nowy pojazd</v-btn>
         </v-col>
       </v-row>
@@ -9,7 +9,7 @@
       <!-- Modal -->
       <v-dialog v-model="showVehicleModal" persistent max-width="500">
         <v-card>
-          <v-card-title class="text-h6">Dodaj Pojazd</v-card-title>
+          <v-card-title class="headline">Dodaj Pojazd</v-card-title>
           <v-card-text>
             <v-form @submit.prevent="addVehicle">
               <v-text-field
@@ -68,17 +68,14 @@
                 v-model="newVehicle.ownerAddress"
                 required
               ></v-text-field>
-  
-              <v-row class="mt-4">
-                <v-col cols="6">
-                  <v-btn color="primary" block type="submit">Dodaj Pojazd</v-btn>
-                </v-col>
-                <v-col cols="6">
-                  <v-btn block @click="closeVehicleModal">Anuluj</v-btn>
-                </v-col>
-              </v-row>
             </v-form>
           </v-card-text>
+          <v-card-actions>
+      
+            <v-btn @click="closeVehicleModal" color="grey">Anuluj</v-btn>
+            <v-btn color="white" type="submit">Dodaj Pojazd</v-btn>
+      
+    </v-card-actions>
         </v-card>
       </v-dialog>
     </v-container>

@@ -1,8 +1,18 @@
 <template>
     <v-card style="height: 100%; width: 100%;">
+      <v-breadcrumbs :items="items">
+      </v-breadcrumbs>
       <v-row>
-        <v-col cols="12">
-          <h1 class="text-center mb-4">Lista mechaników</h1>
+        <v-col cols="12" class="text-left">
+          <h1>Lista mechaników</h1>
+        </v-col>
+        <v-col cols="12" class="text-left">
+          <v-btn color="primary" @click="openMechanicModal">Dodaj nowego mechanika</v-btn>
+      </v-col>
+      </v-row>
+        <v-row>
+
+        <v-col>
           <v-list>
             <v-list-item
               v-for="mechanic in mechanics"
@@ -28,15 +38,15 @@
           </v-list>
         </v-col>
         
-        <v-col cols="12" class="text-right">
-          <v-btn color="primary" @click="openMechanicModal">Dodaj nowego mechanika</v-btn>
-        </v-col>
+       
+          
+       
       </v-row>
   
       <!-- Modal -->
       <v-dialog v-model="showMechanicModal" persistent max-width="500">
         <v-card>
-          <v-card-title class="text-h6">Dodaj Mechanika</v-card-title>
+          <v-card-title class="headline">Dodaj Mechanika</v-card-title>
           <v-card-text>
             <v-form @submit.prevent="addMechanic">
               <v-text-field
@@ -82,14 +92,20 @@
   
               <v-row class="mt-4">
                 <v-col cols="6">
-                  <v-btn color="primary" block type="submit">Dodaj Mechanika</v-btn>
+                  
                 </v-col>
                 <v-col cols="6">
-                  <v-btn block @click="closeMechanicModal">Anuluj</v-btn>
+                  
                 </v-col>
               </v-row>
             </v-form>
           </v-card-text>
+
+          <v-card-actions>
+    
+      <v-btn color="grey" @click="closeMechanicModal">Anuluj</v-btn>
+      <v-btn color="white" type="submit">Dodaj Mechanika</v-btn>
+    </v-card-actions>
         </v-card>
       </v-dialog>
     </v-card>
@@ -108,7 +124,18 @@
   const mechanics = ref([])
   const specialties = ref([])
   const showMechanicModal = ref(false)
-  
+  const items = ref([
+  {
+    title: 'Dashboard',
+    disabled: false,
+    to: '/',
+  },
+  {
+    title: 'Pracownicy',
+    disabled: true,
+    to: 'mechanic/mechanic-list',
+  },
+]);
   const newMechanic = ref({
     firstName: '',
     lastName: '',

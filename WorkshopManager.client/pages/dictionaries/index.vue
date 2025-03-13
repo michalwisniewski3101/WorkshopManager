@@ -1,5 +1,39 @@
 <template>
   <v-card style="height: 100%; width: 100%;">
+    <v-breadcrumbs :items="items">
+      </v-breadcrumbs>
+      <v-row>
+        <v-col cols="12" class="text-left">
+          <h1>Lista słowników</h1>
+        </v-col>
+        <v-col v-if="tab === 'specialties'" cols="6" class="text-left">
+          <v-btn  @click="showSpecialtyModal = true" color="primary">
+        Dodaj Specjalność
+      </v-btn>
+      </v-col>
+      <v-col v-if="tab === 'services'" cols="6" class="text-left">
+        <v-btn  @click="showServiceModal = true" color="primary">
+          Dodaj Serwis</v-btn>
+      </v-col>
+      <v-col  cols="6" class="text-right">
+        <v-text-field
+        v-model="search"
+        label="Szukaj"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+      ></v-text-field>
+      </v-col>
+
+
+
+
+      </v-row>
+
+
+      <v-row>
+        <v-col cols="12">
     <v-tabs v-model="tab" bg-color="primary">
       <v-tab value="specialties">Specjalności</v-tab>
       <v-tab value="services">Serwisy</v-tab>
@@ -14,13 +48,14 @@
             :items="specialties"
             item-value="id"
             item-key="id"
+            :search="search"
           >
             <template v-slot:[`item.specialtyName`]="{ item }">
               <span>{{ item.specialtyName }}</span>
             </template>
           </v-data-table>
-          <!-- Przycisk do otwarcia modalnego okna dodawania specjalności -->
-        <v-btn @click="showSpecialtyModal = true" color="primary">Dodaj Specjalność</v-btn>
+         
+        
 
 <!-- Modal dodawania specjalności -->
 <v-dialog v-model="showSpecialtyModal" persistent max-width="400px">
@@ -36,8 +71,8 @@
       </form>
     </v-card-text>
     <v-card-actions>
-      <v-btn @click="closeSpecialtyModal" color="secondary">Anuluj</v-btn>
-      <v-btn @click="addSpecialty" color="primary">Dodaj</v-btn>
+      <v-btn @click="closeSpecialtyModal" color="grey">Anuluj</v-btn>
+      <v-btn @click="addSpecialty" color="white">Dodaj</v-btn>
     </v-card-actions>
   </v-card>
 </v-dialog>
@@ -50,6 +85,7 @@
             :items="services"
             item-value="id"
             item-key="id"
+            :search="search"
           >
             <template v-slot:[`item.serviceDescription`]="{ item }">
               <span>{{ item.serviceDescription }}</span>
@@ -61,8 +97,8 @@
               <span>{{ item.serviceDuration }} min</span>
             </template>
           </v-data-table>
-           <!-- Przycisk do otwarcia modalnego okna dodawania serwisu -->
-        <v-btn @click="showServiceModal = true" color="primary">Dodaj Serwis</v-btn>
+         
+        
 
 <!-- Modal dodawania serwisu -->
 <v-dialog v-model="showServiceModal" persistent max-width="400px">
@@ -91,14 +127,17 @@
       </form>
     </v-card-text>
     <v-card-actions>
-      <v-btn @click="closeServiceModal" color="secondary">Anuluj</v-btn>
-      <v-btn @click="addService" color="primary">Dodaj</v-btn>
+      
+      <v-btn @click="closeServiceModal" color="grey">Anuluj</v-btn>
+      <v-btn @click="addService" color="white">Dodaj</v-btn>
+      
     </v-card-actions>
   </v-card>
 </v-dialog>
         </v-tabs-window-item>
       </v-tabs-window>
-  
+    </v-col>
+  </v-row>
   </v-card>
 </template>
 
@@ -112,15 +151,27 @@ definePageMeta({
     roles: ['Administrator', 'Starszy Mechanik']
   }
 })
+const search = ref("")
 const showSpecialtyModal = ref(false)
 const showServiceModal = ref(false)
-
+const items = ref([
+  {
+    title: 'Dashboard',
+    disabled: false,
+    to: '/',
+  },
+  {
+    title: 'Słowniki',
+    disabled: true,
+    to: 'dictionaries',
+  },
+]);
 // Specjalności
 const specialties = ref([])
 const newSpecialty = ref({ specialtyName: '' })
 const tab = ref("specialties")
 const specialtyHeaders = ref([
-  { title: 'Specjalność', align: 'start', key: 'specialtyName', sortable: false }
+  { title: 'Specjalność', align: 'start', key: 'specialtyName' }
 ])
 
 // Serwisy
@@ -131,9 +182,9 @@ const newService = ref({
   serviceDuration: 0
 })
 const serviceHeaders = ref([
-  { title: 'Opis Serwisu', align: 'start', key: 'serviceDescription', sortable: false },
-  { title: 'Koszt (PLN)', align: 'start', key: 'serviceCost', sortable: true },
-  { title: 'Czas trwania (min)', align: 'start', key: 'serviceDuration', sortable: true }
+  { title: 'Opis Serwisu', align: 'start', key: 'serviceDescription' },
+  { title: 'Koszt (PLN)', align: 'start', key: 'serviceCost' },
+  { title: 'Czas trwania (min)', align: 'start', key: 'serviceDuration' }
 ])
 const closeSpecialtyModal = () => {
   showSpecialtyModal.value = false

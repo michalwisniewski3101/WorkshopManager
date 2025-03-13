@@ -1,14 +1,32 @@
 <template>
     <v-card style="height: 100%; width: 100%;">
-      <h1 class="text-center mb-4">Lista pojazdów</h1>
-  
-      <AddVehicleForm  @close="closeModal" @refresh="fetchVehicles" />
+      <v-breadcrumbs :items="items">
+      </v-breadcrumbs>
+      <v-row>
+      <v-col cols="12" class="text-left">
+        <h1>Lista pojazdów</h1>
+      </v-col>
+      <v-col cols="6" class="text-left">
+        <AddVehicleForm  @close="closeModal" @refresh="fetchVehicles" />
+      </v-col>
+      <v-col cols="6" class="text-right">
+        <v-text-field
+        v-model="search"
+        label="Szukaj"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+      ></v-text-field>
+      </v-col>
+    </v-row>
+      
       <v-data-table
-        v-if="vehicles.length"
         :headers="tableHeaders"
         :items="vehicles"
         item-key="id"
         class="elevation-1"
+        :search="search"
       >
         <template v-slot:item.make="{ item }">
           {{ item.make }}
@@ -48,19 +66,31 @@
   
   const vehicles = ref([])
   const isModalOpen = ref(false)
+  const search = ref("")
   
   const tableHeaders = [
-    { title: 'Marka', value: 'make' },
-    { title: 'Model', value: 'model' },
-    { title: 'Rok', value: 'year' },
-    { title: 'Rejestracja', value: 'licensePlate' },
-    { title: 'Akcje', value: 'actions', sortable: false }
+    { title: 'Marka', key: 'make' },
+    { title: 'Model', key: 'model' },
+    { title: 'Rok', key: 'year' },
+    { title: 'Rejestracja', key: 'licensePlate' },
+    { title: 'Akcje', key: 'actions', sortable: false }
   ]
   
   const openModal = () => {
     isModalOpen.value = true
   }
-  
+  const items = ref([
+  {
+    title: 'Dashboard',
+    disabled: false,
+    to: '/',
+  },
+  {
+    title: 'Pojazdy',
+    disabled: true,
+    to: 'vehicle/vehicle-list',
+  },
+]);
   const closeModal = () => {
     isModalOpen.value = false
   }

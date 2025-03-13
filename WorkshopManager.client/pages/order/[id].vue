@@ -1,7 +1,15 @@
 <template>
   <v-card style="height: 100%; width: 100%;">
-    <h1 class="text-center mb-4">Szczegóły zamówienia</h1>
-
+    <v-breadcrumbs :items="items">
+      </v-breadcrumbs>
+      <v-row>
+        <v-col cols="12" class="text-left">
+          <h1>Szczegóły zamówienia</h1>
+        </v-col>
+        <v-col cols="12" class="text-right">
+          <v-btn color="primary" @click="openMechanicModal">Dodaj nowego mechanika</v-btn>
+      </v-col>
+      </v-row>
     <div v-if="order">
       <v-card class="mb-4">
         <v-card-title>
@@ -100,9 +108,6 @@
       </div>
     </div>
   
-    <NuxtLink to="/order">
-      <v-btn color="secondary" class="mt-4">Wróć do listy zamówień</v-btn>
-    </NuxtLink>
   </v-card>
 </template>
 
@@ -115,7 +120,23 @@ const serviceSchedules = ref([])
 const services = ref([])
 const mechanics = ref([])
 const inventoryItems = ref([])
-
+const items = ref([
+  {
+    title: 'Dashboard',
+    disabled: false,
+    to: '/',
+  },
+  {
+    title: 'Zamówienia',
+    disabled: false,
+    to: '/order',
+  },
+  {
+    title: 'Szczegóły Zamówienia',
+    disabled: true,
+    to: '/order',
+  },
+]);
 const route = useRoute()
 
 const statusOptions = [

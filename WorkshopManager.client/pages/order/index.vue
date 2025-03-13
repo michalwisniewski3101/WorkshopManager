@@ -1,13 +1,36 @@
 <template>
   <v-card style="height: 100%; width: 100%;">
-    <h1 class="text-center mb-4">Lista zamówień</h1>
-
+    <v-breadcrumbs :items="items">
+      </v-breadcrumbs>
+      <v-row>
+      <v-col cols="12" class="text-left">
+        <h1>Lista zamówień</h1>
+      </v-col>
+      <v-col cols="6" class="text-left">
+        <NuxtLink to="/order/create">
+      <v-btn color="primary" >
+        Dodaj nowe zamówienie
+      </v-btn>
+    </NuxtLink>
+      </v-col>
+      <v-col cols="6" class="text-right">
+        <v-text-field
+        v-model="search"
+        label="Szukaj"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+      ></v-text-field>
+      </v-col>
+    </v-row>
     <v-data-table
       v-if="orders.length"
       :headers="tableHeaders"
       :items="orders"
       item-key="id"
       class="elevation-1"
+      :search="search"
     >
       <template v-slot:item.status="{ item }">
         {{ getOrderStatusName(item.orderStatus) }}
@@ -30,12 +53,6 @@
         </NuxtLink>
       </template>
     </v-data-table>
-
-    <NuxtLink to="/order/create">
-      <v-btn color="success" class="mt-4">
-        Dodaj nowe zamówienie
-      </v-btn>
-    </NuxtLink>
   </v-card>
 </template>
 
@@ -51,7 +68,19 @@ const tableHeaders = [
   { title: 'Status', key: 'status' },
   { title: 'Akcje', key: 'actions', sortable: false }
 ]
-
+const search = ref("")
+const items = ref([
+  {
+    title: 'Dashboard',
+    disabled: false,
+    to: '/',
+  },
+  {
+    title: 'Zamówienia',
+    disabled: true,
+    to: 'order',
+  },
+]);
 const getOrderStatusName = (status) => {
   const statuses = {
     0: 'Nowe',
