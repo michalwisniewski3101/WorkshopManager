@@ -108,9 +108,53 @@ onMounted(fetchOrders)
 /* Dostosowanie do stylu Vuetify */
 .v-btn {
   margin-top: 1rem;
+  transition: background 0.3s ease;
 }
 
 h1 {
-  color: var(--v-primary-base); /* Kolor z motywu Vuetify */
+  color: #333;
+  margin-bottom: 1rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.v-card {
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.v-text-field {
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.clickable-icon {
+  color: #4caf50;
+  transition: color 0.3s ease;
+}
+
+.clickable-icon:hover {
+  color: #45a049;
+}
+
+:deep(.v-data-table) {
+  background: white;
+  border-radius: 5px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+}
+
+:deep(.v-data-table th) {
+  font-weight: bold;
+  color: #555;
+  background: #f9f9f9;
+}
+
+:deep(.v-data-table td) {
+  color: #333;
+}
+.v-breadcrumbs:deep() {
+  color: #333
 }
 </style>

@@ -7,7 +7,6 @@
           <h1>Szczegóły zamówienia</h1>
         </v-col>
         <v-col cols="12" class="text-right">
-          <v-btn color="primary" @click="openMechanicModal">Dodaj nowego mechanika</v-btn>
       </v-col>
       </v-row>
     <div v-if="order">
