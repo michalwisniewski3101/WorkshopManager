@@ -112,14 +112,14 @@ onMounted(fetchOrders)
 }
 
 h1 {
-  color: #333;
+  color: #000000;
   margin-bottom: 1rem;
   font-family: 'Arial', sans-serif;
 }
 
 .v-card {
   padding: 20px;
-  background: #f4f4f4;
+  background: #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
 }
@@ -127,10 +127,11 @@ h1 {
 .v-text-field {
   max-width: 300px;
   margin-left: auto;
+  color: #000000;
 }
 
 .clickable-icon {
-  color: #4caf50;
+  color: #000000;
   transition: color 0.3s ease;
 }
 
@@ -139,7 +140,7 @@ h1 {
 }
 
 :deep(.v-data-table) {
-  background: white;
+  background: rgb(185, 185, 185);
   border-radius: 5px;
   margin-top: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
@@ -147,14 +148,14 @@ h1 {
 
 :deep(.v-data-table th) {
   font-weight: bold;
-  color: #555;
-  background: #f9f9f9;
+  color: #000000;
+  background: #a0a0a0;
 }
 
 :deep(.v-data-table td) {
-  color: #333;
+  color: #000000;
 }
 .v-breadcrumbs:deep() {
-  color: #333
+  color: #000000
 }
 </style>

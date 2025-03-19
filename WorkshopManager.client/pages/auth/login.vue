@@ -27,7 +27,7 @@
   max-width: 400px;
   margin: 50px auto;
   padding: 20px;
-  background: #f4f4f4;
+  background: #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;

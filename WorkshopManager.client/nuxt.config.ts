@@ -56,7 +56,7 @@ export default defineNuxtConfig({
             colors: {
               primary: "#c42222",
               secondary: "#8b8b8b",
-              surface: "#fff",
+              surface: "#d7f0c2",
               appBar: "#fff",
             },
           },
