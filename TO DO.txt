@@ -3,3 +3,4 @@
 -dodać obliczanie czasu zamówienia
 -dodać testy
 -poprawic logo
+-dodac ikony do przyciskow
