@@ -2,48 +2,60 @@
     <v-container>
       <v-row>
         <v-col cols="12" class="text-left">
-          <v-btn color="primary" @click="openVehicleModal">Dodaj nowy pojazd</v-btn>
+          <v-btn color="#4caf50" @click="openVehicleModal">Dodaj nowy pojazd</v-btn>
         </v-col>
       </v-row>
   
       <!-- Modal -->
-      <v-dialog v-model="showVehicleModal" persistent max-width="500">
+      <v-dialog v-model="showVehicleModal" persistent max-width="800">
         <v-card>
-          <v-card-title class="headline">Dodaj Pojazd</v-card-title>
+          <v-card-title >Dodaj Pojazd</v-card-title>
           <v-card-text>
             <v-form @submit.prevent="addVehicle">
-              <v-text-field
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field
                 label="Marka"
                 v-model="newVehicle.make"
                 required
               ></v-text-field>
-  
-              <v-text-field
-                label="Model"
-                v-model="newVehicle.model"
-                required
-              ></v-text-field>
-  
               <v-text-field
                 label="Rok produkcji"
                 type="number"
                 v-model="newVehicle.year"
                 required
               ></v-text-field>
-  
-              <v-text-field
-                label="Numer rejestracyjny"
-                v-model="newVehicle.licensePlate"
-                required
-              ></v-text-field>
-  
               <v-text-field
                 label="VIN"
                 v-model="newVehicle.vin"
                 required
               ></v-text-field>
-  
+                </v-col >
+
+
+
+
+
+
+
+                <v-col cols="6">
+                  <v-text-field
+                label="Model"
+                v-model="newVehicle.model"
+                required
+              ></v-text-field>
               <v-text-field
+                label="Numer rejestracyjny"
+                v-model="newVehicle.licensePlate"
+                required
+              ></v-text-field>
+                </v-col>
+
+              </v-row>
+
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field
                 label="Imię i nazwisko właściciela"
                 v-model="newVehicle.ownerName"
                 required
@@ -55,8 +67,16 @@
                 v-model="newVehicle.ownerPhoneNumber"
                 required
               ></v-text-field>
-  
-              <v-text-field
+                </v-col >
+
+
+
+
+
+
+
+                <v-col cols="6">
+                  <v-text-field
                 label="Email właściciela"
                 type="email"
                 v-model="newVehicle.ownerEmail"
@@ -68,13 +88,16 @@
                 v-model="newVehicle.ownerAddress"
                 required
               ></v-text-field>
+                </v-col>
+
+              </v-row>
             </v-form>
           </v-card-text>
           <v-card-actions>
       
-            <v-btn @click="closeVehicleModal" color="grey">Anuluj</v-btn>
-            <v-btn color="white" type="submit">Dodaj Pojazd</v-btn>
-      
+            <v-btn @click="closeVehicleModal" style="background-color: #f15c5c;">Anuluj</v-btn>
+            <v-btn style="background-color: #4caf50;" type="submit">Dodaj Pojazd</v-btn>
+
     </v-card-actions>
         </v-card>
       </v-dialog>
@@ -140,6 +163,18 @@ import { ref, defineEmits } from 'vue'
   <style scoped>
   .text-right {
     text-align: right;
+  }
+  .v-card {
+    padding: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    color: #000000;
+  }
+
+  
+  .v-dialog .v-card {
+    padding: 15px;
   }
   </style>
   

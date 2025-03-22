@@ -1,6 +1,5 @@
--poprawić szczegóły zamówienia
--kalendarz
--poprawić wygląd strony klienta i logowania
+-dodać numery zamówień
+-usunać id zamówienia z v-data-table
 -dodać obliczanie czasu zamówienia
--poprawić formularze
 -dodać testy
+-poprawic logo

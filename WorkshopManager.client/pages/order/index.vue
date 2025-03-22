@@ -8,7 +8,7 @@
       </v-col>
       <v-col cols="6" class="text-left">
         <NuxtLink to="/order/create">
-      <v-btn color="primary" >
+      <v-btn style="background-color: #4caf50;" >
         Dodaj nowe zamówienie
       </v-btn>
     </NuxtLink>
@@ -158,4 +158,10 @@ h1 {
 .v-breadcrumbs:deep() {
   color: #000000
 }
+
+:deep(.v-data-table-footer) {
+  background: rgb(185, 185, 185);
+  color: #000000;
+}
+
 </style>

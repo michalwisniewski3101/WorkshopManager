@@ -3,7 +3,7 @@
   
 
     <div v-if="order">
-      <v-card class="mb-4">
+      <v-card class="orderCard">
         <v-card-title>
           <v-row>
             <v-col cols="12" md="6">
@@ -98,7 +98,7 @@
         <label for="orderCode">Kod zamówienia:</label>
         <input v-model="orderCode" id="orderCode" type="text" placeholder="Wprowadź kod" />
       </div>
-      <button @click="loadOrderDetails">Pokaż zamówienie</button>
+      <v-btn style="background-color: #4caf50;" @click="loadOrderDetails">Pokaż zamówienie</v-btn>
 
     </form>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
@@ -276,7 +276,8 @@ input[type="password"] {
   margin-bottom: 20px;
 }
 
-button {
+
+.v-btn {
   width: 100%;
   padding: 10px;
   background-color: #4caf50;
@@ -287,14 +288,26 @@ button {
   font-size: 16px;
   transition: background 0.3s ease;
 }
-
-button:hover {
-  background-color: #45a049;
+.orderCard {
+  background: rgb(185, 185, 185);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #000000;
+}
+.v-expansion-panel-text{
+  background: rgb(185, 185, 185);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #000000;
+}
+.v-expansion-panel{
+  background: #a0a0a0;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #000000;
 }
 
-.error {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-}
 </style>

@@ -13,26 +13,36 @@
     <v-card-text>
 
       <v-form @submit.prevent="addOrder">
-        <!-- Dane klienta -->
-        <v-text-field v-model="newOrder.clientName" label="Imię i nazwisko klienta" required></v-text-field>
-        <v-text-field v-model="newOrder.clientPhoneNumber" label="Numer telefonu klienta" type="tel" required></v-text-field>
-        <v-text-field v-model="newOrder.clientEmail" label="E-mail klienta" type="email"></v-text-field>
-        <v-text-field v-model="newOrder.clientAddress" label="Adres klienta"></v-text-field>
-
-        <!-- Dane pojazdu -->
-        <v-text-field v-model="newOrder.vin" label="Numer VIN" required></v-text-field>
+        <v-row>
+          <v-col>
+            <v-text-field v-model="newOrder.clientName" label="Imię i nazwisko klienta" required></v-text-field>
+            <v-text-field v-model="newOrder.clientPhoneNumber" label="Numer telefonu klienta" type="tel" required></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="newOrder.clientEmail" label="E-mail klienta" type="email"></v-text-field>
+            <v-text-field v-model="newOrder.clientAddress" label="Adres klienta"></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field v-model="newOrder.vin" label="Numer VIN" required></v-text-field>
         <v-text-field v-model="newOrder.make" label="Marka pojazdu" required></v-text-field>
         <v-text-field v-model="newOrder.model" label="Model pojazdu" required></v-text-field>
-        <v-text-field v-model="newOrder.year" label="Rok produkcji" type="number" required></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="newOrder.year" label="Rok produkcji" type="number" required></v-text-field>
         <v-text-field v-model="newOrder.licensePlate" label="Tablica rejestracyjna" required></v-text-field>
 
-        <!-- Opis zamówienia -->
+          </v-col>
+        </v-row>
+
+      
         <v-textarea v-model="newOrder.description" label="Opis zamówienia"></v-textarea>
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <NuxtLink to="/order"><v-btn color="grey" type="button">Anuluj</v-btn></NuxtLink>
-      <v-btn color="white" @click="addOrder">Dodaj Zamówienie</v-btn>
+      <v-btn style="background-color: #f15c5c;" to="/order" >Anuluj</v-btn>
+      <v-btn style="background-color: #4caf50;" @click="addOrder">Dodaj Zamówienie</v-btn>
       
     </v-card-actions>
   </v-col>
@@ -121,8 +131,6 @@ h1 {
 }
 
 .v-text-field {
-  max-width: 300px;
-  margin-left: auto;
   color: #000000;
 }
 
@@ -153,5 +161,8 @@ h1 {
 }
 .v-breadcrumbs:deep() {
   color: #000000
+}
+.v-card-actions {
+  justify-content: flex-end;
 }
 </style>

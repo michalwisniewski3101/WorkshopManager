@@ -7,7 +7,7 @@
           <h1>Lista mechaników</h1>
         </v-col>
         <v-col cols="12" class="text-left">
-          <v-btn color="primary" @click="openMechanicModal">Dodaj nowego mechanika</v-btn>
+          <v-btn style="background-color: #4caf50;" @click="openMechanicModal">Dodaj nowego mechanika</v-btn>
       </v-col>
       </v-row>
         <v-row>
@@ -44,29 +44,37 @@
       </v-row>
   
       <!-- Modal -->
-      <v-dialog v-model="showMechanicModal" persistent max-width="500">
+      <v-dialog v-model="showMechanicModal" persistent max-width="800">
         <v-card>
           <v-card-title class="headline">Dodaj Mechanika</v-card-title>
           <v-card-text>
             <v-form @submit.prevent="addMechanic">
-              <v-text-field
+
+              <v-row>
+                <v-col>
+                  <v-text-field
                 label="Imię"
                 v-model="newMechanic.firstName"
                 required
               ></v-text-field>
-  
-              <v-text-field
-                label="Nazwisko"
-                v-model="newMechanic.lastName"
-                required
-              ></v-text-field>
-  
               <v-text-field
                 label="Numer telefonu"
                 v-model="newMechanic.phoneNumber"
                 required
               ></v-text-field>
-  
+              <v-text-field
+                label="Poziom doświadczenia"
+                type="number"
+                v-model="newMechanic.experienceLevel"
+                required
+              ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                label="Nazwisko"
+                v-model="newMechanic.lastName"
+                required
+              ></v-text-field>
               <v-select
                 :items="specialties"
                 item-value="id"
@@ -75,36 +83,35 @@
                 label="Specjalność"
                 required
               ></v-select>
-  
-              <v-text-field
-                label="Poziom doświadczenia"
-                type="number"
-                v-model="newMechanic.experienceLevel"
-                required
-              ></v-text-field>
-  
               <v-text-field
                 label="Data zatrudnienia"
                 type="date"
                 v-model="newMechanic.dateJoined"
                 required
               ></v-text-field>
-  
-              <v-row class="mt-4">
-                <v-col cols="6">
-                  
-                </v-col>
-                <v-col cols="6">
-                  
                 </v-col>
               </v-row>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
             </v-form>
           </v-card-text>
 
           <v-card-actions>
     
-      <v-btn color="grey" @click="closeMechanicModal">Anuluj</v-btn>
-      <v-btn color="white" type="submit">Dodaj Mechanika</v-btn>
+      <v-btn style="background-color: #f15c5c;" @click="closeMechanicModal">Anuluj</v-btn>
+      <v-btn style="background-color: #4caf50;" type="submit">Dodaj Mechanika</v-btn>
     </v-card-actions>
         </v-card>
       </v-dialog>
@@ -224,12 +231,9 @@ h1 {
   background: #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  color: #000000 ;
 }
 
-.v-text-field {
-  max-width: 300px;
-  margin-left: auto;
-}
 
 .clickable-icon {
   color: #000000;

@@ -1,12 +1,8 @@
 <template>
     <v-card style="height: 100%; width: 100%; padding: 20px;">
-      <div>
-        <h1>Witamy w aplikacji WorkshopManager</h1>
-        <p>Ta aplikacja pozwala na zarządzanie warsztatem samochodowym.</p>
-      </div>
-  
-      <!-- Brakujące elementy magazynowe -->
-      <v-container>
+      <v-row>
+      <v-col cols="6" >
+        <v-container>
         <h2>Brakujące elementy magazynowe</h2>
         <Carousel v-bind="carouselConfig">
           <Slide v-for="item in missingInventoryItems" :key="item.id">
@@ -25,8 +21,10 @@
         </Carousel>
       </v-container>
   
-      <!-- Kończące się elementy magazynowe -->
-      <v-container>
+
+      </v-col>  
+      <v-col cols="6">
+        <v-container>
         <h2>Kończące się elementy magazynowe</h2>
         <Carousel v-bind="carouselConfig">
           <Slide v-for="item in lowStockInventoryItems" :key="item.id">
@@ -44,6 +42,17 @@
           </template>
         </Carousel>
       </v-container>
+      </v-col>
+      
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-container>
+        <Calendar />
+          </v-container>
+        </v-col>  
+      </v-row>
+      
     </v-card>
   </template>
   
@@ -86,7 +95,7 @@
   
 
   const carouselConfig = {
-    itemsToShow: 4, 
+    itemsToShow: 2, 
     snapAlign: 'start', 
     wrapAround: true,
     autoplay: 4000,
@@ -106,10 +115,6 @@
     padding: 10px;
     margin: 0 auto;
   }
-  .v-btn {
-  margin-top: 1rem;
-  transition: background 0.3s ease;
-}
 
 h1 {
   color: #000000;
@@ -125,10 +130,7 @@ h1 {
   color: #000000;
 }
 
-.v-text-field {
-  max-width: 300px;
-  margin-left: auto;
-}
+
 
 .clickable-icon {
   color: #000000;
@@ -158,5 +160,6 @@ h1 {
 .v-breadcrumbs:deep() {
   color: #000000
 }
+
   </style>
   

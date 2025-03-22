@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import { useRouter } from '#app'
 import axios from 'axios'
@@ -8,112 +8,89 @@ const authStore = useAuthStore()
 const router = useRouter()
 const rail = ref(false)
 
-
 onMounted(() => {
-  authStore.checkLoginStatus()  // Sprawdzamy stan logowania po załadowaniu
+  authStore.checkLoginStatus() // Sprawdzamy stan logowania po załadowaniu
 })
 
+// Funkcja do wylogowania
 const logout = async () => {
   try {
-    await axios.post('/api/auth/logout', {}, {
-      /* headers: {
-        Authorization: `Bearer ${authStore.jwtToken}`,
-      },*/
-    })
-    authStore.logout()  // Zaktualizowanie stanu logowania w Pinia
-
-    // Przekierowanie po wylogowaniu
-    router.push('/auth/login')
+    await axios.post('/api/auth/logout', {}, {})
+    authStore.logout() // Zaktualizowanie stanu logowania w Pinia
+    router.push('/auth/login') // Przekierowanie po wylogowaniu
   } catch (error) {
-    console.error("Błąd wylogowania:", error)
+    console.error('Błąd wylogowania:', error)
   }
 }
+
+// Zmiana ikony chevron
+const chevronIcon = computed(() => (rail.value ? 'mdi-chevron-right' : 'mdi-chevron-left'))
+
+// Definiowanie elementów menu z ikonami
+const menuItems = [
+  { title: 'Strona główna', to: '/', icon: 'mdi-home', roles: ['Administrator', 'Starszy Mechanik', 'Młodszy Mechanik', 'Klient'] },
+  { title: 'Pojazdy', to: '/vehicle/vehicle-list', icon: 'mdi-car', roles: ['Administrator', 'Starszy Mechanik', 'Młodszy Mechanik'] },
+  { title: 'Magazyn', to: '/warehouse/', icon: 'mdi-warehouse', roles: ['Administrator', 'Starszy Mechanik'] },
+  { title: 'Pracownicy', to: '/mechanic/mechanic-list', icon: 'mdi-account-group', roles: ['Administrator', 'Starszy Mechanik', 'Młodszy Mechanik'] },
+  { title: 'Zamówienia', to: '/order', icon: 'mdi-cart', roles: ['Administrator', 'Starszy Mechanik', 'Młodszy Mechanik'] },
+  { title: 'Słowniki', to: '/dictionaries/', icon: 'mdi-book', roles: ['Administrator', 'Starszy Mechanik'] },
+  { title: 'Klient', to: '/client/', icon: 'mdi-account', roles: ['Administrator'] },
+]
 </script>
+
 
 <template>
   <v-app>
     <v-layout>
-    <v-navigation-drawer
-        :rail="rail"
-      >
-      <v-list>
-                <!-- Wylogowanie -->
-                <v-list-item v-if="authStore.isLoggedIn" >
-          <v-list-item-title>
-          <v-btn @click="rail = !rail"
-  icon
-  tile
->
-  <v-icon>mdi-chevron-left</v-icon>
-</v-btn>
-          </v-list-item-title>
+      <!-- Menu boczne -->
+      <v-navigation-drawer :rail="rail" permanent>
+        <v-list>
+          <!-- Przycisk rozwijania/zamykania menu -->
+          <v-list-item>
+            <v-list-item-title @click="rail = !rail">
+ 
+                <v-icon>{{ chevronIcon }}</v-icon>
 
-        </v-list-item>
-        <v-divider></v-divider>
-        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'||authStore.roles=='Klient'">
-          <v-list-item-title>
-            <NuxtLink to="/">Strona główna</NuxtLink>
-          </v-list-item-title>
-        </v-list-item>
+            </v-list-item-title>
+          </v-list-item>
 
-        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'">
-          <v-list-item-title>
-            <NuxtLink to="/vehicle/vehicle-list">Pojazdy</NuxtLink>
-          </v-list-item-title>
-        </v-list-item>
+          <v-divider></v-divider>
 
-        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'">
-          <v-list-item-title>
-            <NuxtLink to="/warehouse/">Magazyn</NuxtLink>
-          </v-list-item-title>
-        </v-list-item>
+          <!-- Dynamiczne generowanie menu z ikonami i kontrolą dostępu po rolach -->
+          <template v-for="item in menuItems" :key="item.title">
+            <v-list-item v-if="item.roles.includes(authStore.roles)">
+              <v-list-item-title>
+                <NuxtLink :to="item.to">
+                  <v-icon left>{{ item.icon }}</v-icon>
+                  {{ item.title }}
+                </NuxtLink>
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-list>
+      </v-navigation-drawer>
 
-        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'">
-          <v-list-item-title>
-            <NuxtLink to="/mechanic/mechanic-list">Pracownicy</NuxtLink>
-          </v-list-item-title>
-        </v-list-item>
+      <!-- Pasek górny -->
+      <v-app-bar app>
+  <v-toolbar-title class="d-flex align-center">
+    <img src="/logo.webp" alt="WorkshopManager" class="logo" />
+    Workshop Manager
+  </v-toolbar-title>
+  <span><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
+  <v-btn @click="logout" color="red">
+    <font-awesome-icon icon="sign-out-alt" /> Wyloguj
+  </v-btn>
+</v-app-bar>
 
-        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'||authStore.roles=='Młodszy Mechanik'">
-          <v-list-item-title>
-            <NuxtLink to="/order">Zamówienia</NuxtLink>
-          </v-list-item-title>
-        </v-list-item>
+      <!-- Główna zawartość -->
+      <v-main class="d-flex align-center justify-center">
+        <NuxtPage />
+      </v-main>
 
-        <v-list-item v-if="authStore.roles=='Administrator'||authStore.roles=='Starszy Mechanik'">
-          <v-list-item-title>
-            <NuxtLink to="/dictionaries/">Słowniki</NuxtLink>
-          </v-list-item-title>
-        </v-list-item>
-
-        <v-list-item v-if="authStore.roles=='Administrator'">
-          <v-list-item-title>
-            <NuxtLink to="/client/">Klient</NuxtLink>
-          </v-list-item-title>
-        </v-list-item>
-
-
-      </v-list>
-    </v-navigation-drawer>
-
-    <!-- App Bar -->
-    <v-app-bar app>
-      <v-toolbar-title>Workshop Manager</v-toolbar-title>
-      <span ><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
-            <v-btn @click="logout" color="red">
-            <font-awesome-icon icon="sign-out-alt" /> Wyloguj
-          </v-btn>
-    </v-app-bar>
-    
-    <!-- Main Content Area -->
-    <v-main class="d-flex align-center justify-center">
-      <NuxtPage />
-    </v-main>
-
-    <!-- Footer -->
-    <v-footer app>
-      <span>&copy; 2024 Workshop Manager</span>
-    </v-footer>
+      <!-- Stopka -->
+      <v-footer app>
+        <span>&copy; 2024 Workshop Manager</span>
+      </v-footer>
     </v-layout>
   </v-app>
 </template>
@@ -125,25 +102,15 @@ const logout = async () => {
     width: 100%;
   }
 
-.v-navigation-drawer {
-    background-color: var(--v-theme-secondary); /* Kolor `surface` z motywu */
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .v-list-item-title {
-    font-weight: bold;
-    font-size: 1rem;
-    color: var(--v-theme-primary); /* Kolor `primary` z motywu */
-    transition: color 0.3s ease;
-  }
+
   
   .v-list-item-title a {
     text-decoration: none;
     color: inherit;
   }
   
-  .v-list-item-title:hover {
-    color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
+  .v-list-item:hover {
+    background-color: rgba(100, 100, 100, 0.8); /* Kolor `secondary` z motywu */
   }
   
   /* Przyciski */
@@ -176,6 +143,10 @@ const logout = async () => {
     color: var(--v-theme-secondary); /* Kolor `secondary` z motywu */
     font-family: "Roboto", sans-serif;
   }
+  .logo {
+  height: 40px; /* Dopasuj wysokość */
+  width: auto;
+}
 
 </style>
 

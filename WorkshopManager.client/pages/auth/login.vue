@@ -4,7 +4,7 @@
 
 
     <div class="login-form">
-      <NuxtLink to="/client/"><button to="/client/">Strefa Klienta</button></NuxtLink>
+      <v-btn  style="background-color: #4caf50;" to="/client/">Strefa Klienta</v-btn>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 
@@ -68,7 +68,7 @@ input[type="password"] {
   margin-bottom: 20px;
 }
 
-button {
+.v-btn {
   width: 100%;
   padding: 10px;
   background-color: #4caf50;
@@ -80,9 +80,6 @@ button {
   transition: background 0.3s ease;
 }
 
-button:hover {
-  background-color: #45a049;
-}
 
 .error {
   color: red;

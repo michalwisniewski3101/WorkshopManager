@@ -14,7 +14,9 @@
         <input v-model="rememberMe" type="checkbox" id="rememberMe" />
         <label for="rememberMe">Zapamiętaj mnie</label>
       </div>
-      <button type="submit">Zaloguj się</button>
+      <v-btn type="submit">
+  Zaloguj się
+</v-btn>
     </form>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
@@ -98,21 +100,7 @@ input[type="password"] {
   margin-bottom: 20px;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
-}
 
-button:hover {
-  background-color: #45a049;
-}
 
 .error {
   color: red;

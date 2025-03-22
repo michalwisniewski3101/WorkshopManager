@@ -7,12 +7,12 @@
           <h1>Lista słowników</h1>
         </v-col>
         <v-col v-if="tab === 'specialties'" cols="6" class="text-left">
-          <v-btn  @click="showSpecialtyModal = true" color="primary">
+          <v-btn  @click="showSpecialtyModal = true" style="background-color: #4caf50;">
         Dodaj Specjalność
       </v-btn>
       </v-col>
       <v-col v-if="tab === 'services'" cols="6" class="text-left">
-        <v-btn  @click="showServiceModal = true" color="primary">
+        <v-btn  @click="showServiceModal = true" style="background-color: #4caf50;">
           Dodaj Serwis</v-btn>
       </v-col>
       <v-col  cols="6" class="text-right">
@@ -34,7 +34,7 @@
 
       <v-row>
         <v-col cols="12">
-    <v-tabs v-model="tab" bg-color="primary">
+    <v-tabs v-model="tab" bg-color="rgb(185, 185, 185)">
       <v-tab value="specialties">Specjalności</v-tab>
       <v-tab value="services">Serwisy</v-tab>
     </v-tabs>
@@ -71,8 +71,8 @@
       </form>
     </v-card-text>
     <v-card-actions>
-      <v-btn @click="closeSpecialtyModal" color="grey">Anuluj</v-btn>
-      <v-btn @click="addSpecialty" color="white">Dodaj</v-btn>
+      <v-btn @click="closeSpecialtyModal" style="background-color: #f15c5c;">Anuluj</v-btn>
+      <v-btn @click="addSpecialty" style="background-color: #4caf50;">Dodaj</v-btn>
     </v-card-actions>
   </v-card>
 </v-dialog>
@@ -128,8 +128,8 @@
     </v-card-text>
     <v-card-actions>
       
-      <v-btn @click="closeServiceModal" color="grey">Anuluj</v-btn>
-      <v-btn @click="addService" color="white">Dodaj</v-btn>
+      <v-btn @click="closeServiceModal" style="background-color: #f15c5c;">Anuluj</v-btn>
+      <v-btn @click="addService" style="background-color: #4caf50;">Dodaj</v-btn>
       
     </v-card-actions>
   </v-card>
@@ -276,11 +276,10 @@ h1 {
   background: #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  color: #000000;
 }
 
 .v-text-field {
-  max-width: 300px;
-  margin-left: auto;
   color: #000000;
 }
 
@@ -298,6 +297,7 @@ h1 {
   border-radius: 5px;
   margin-top: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+  color: #000000;
 }
 
 :deep(.v-data-table th) {
@@ -311,5 +311,29 @@ h1 {
 }
 .v-breadcrumbs:deep() {
   color: #000000
+}
+.v-tabs {
+  align-items: center; /* Wyśrodkowanie w pionie */
+  display: flex;
+  justify-content: center;
+}
+
+/* Styl aktywnej zakładki */
+.v-tab.v-tab--selected {
+  background-color: #a0a0a0 !important; /* Ciemniejszy kolor aktywnej zakładki */
+  color: #000 !important;
+  font-weight: bold;
+  border-radius: 5px; /* Zaokrąglenie dla lepszego efektu */
+}
+
+/* Styl nieaktywnej zakładki */
+.v-tab {
+  color: #000000;
+  transition: background 0.3s ease;
+}
+
+/* Hover dla efektu */
+.v-tab:hover {
+  background-color: #c0c0c0;
 }
 </style>

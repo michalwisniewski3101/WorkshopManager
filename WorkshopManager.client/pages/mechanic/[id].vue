@@ -322,6 +322,7 @@ h1 {
   border-radius: 5px;
   margin-top: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+  color: #000000;
 }
 
 :deep(.v-data-table th) {

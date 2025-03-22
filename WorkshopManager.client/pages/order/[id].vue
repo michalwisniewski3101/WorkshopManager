@@ -72,7 +72,7 @@
             </div>
             <div v-if="!schedule.showStatusChange">
               
-              <v-btn @click="changeServiceStatus(schedule.id)" color="primary">
+              <v-btn @click="changeServiceStatus(schedule.id)" style="background-color: #4caf50;">
                 <v-icon>mdi-pencil</v-icon>
                 Zmień status
               </v-btn>

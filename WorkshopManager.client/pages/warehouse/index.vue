@@ -7,7 +7,7 @@
         <h1>Elementy Magazynu</h1>
       </v-col>
       <v-col cols="6" class="text-left">
-        <v-btn @click="openInventoryModal" color="primary">Dodaj nowy element magazynu</v-btn>
+        <v-btn style="background-color: #4caf50;" @click="openInventoryModal" >Dodaj nowy element magazynu</v-btn>
       </v-col>
       <v-col cols="6" class="text-right">
         <v-text-field
@@ -36,17 +36,25 @@
     </v-row>
 
     <!-- Modal dodawania lub edycji elementu magazynu -->
-    <v-dialog v-model="showInventoryModal" persistent max-width="500">
+    <v-dialog v-model="showInventoryModal" persistent max-width="800">
       <v-card>
-        <v-card-title class="headline">{{ isEditMode ? 'Edytuj Element Magazynu' : 'Dodaj Element Magazynu' }}</v-card-title>
+        <v-card-title >{{ isEditMode ? 'Edytuj Element Magazynu' : 'Dodaj Element Magazynu' }}</v-card-title>
         <v-card-text>
           <v-form @submit.prevent="saveInventoryItem">
-            <v-text-field v-model="newInventoryItem.name" label="Nazwa" required></v-text-field>
+            <v-row>
+              <v-col>
+                <v-text-field v-model="newInventoryItem.name" label="Nazwa" required></v-text-field>
             <v-text-field v-model="newInventoryItem.description" label="Opis" required></v-text-field>
             <v-text-field v-model="newInventoryItem.productNumber" label="Numer produktu" required></v-text-field>
-            <v-text-field v-model.number="newInventoryItem.unitPrice" label="Cena jednostkowa (PLN)" type="number" required></v-text-field>
+              </v-col>
+              <v-col>
+                <v-text-field v-model.number="newInventoryItem.unitPrice" label="Cena jednostkowa (PLN)" type="number" required></v-text-field>
             <v-text-field v-model.number="newInventoryItem.reorderLevel" label="Poziom zamawiania" type="number" required></v-text-field>
             <v-text-field v-model="newInventoryItem.supplier" label="Dostawca" required></v-text-field>
+              </v-col>
+            </v-row>
+
+
             <v-select
               v-model.number="newInventoryItem.taxRate"
               :items="[23, 8, 5, 0]"
@@ -57,14 +65,14 @@
         </v-card-text>
         <v-card-actions>
           
-          <v-btn color="grey" @click="closeInventoryModal">Anuluj</v-btn>
-          <v-btn color="white" @click="saveInventoryItem">Zapisz</v-btn>
+          <v-btn style="background-color: #f15c5c;" @click="closeInventoryModal">Anuluj</v-btn>
+          <v-btn style="background-color: #4caf50;" @click="saveInventoryItem">Zapisz</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <!-- Modal aktualizacji ilości w magazynie -->
-    <v-dialog v-model="showQuantityModal" persistent max-width="500">
+    <v-dialog v-model="showQuantityModal" persistent max-width="800">
       <v-card>
         <v-card-title class="text-h6">Zmień ilość w magazynie</v-card-title>
         <v-card-text>
@@ -75,8 +83,9 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" @click="updateQuantity">Zapisz</v-btn>
-          <v-btn color="grey" @click="closeQuantityModal">Anuluj</v-btn>
+          
+          <v-btn style="background-color: #f15c5c;" @click="closeQuantityModal">Anuluj</v-btn>
+          <v-btn style="background-color: #4caf50;"  @click="updateQuantity">Zapisz</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -241,11 +250,10 @@ h1 {
   background: #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  color:#000000;
 }
 
 .v-text-field {
-  max-width: 300px;
-  margin-left: auto;
   color: #000000;
 }
 
@@ -263,6 +271,7 @@ h1 {
   border-radius: 5px;
   margin-top: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+  color: #000000;
 }
 
 :deep(.v-data-table th) {
