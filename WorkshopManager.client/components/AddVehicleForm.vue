@@ -2,7 +2,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" class="text-left">
-          <v-btn color="#4caf50" @click="openVehicleModal">Dodaj nowy pojazd</v-btn>
+          <v-btn color="#4caf50" @click="openVehicleModal"><v-icon>mdi-plus</v-icon>Dodaj nowy pojazd</v-btn>
         </v-col>
       </v-row>
   

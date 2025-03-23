@@ -6,33 +6,33 @@
       <v-card class="orderCard">
         <v-card-title>
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="6">
               <span><strong>Data zamówienia:</strong> {{ new Date(order.orderDate).toLocaleDateString() }}</span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6">
               <span><strong>Klient:</strong> {{ order.clientName }}</span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6">
               <span><strong>Telefon:</strong> {{ order.clientPhoneNumber }}</span>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <span><strong>Opis:</strong> {{ order.description }}</span>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <span><strong>Status:</strong> {{ getOrderStatusName(order.orderStatus) }}</span>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <span><strong>Kod Klienta:</strong> {{ order.clientCode }}</span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6">
               <span><strong>Szacowana data ukończenia:</strong>
                 {{ order.estimatedCompletionDate ? new Date(order.estimatedCompletionDate).toLocaleDateString() : 'Brak' }}
               </span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6">
               <span><strong>Całkowity koszt:</strong> {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono' }}</span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" class="text-right">
               <Payment :order-id="order.id"/>
             </v-col>
           </v-row>

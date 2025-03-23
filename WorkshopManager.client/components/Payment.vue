@@ -29,7 +29,7 @@ async function pay() {
 </script>
 
 <template>
-  <div>
+  <v-container>
     <v-btn @click="dialog = true" style="background-color: #4caf50;">
       Potwierdź zamówienie
     </v-btn>
@@ -43,7 +43,7 @@ async function pay() {
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="dialog = false" color="grey">
+          <v-btn style="background-color: #f15c5c;" @click="dialog = false" >
             Anuluj
           </v-btn>
           <v-btn @click="pay" style="background-color: #4caf50;">
@@ -52,5 +52,5 @@ async function pay() {
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
+  </v-container>
 </template>

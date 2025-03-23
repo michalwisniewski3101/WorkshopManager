@@ -71,15 +71,16 @@ const menuItems = [
       </v-navigation-drawer>
 
       <!-- Pasek górny -->
-      <v-app-bar app>
+      <v-app-bar app class="d-flex align-center justify-between">
   <v-toolbar-title class="d-flex align-center">
-    <img src="/logo.webp" alt="WorkshopManager" class="logo" />
-    Workshop Manager
+    <span class="title-text">Workshop Manager</span>
   </v-toolbar-title>
-  <span><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
-  <v-btn @click="logout" color="red">
-    <font-awesome-icon icon="sign-out-alt" /> Wyloguj
-  </v-btn>
+  <div class="d-flex align-center">
+    <span class="mr-4"><font-awesome-icon icon="user" /> {{ authStore.username }}</span>
+    <v-btn @click="logout" color="red">
+      <font-awesome-icon icon="sign-out-alt" /> Wyloguj
+    </v-btn>
+  </div>
 </v-app-bar>
 
       <!-- Główna zawartość -->

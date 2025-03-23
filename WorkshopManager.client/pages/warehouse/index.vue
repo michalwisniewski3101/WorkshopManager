@@ -7,7 +7,7 @@
         <h1>Elementy Magazynu</h1>
       </v-col>
       <v-col cols="6" class="text-left">
-        <v-btn style="background-color: #4caf50;" @click="openInventoryModal" >Dodaj nowy element magazynu</v-btn>
+        <v-btn style="background-color: #4caf50;" @click="openInventoryModal" ><v-icon>mdi-plus</v-icon>Dodaj nowy element magazynu</v-btn>
       </v-col>
       <v-col cols="6" class="text-right">
         <v-text-field

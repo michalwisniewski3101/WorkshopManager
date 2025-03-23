@@ -9,7 +9,7 @@
       <v-col cols="6" class="text-left">
         <NuxtLink to="/order/create">
       <v-btn style="background-color: #4caf50;" >
-        Dodaj nowe zamówienie
+        <v-icon>mdi-plus</v-icon>Dodaj nowe zamówienie
       </v-btn>
     </NuxtLink>
       </v-col>
@@ -51,6 +51,8 @@
   <v-icon>mdi-eye</v-icon>
 
         </NuxtLink>
+        <v-icon @click="editItem(item)" class="clickable-icon">mdi-pencil</v-icon>
+        <v-icon @click="deleteItem(item.id)" class="clickable-icon">mdi-delete</v-icon>
       </template>
     </v-data-table>
   </v-card>
@@ -62,7 +64,7 @@ import { ref, onMounted } from 'vue'
 const orders = ref([])
 
 const tableHeaders = [
-  { title: 'Zamówienie ID', key: 'id' },
+  { title: 'Numer zamówienia', key: 'description' },
   { title: 'Data zamówienia', key: 'orderDate' },
   { title: 'Klient', key: 'clientName' },
   { title: 'Status', key: 'status' },

@@ -46,6 +46,8 @@
   <v-icon>mdi-eye</v-icon>
 
         </NuxtLink>
+            <v-icon @click="editItem(item)" class="clickable-icon">mdi-pencil</v-icon>
+            <v-icon @click="deleteItem(item.id)" class="clickable-icon">mdi-delete</v-icon>
       </template>
       </v-data-table>
     </v-card>

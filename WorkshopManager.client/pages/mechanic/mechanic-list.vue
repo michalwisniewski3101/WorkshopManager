@@ -7,7 +7,7 @@
           <h1>Lista mechaników</h1>
         </v-col>
         <v-col cols="12" class="text-left">
-          <v-btn style="background-color: #4caf50;" @click="openMechanicModal">Dodaj nowego mechanika</v-btn>
+          <v-btn style="background-color: #4caf50;" @click="openMechanicModal"><v-icon>mdi-plus</v-icon>Dodaj nowego mechanika</v-btn>
       </v-col>
       </v-row>
         <v-row>
@@ -25,6 +25,8 @@
           <v-icon>mdi-eye</v-icon>
            
       </NuxtLink>
+      <v-icon @click="editItem(item)" class="clickable-icon">mdi-pencil</v-icon>
+      <v-icon @click="deleteItem(item.id)" class="clickable-icon">mdi-delete</v-icon>
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   Specjalność: {{ getSpecialtyName(mechanic.specialtyId) }}, Doświadczenie: {{ mechanic.experienceLevel }} lat

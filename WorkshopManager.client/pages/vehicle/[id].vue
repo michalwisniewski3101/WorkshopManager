@@ -171,7 +171,7 @@ const items = ref([
 ]);
 const route = useRoute()
 const tableHeaders = [
-  { title: 'Zamówienie ID', key: 'id' },
+{ title: 'Numer zamówienia', key: 'description' },
   { title: 'Data zamówienia', key: 'orderDate' },
   { title: 'Klient', key: 'clientName' },
   { title: 'Status', key: 'status' },

@@ -8,12 +8,12 @@
         </v-col>
         <v-col v-if="tab === 'specialties'" cols="6" class="text-left">
           <v-btn  @click="showSpecialtyModal = true" style="background-color: #4caf50;">
-        Dodaj Specjalność
+            <v-icon>mdi-plus</v-icon>Dodaj Specjalność
       </v-btn>
       </v-col>
       <v-col v-if="tab === 'services'" cols="6" class="text-left">
         <v-btn  @click="showServiceModal = true" style="background-color: #4caf50;">
-          Dodaj Serwis</v-btn>
+          <v-icon>mdi-plus</v-icon>Dodaj Serwis</v-btn>
       </v-col>
       <v-col  cols="6" class="text-right">
         <v-text-field
@@ -53,6 +53,10 @@
             <template v-slot:[`item.specialtyName`]="{ item }">
               <span>{{ item.specialtyName }}</span>
             </template>
+            <template v-slot:item.actions="{ item }">
+        <v-icon @click="editItem(item)" class="clickable-icon">mdi-pencil</v-icon>
+        <v-icon @click="deleteItem(item.id)" class="clickable-icon">mdi-delete</v-icon>
+      </template>
           </v-data-table>
          
         
@@ -96,6 +100,10 @@
             <template v-slot:[`item.serviceDuration`]="{ item }">
               <span>{{ item.serviceDuration }} min</span>
             </template>
+            <template v-slot:item.actions="{ item }">
+        <v-icon @click="editItem(item)" class="clickable-icon">mdi-pencil</v-icon>
+        <v-icon @click="deleteItem(item.id)" class="clickable-icon">mdi-delete</v-icon>
+      </template>
           </v-data-table>
          
         
@@ -171,7 +179,8 @@ const specialties = ref([])
 const newSpecialty = ref({ specialtyName: '' })
 const tab = ref("specialties")
 const specialtyHeaders = ref([
-  { title: 'Specjalność', align: 'start', key: 'specialtyName' }
+  { title: 'Specjalność', align: 'start', key: 'specialtyName' },
+  { title: 'Akcje', key: 'actions', sortable: false }
 ])
 
 // Serwisy
@@ -184,7 +193,8 @@ const newService = ref({
 const serviceHeaders = ref([
   { title: 'Opis Serwisu', align: 'start', key: 'serviceDescription' },
   { title: 'Koszt (PLN)', align: 'start', key: 'serviceCost' },
-  { title: 'Czas trwania (min)', align: 'start', key: 'serviceDuration' }
+  { title: 'Czas trwania (min)', align: 'start', key: 'serviceDuration' },
+  { title: 'Akcje', key: 'actions', sortable: false }
 ])
 const closeSpecialtyModal = () => {
   showSpecialtyModal.value = false

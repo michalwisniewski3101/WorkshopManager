@@ -2,5 +2,3 @@
 -usunać id zamówienia z v-data-table
 -dodać obliczanie czasu zamówienia
 -dodać testy
--poprawic logo
--dodac ikony do przyciskow

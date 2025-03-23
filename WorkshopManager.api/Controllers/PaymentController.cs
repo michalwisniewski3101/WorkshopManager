@@ -93,8 +93,8 @@ namespace WorkshopManager.api.Controllers
                 PaymentMethodTypes = new List<string> { "card", "blik" },
                 LineItems = lineItems,
                 Mode = "payment",
-                SuccessUrl = "http://localhost:3000/success",
-                CancelUrl = "http://localhost:3000/cancel",
+                SuccessUrl = "http://localhost:3000/client/",
+                CancelUrl = "http://localhost:3000/client/",
                 InvoiceCreation = new SessionInvoiceCreationOptions
                 {
                     Enabled = request.NeedsInvoice

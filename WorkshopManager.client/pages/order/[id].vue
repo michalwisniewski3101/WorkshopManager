@@ -7,44 +7,53 @@
           <h1>Szczegóły zamówienia</h1>
         </v-col>
         <v-col cols="12" class="text-right">
+          <v-icon class="clickable-icon ma-3">mdi-pencil</v-icon>
+          <v-icon class="clickable-icon ma-3">mdi-delete</v-icon>
       </v-col>
       </v-row>
     <div v-if="order">
       <v-card class="orderCard">
         <v-card-title>
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="6" >
               <span><strong>Data zamówienia:</strong> {{ new Date(order.orderDate).toLocaleDateString() }}</span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6" >
               <span><strong>Klient:</strong> {{ order.clientName }}</span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6" >
               <span><strong>Telefon:</strong> {{ order.clientPhoneNumber }}</span>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <span><strong>Opis:</strong> {{ order.description }}</span>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <span><strong>Status:</strong> {{ getOrderStatusName(order.orderStatus) }}</span>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <span><strong>Kod Klienta:</strong> {{ order.clientCode }}</span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6" >
               <span><strong>Szacowana data ukończenia:</strong>
                 {{ order.estimatedCompletionDate ? new Date(order.estimatedCompletionDate).toLocaleDateString() : 'Brak' }}
               </span>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="6" >
               <span><strong>Całkowity koszt:</strong> {{ order.totalCost ? `${order.totalCost} PLN` : 'Nie ustalono' }}</span>
             </v-col>
           </v-row>
         </v-card-title>
       </v-card>
-
-      <service-schedule-form @service-schedule-added="handleServiceScheduleAdded" :orderId="order.id" />
-
+      <v-row>
+        <v-col cols="6" class="text-left">
+          <service-schedule-form @service-schedule-added="handleServiceScheduleAdded" :orderId="order.id" />
+        </v-col>
+        <v-col cols="6" class="text-right">
+          <Payment :order-id="order.id"/>
+        </v-col>
+      </v-row>
+      
+              
       <v-divider class="my-4"></v-divider>
       
       <div v-if="serviceSchedules && serviceSchedules.length > 0">
@@ -70,13 +79,13 @@
               <v-btn @click="updateServiceScheduleStatus(schedule.id)" color="success">Zapisz zmiany</v-btn>
               <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
             </div>
-            <div v-if="!schedule.showStatusChange">
+            <div v-if="!schedule.showStatusChange" class="text-right">
               
-              <v-btn @click="changeServiceStatus(schedule.id)" style="background-color: #4caf50;">
-                <v-icon>mdi-pencil</v-icon>
-                Zmień status
-              </v-btn>
+
+              <v-icon @click="changeServiceStatus(schedule.id)" class="clickable-icon">mdi-autorenew</v-icon>
+              <v-icon @click="editItem(item)" class="clickable-icon">mdi-pencil</v-icon>
               <v-icon @click="deleteServiceSchedule(schedule.id)" class="clickable-icon">mdi-delete</v-icon>
+              
             </div>
             <span><strong>Mechanicy:</strong>
                   {{ getMechanicsNames(schedule.mechanics) }}
