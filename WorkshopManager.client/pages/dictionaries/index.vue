@@ -152,7 +152,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-// Definiowanie meta danych
+
 definePageMeta({
   middleware: 'auth',
   auth: {
@@ -174,7 +174,7 @@ const items = ref([
     to: 'dictionaries',
   },
 ]);
-// Specjalności
+
 const specialties = ref([])
 const newSpecialty = ref({ specialtyName: '' })
 const tab = ref("specialties")
@@ -183,7 +183,7 @@ const specialtyHeaders = ref([
   { title: 'Akcje', key: 'actions', sortable: false }
 ])
 
-// Serwisy
+
 const services = ref([])
 const newService = ref({
   serviceDescription: '',
@@ -210,7 +210,7 @@ const closeServiceModal = () => {
 
 
 
-// Funkcja pobierająca specjalności z backendu
+
 const fetchSpecialties = async () => {
   try {
     specialties.value = await $fetch('/api/MechanicSpecialty/GetSpecialties')
@@ -219,7 +219,7 @@ const fetchSpecialties = async () => {
   }
 }
 
-// Funkcja pobierająca serwisy z backendu
+
 const fetchServices = async () => {
   try {
     services.value = await $fetch('/api/Service')
@@ -228,7 +228,7 @@ const fetchServices = async () => {
   }
 }
 
-// Funkcja dodawania specjalności
+
 const addSpecialty = async () => {
   try {
     await $fetch('/api/MechanicSpecialty/AddSpecialty', {
@@ -242,7 +242,7 @@ const addSpecialty = async () => {
     alert('Błąd podczas dodawania specjalności')
   }
 }
-// Funkcja dodawania serwisu
+
 const addService = async () => {
   try {
     const serviceData = {
@@ -261,7 +261,7 @@ const addService = async () => {
 }
 
 
-// Pobieranie danych przy zamontowaniu komponentu
+
 onMounted(() => {
   fetchSpecialties()
   fetchServices()

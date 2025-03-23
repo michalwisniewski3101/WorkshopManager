@@ -28,7 +28,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from '~/stores/auth'
 
-const authStore = useAuthStore()  // Pobieramy store Pinia
+const authStore = useAuthStore()  
 const username = ref('')
 const password = ref('')
 const rememberMe = ref(false)
@@ -44,9 +44,9 @@ const login = async () => {
     })
     const { token } = response.data
 
-    authStore.setLoginStatus(token, username.value)  // Ustawiamy stan logowania
+    authStore.setLoginStatus(token, username.value)  
 
-    // Przekierowanie po zalogowaniu
+
     router.push('/')
   } catch (error) {
     errorMessage.value = 'Nieprawidłowe dane logowania'

@@ -101,7 +101,7 @@ const props = defineProps({
   },
 });
 
-// Definicja zmiennych
+
 const services = ref([]);
 const showScheduleModal = ref(false);
 const mechanics = ref([]);
@@ -117,7 +117,7 @@ const newServiceSchedule = ref({
   ],
 });
 
-// Funkcja do ładowania danych
+
 const fetchData = async () => {
   try {
     services.value = await $fetch('/api/Service');

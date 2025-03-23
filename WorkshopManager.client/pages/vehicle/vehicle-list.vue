@@ -106,12 +106,11 @@
   }
   
   const editVehicle = (vehicle) => {
-    // Funkcja do edytowania pojazdu
     console.log('Edytuj pojazd:', vehicle)
   }
   
   const deleteVehicle = (vehicle) => {
-    // Funkcja do usuwania pojazdu
+
     console.log('Usuń pojazd:', vehicle)
   }
   

@@ -14,14 +14,13 @@ public class MechanicController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Mechanic
+
     [HttpGet("GetMechanicsList")]
     public async Task<ActionResult<IEnumerable<Mechanic>>> GetMechanicsList()
     {
         return await _context.Mechanics.ToListAsync();
     }
 
-    // GET: api/Mechanic/{id}
     [HttpGet("GetMechanicById{id}")]
     public async Task<ActionResult<Mechanic>> GetMechanic(Guid id)
     {
@@ -35,7 +34,6 @@ public class MechanicController : ControllerBase
         return mechanic;
     }
 
-    // POST: api/Mechanic
     [HttpPost]
     public async Task<ActionResult<Mechanic>> PostMechanic(Mechanic mechanic)
     {
@@ -45,7 +43,6 @@ public class MechanicController : ControllerBase
         return CreatedAtAction(nameof(GetMechanic), new { id = mechanic.Id }, mechanic);
     }
 
-    // PUT: api/Mechanic/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> PutMechanic(Mechanic mechanic)
     {
@@ -70,7 +67,6 @@ public class MechanicController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/Mechanic/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMechanic(Guid id)
     {

@@ -26,7 +26,6 @@ namespace WorkshopManager.Tests
             _signInManagerMock = GetMockSignInManager<IdentityUser>(_userManagerMock.Object);
             _configurationMock = new Mock<IConfiguration>();
 
-            // Konfiguracja ustawieñ JWT
             _configurationMock.Setup(c => c["Jwt:Key"]).Returns("TestKeyForJwtToken1234567890123456");
             _configurationMock.Setup(c => c["Jwt:Issuer"]).Returns("TestIssuer");
             _configurationMock.Setup(c => c["Jwt:Audience"]).Returns("TestAudience");
@@ -37,14 +36,14 @@ namespace WorkshopManager.Tests
             _controller = new AuthController(_userManagerMock.Object, _signInManagerMock.Object, _configurationMock.Object);
         }
 
-        // Pomocnicza metoda do tworzenia mocka UserManager
+
         private static Mock<UserManager<TUser>> GetMockUserManager<TUser>() where TUser : class
         {
             var store = new Mock<IUserStore<TUser>>();
             return new Mock<UserManager<TUser>>(store.Object, null, null, null, null, null, null, null, null);
         }
 
-        // Pomocnicza metoda do tworzenia mocka SignInManager
+  
         private static Mock<SignInManager<TUser>> GetMockSignInManager<TUser>(UserManager<TUser> userManager) where TUser : class
         {
             var contextAccessor = new Mock<Microsoft.AspNetCore.Http.IHttpContextAccessor>();
@@ -57,7 +56,7 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task Register_ValidModel_ReturnsOk()
         {
-            // Arrange
+             
             var model = new RegisterModel
             {
                 Username = "testuser",
@@ -70,10 +69,10 @@ namespace WorkshopManager.Tests
                 .Setup(x => x.CreateAsync(It.IsAny<IdentityUser>(), model.Password))
                 .ReturnsAsync(IdentityResult.Success);
 
-            // Act
+             
             var result = await _controller.Register(model);
 
-            // Assert
+             
             Assert.IsInstanceOf<OkObjectResult>(result);
             var okResult = result as OkObjectResult;
             Assert.AreEqual("Rejestracja powiod³a siê", okResult.Value);
@@ -82,7 +81,7 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task Register_InvalidModelState_ReturnsBadRequest()
         {
-            // Arrange
+             
             _controller.ModelState.AddModelError("Error", "B³¹d walidacji");
             var model = new RegisterModel
             {
@@ -92,17 +91,17 @@ namespace WorkshopManager.Tests
                 Password = "Test@1234"
             };
 
-            // Act
+             
             var result = await _controller.Register(model);
 
-            // Assert
+             
             Assert.IsInstanceOf<BadRequestObjectResult>(result);
         }
 
         [Test]
         public async Task Register_FailedCreation_ReturnsBadRequestWithErrors()
         {
-            // Arrange
+             
             var model = new RegisterModel
             {
                 Username = "testuser",
@@ -117,14 +116,14 @@ namespace WorkshopManager.Tests
                 .Setup(x => x.CreateAsync(It.IsAny<IdentityUser>(), model.Password))
                 .ReturnsAsync(failedResult);
 
-            // Act
+             
             var result = await _controller.Register(model);
 
-            // Assert
+             
             Assert.IsInstanceOf<BadRequestObjectResult>(result);
             var badRequestResult = result as BadRequestObjectResult;
             Assert.IsNotNull(badRequestResult.Value);
-            // Mo¿esz dodatkowo zweryfikowaæ zawartoœæ b³êdów w ModelState, jeœli jest to potrzebne.
+
         }
 
         #endregion
@@ -134,7 +133,7 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task Login_ValidCredentials_ReturnsOkWithToken()
         {
-            // Arrange
+             
             var model = new LoginModel
             {
                 Username = "testuser",
@@ -154,10 +153,10 @@ namespace WorkshopManager.Tests
                 .Setup(x => x.GetRolesAsync(testUser))
                 .ReturnsAsync(new List<string> { "User" });
 
-            // Act
+             
             var result = await _controller.Login(model);
 
-            // Assert
+             
             Assert.IsInstanceOf<OkObjectResult>(result);
             var okResult = result as OkObjectResult;
             Assert.IsInstanceOf<TokenModel>(okResult.Value);
@@ -169,7 +168,7 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task Login_InvalidModelState_ReturnsBadRequest()
         {
-            // Arrange
+             
             _controller.ModelState.AddModelError("Error", "B³¹d walidacji");
             var model = new LoginModel
             {
@@ -178,17 +177,17 @@ namespace WorkshopManager.Tests
                 RememberMe = false
             };
 
-            // Act
+             
             var result = await _controller.Login(model);
 
-            // Assert
+             
             Assert.IsInstanceOf<BadRequestObjectResult>(result);
         }
 
         [Test]
         public async Task Login_InvalidCredentials_ReturnsUnauthorized()
         {
-            // Arrange
+             
             var model = new LoginModel
             {
                 Username = "testuser",
@@ -200,10 +199,10 @@ namespace WorkshopManager.Tests
                 .Setup(x => x.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false))
                 .ReturnsAsync(Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            // Act
+             
             var result = await _controller.Login(model);
 
-            // Assert
+             
             Assert.IsInstanceOf<UnauthorizedObjectResult>(result);
         }
 
@@ -214,15 +213,15 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task Logout_ReturnsOk()
         {
-            // Arrange
+             
             _signInManagerMock
                 .Setup(x => x.SignOutAsync())
                 .Returns(Task.CompletedTask);
 
-            // Act
+             
             var result = await _controller.Logout();
 
-            // Assert
+             
             Assert.IsInstanceOf<OkObjectResult>(result);
             var okResult = result as OkObjectResult;
             Assert.AreEqual("Wylogowanie powiod³o siê", okResult.Value);

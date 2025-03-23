@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { jwtDecode } from 'jwt-decode'; // Poprawiony import
+import { jwtDecode } from 'jwt-decode'; 
 
 export const useAuthStore = defineStore('auth', () => {
   const isLoggedIn = ref(false)
@@ -8,23 +8,23 @@ export const useAuthStore = defineStore('auth', () => {
   const jwtToken = ref('')
   const roles = ref([]) 
 
-  // Funkcja do ustawienia stanu logowania
+ 
   const setLoginStatus = (token, user) => {
     jwtToken.value = token
     username.value = user
     isLoggedIn.value = true
 
-    // Dekodowanie tokena i wyciąganie ról
+
     const decodedToken = jwtDecode(token)
     roles.value = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || []
 
-    // Zapis w localStorage
+
     localStorage.setItem('jwtToken', token)
     localStorage.setItem('username', user)
-    localStorage.setItem('roles', JSON.stringify(roles.value)); // Zapisujemy jako JSON
+    localStorage.setItem('roles', JSON.stringify(roles.value)); 
   }
 
-  // Funkcja do sprawdzenia, czy użytkownik jest zalogowany
+
   const checkLoginStatus = () => {
     const token = localStorage.getItem('jwtToken')
     if (token) {
@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
       isLoggedIn.value = true
       username.value = localStorage.getItem('username')
 
-      // Dekodowanie tokena, aby odświeżyć role
+
       const decodedToken = jwtDecode(token)
       roles.value = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || []
     } else {
@@ -41,7 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // Funkcja wylogowania
+
   const logout = () => {
     jwtToken.value = ''
     username.value = ''

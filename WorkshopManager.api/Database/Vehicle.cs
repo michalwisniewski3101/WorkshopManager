@@ -1,6 +1,6 @@
 ﻿public class Vehicle : IEntity
 {
-    public Guid Id { get; set; }  // GUID jako identyfikator
+    public Guid Id { get; set; }  
 
     public string Make { get; set; }
     public string Model { get; set; }

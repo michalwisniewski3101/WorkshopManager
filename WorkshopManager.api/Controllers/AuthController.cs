@@ -24,7 +24,6 @@ public class AuthController : ControllerBase
         _configuration = configuration;
     }
 
-    // Endpoint rejestracji
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
     {
@@ -47,7 +46,6 @@ public class AuthController : ControllerBase
         return BadRequest(ModelState);
     }
 
-    // Endpoint logowania
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
@@ -60,7 +58,7 @@ public class AuthController : ControllerBase
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             var token = GenerateJwtToken(user);
-            var refreshToken = GenerateRefreshToken(); // Możesz stworzyć funkcję do generowania refresh tokena
+            var refreshToken = GenerateRefreshToken(); 
 
             return Ok(new TokenModel { Token = token, RefreshToken = refreshToken });
         }
@@ -90,17 +88,17 @@ public class AuthController : ControllerBase
 
     private string GenerateJwtToken(IdentityUser user)
     {
-        // Pobierz role użytkownika
+
         var userRoles = _userManager.GetRolesAsync(user).Result;
 
-        // Twórz claims dla tokena
+ 
         var claims = new List<Claim>
     {
         new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     };
 
-        // Dodaj role jako claims
+ 
         foreach (var role in userRoles)
         {
             claims.Add(new Claim(ClaimTypes.Role, role));
@@ -122,11 +120,11 @@ public class AuthController : ControllerBase
 
     private string GenerateRefreshToken()
     {
-        // Logika do generowania refresh tokena
+
         return Guid.NewGuid().ToString();
     }
 
-    // Endpoint wylogowania
+
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {

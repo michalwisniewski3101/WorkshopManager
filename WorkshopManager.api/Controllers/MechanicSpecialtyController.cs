@@ -18,14 +18,13 @@ namespace WorkshopManager.api.Controllers
             _context = context;
         }
 
-        // GET: api/MechanicSpecialty - Zwraca listę specjalności
+  
         [HttpGet("GetSpecialties")]
         public async Task<ActionResult<IEnumerable<MechanicSpecialty>>> GetSpecialties()
         {
             return await _context.MechanicSpecialties.ToListAsync();
         }
 
-        // POST: api/MechanicSpecialty/AddSpecialty - Dodaje nową specjalność
         [HttpPost("AddSpecialty")]
         public async Task<ActionResult<MechanicSpecialty>> AddSpecialty([FromBody] MechanicSpecialty specialty)
         {

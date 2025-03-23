@@ -18,18 +18,12 @@ public class InventoryItemController : ControllerBase
         _serviceRepository = serviceRepository;
     }
 
-
-
-
-
-    // GET: api/InventoryItem
     [HttpGet]
     public async Task<ActionResult<IEnumerable<InventoryItem>>> GetInventoryItems()
     {
         return await _context.InventoryItems.ToListAsync();
     }
 
-    // GET: api/InventoryItem/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<InventoryItem>> GetInventoryItem(Guid id)
     {
@@ -57,8 +51,6 @@ public class InventoryItemController : ControllerBase
     }
 
 
-
-    // POST: api/InventoryItem
     [HttpPost]
     public async Task<ActionResult<InventoryItem>> PostInventoryItem(InventoryItem inventoryItem)
     {
@@ -103,7 +95,7 @@ public class InventoryItemController : ControllerBase
                     }
                 }
 
-                // Sprawdzenie, czy nadal brakuje jakichś elementów
+     
                 bool hasMissingItems = service.OrderItems.Any(oi =>
                     missingInventoryItems.Any(mi => mi.Id == oi.InventoryItemId));
 
@@ -123,7 +115,7 @@ public class InventoryItemController : ControllerBase
         return inventoryItem;
 
     }
-        // PUT: api/InventoryItem/{id}
+
     [HttpPut("{id}")]
     public async Task<IActionResult> PutInventoryItem(Guid id, InventoryItem inventoryItem)
     {
@@ -153,7 +145,6 @@ public class InventoryItemController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/InventoryItem/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteInventoryItem(Guid id)
     {

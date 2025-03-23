@@ -16,13 +16,13 @@ namespace WorkshopManager.api.Repos
             _vehicleRepository = vehicleRepository;
         }
 
-        // Pobierz wszystkie zamówienia
+  
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
             return await _context.Orders.ToListAsync();
         }
 
-        // Pobierz zamówienie po ID
+    
         public async Task<Order> GetOrderByIdAsync(Guid id)
         {
             return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
@@ -58,10 +58,9 @@ namespace WorkshopManager.api.Repos
         {
             return await _context.Orders.FirstOrDefaultAsync(o => o.ClientCode == code);
         }
-        // Dodaj nowe zamówienie
         public async Task<Order> AddOrderAsync(CreateOrderDto orderDto)
         {
-            // Uzyskujemy lub tworzymy pojazd na podstawie danych VIN (jeśli pojazd nie istnieje)
+  
             var vehicleId = await _vehicleRepository.GetOrAddVehicleAsync(orderDto.VIN, orderDto.Make, orderDto.Model, orderDto.Year, orderDto.LicensePlate);
 
             var newOrder = new Order
@@ -94,7 +93,6 @@ namespace WorkshopManager.api.Repos
             return true;
         }
 
-        // Usuń zamówienie
         public async Task<bool> DeleteOrderAsync(Guid id)
         {
             var order = await _context.Orders.FindAsync(id);
@@ -109,7 +107,6 @@ namespace WorkshopManager.api.Repos
         }
 
 
-        // Sprawdź, czy zamówienie istnieje
         public bool OrderExists(Guid id)
         {
             return _context.Orders.Any(e => e.Id == id);

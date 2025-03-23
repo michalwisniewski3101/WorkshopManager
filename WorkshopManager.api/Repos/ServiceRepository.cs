@@ -97,10 +97,10 @@ namespace WorkshopManager.api.Repos
             serviceSchedule.Id = Guid.NewGuid();
 
             serviceSchedule.ServiceStatus = ServiceStatus.Pending;
-            // Iteracja po wszystkich pozycjach zamówienia
+
             foreach (var orderItem in serviceSchedule.OrderItems)
             {
-                // Pobieranie ceny jednostkowej z magazynu
+
                 var inventoryItem = await _context.InventoryItems
                     .FirstOrDefaultAsync(item => item.Id == orderItem.InventoryItemId);
 
@@ -236,17 +236,15 @@ namespace WorkshopManager.api.Repos
 
                 else
                 {
-                    // Opcjonalny przypadek dla innych kombinacji statusów
                     return;
                 }
 
-                // Aktualizacja statusu zamówienia
+
                 var order = await _context.Orders.FindAsync(orderId);
             if (order != null)
             {
                 order.OrderStatus = newOrderStatus;
 
-                // Sumowanie total price dla wszystkich OrderItems powiązanych z danym OrderId
                 var totalCost = await _context.ServiceSchedules
                     .Where(ss => ss.OrderId == orderId)
                     .SelectMany(ss => ss.OrderItems)

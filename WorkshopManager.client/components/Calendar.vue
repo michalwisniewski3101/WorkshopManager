@@ -68,9 +68,9 @@
   
   const getOrderColor = (status) => {
     const statusColors = {
-      1: "blue",    // Nowe
-      2: "orange",  // W trakcie
-      3: "green",   // Zakończone
+      1: "blue",    
+      2: "orange",  
+      3: "green",   
     };
     return statusColors[status] || "grey";
   };

@@ -23,7 +23,7 @@ public class VehicleController : ControllerBase
         return Ok(vehicles);
     }
 
-    // Pobierz pojazd po ID
+
     [HttpGet("{id}")]
     public async Task<ActionResult<Vehicle>> GetVehicle(Guid id)
     {
@@ -37,7 +37,7 @@ public class VehicleController : ControllerBase
         return Ok(vehicle);
     }
 
-    // Dodaj nowy pojazd
+
     [HttpPost]
     public async Task<ActionResult<Vehicle>> PostVehicle(Vehicle vehicle)
     {

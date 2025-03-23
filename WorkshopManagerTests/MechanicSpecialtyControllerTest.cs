@@ -42,15 +42,15 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task GetSpecialties_ReturnsAllSpecialties()
         {
-            // Arrange
+             
             _context.MechanicSpecialties.Add(CreateTestSpecialty());
             _context.MechanicSpecialties.Add(new MechanicSpecialty { Id = Guid.NewGuid(), SpecialtyName = "Lakiernik" });
             await _context.SaveChangesAsync();
 
-            // Act
+             
             var result = await _controller.GetSpecialties();
 
-            // Assert
+             
             Assert.IsInstanceOf<ActionResult<IEnumerable<MechanicSpecialty>>>(result);
             Assert.AreEqual(2, result.Value.Count());
         }
@@ -58,13 +58,13 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task AddSpecialty_ValidSpecialty_ReturnsOkWithCreatedSpecialty()
         {
-            // Arrange
+             
             var specialty = new MechanicSpecialty { SpecialtyName = "Wulkanizator" };
 
-            // Act
+             
             var result = await _controller.AddSpecialty(specialty);
 
-            // Assert
+             
             Assert.IsInstanceOf<OkObjectResult>(result.Result);
             var createdSpecialty = (result.Result as OkObjectResult).Value as MechanicSpecialty;
             Assert.IsNotNull(createdSpecialty);
@@ -75,13 +75,13 @@ namespace WorkshopManager.Tests
         [Test]
         public async Task AddSpecialty_InvalidSpecialty_ReturnsBadRequest()
         {
-            // Arrange
+             
             var specialty = new MechanicSpecialty { SpecialtyName = "" };
 
-            // Act
+             
             var result = await _controller.AddSpecialty(specialty);
 
-            // Assert
+             
             Assert.IsInstanceOf<BadRequestObjectResult>(result.Result);
             var badRequest = result.Result as BadRequestObjectResult;
             Assert.AreEqual("Nazwa specjalnoœci nie mo¿e byæ pusta.", badRequest.Value);

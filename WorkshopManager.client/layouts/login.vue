@@ -8,19 +8,16 @@ const authStore = useAuthStore()
 const router = useRouter()
 
 onMounted(() => {
-  authStore.checkLoginStatus()  // Sprawdzamy stan logowania po załadowaniu
+  authStore.checkLoginStatus()  
 })
 
 const logout = async () => {
   try {
     await axios.post('/api/auth/logout', {}, {
-      /* headers: {
-        Authorization: `Bearer ${authStore.jwtToken}`,
-      },*/
     })
-    authStore.logout()  // Zaktualizowanie stanu logowania w Pinia
+    authStore.logout()  
 
-    // Przekierowanie po wylogowaniu
+
     router.push('/auth/login')
   } catch (error) {
     console.error("Błąd wylogowania:", error)

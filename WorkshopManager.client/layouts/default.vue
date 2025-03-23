@@ -9,24 +9,24 @@ const router = useRouter()
 const rail = ref(false)
 
 onMounted(() => {
-  authStore.checkLoginStatus() // Sprawdzamy stan logowania po załadowaniu
+  authStore.checkLoginStatus() 
 })
 
-// Funkcja do wylogowania
+
 const logout = async () => {
   try {
     await axios.post('/api/auth/logout', {}, {})
-    authStore.logout() // Zaktualizowanie stanu logowania w Pinia
-    router.push('/auth/login') // Przekierowanie po wylogowaniu
+    authStore.logout() 
+    router.push('/auth/login') 
   } catch (error) {
     console.error('Błąd wylogowania:', error)
   }
 }
 
-// Zmiana ikony chevron
+
 const chevronIcon = computed(() => (rail.value ? 'mdi-chevron-right' : 'mdi-chevron-left'))
 
-// Definiowanie elementów menu z ikonami
+
 const menuItems = [
   { title: 'Strona główna', to: '/', icon: 'mdi-home', roles: ['Administrator', 'Starszy Mechanik', 'Młodszy Mechanik', 'Klient'] },
   { title: 'Pojazdy', to: '/vehicle/vehicle-list', icon: 'mdi-car', roles: ['Administrator', 'Starszy Mechanik', 'Młodszy Mechanik'] },

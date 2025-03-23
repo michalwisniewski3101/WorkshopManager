@@ -139,7 +139,7 @@ const newInventoryItem = ref({
   supplier: '',
   taxRate: 23
 })
-const selectedInventoryItem = ref({}) // Element, którego ilość jest aktualizowana
+const selectedInventoryItem = ref({}) 
 const showInventoryModal = ref(false)
 const showQuantityModal = ref(false)
 const isEditMode = ref(false)

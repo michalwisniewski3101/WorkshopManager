@@ -1,4 +1,4 @@
-// plugins/pinia.js
+
 import { createPinia } from 'pinia'
 
 export default defineNuxtPlugin(nuxtApp => {

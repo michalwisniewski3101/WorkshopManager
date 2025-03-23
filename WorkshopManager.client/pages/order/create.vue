@@ -97,11 +97,11 @@ const addOrder = async () => {
       headers: { 'Content-Type': 'application/json' }
     })
 
-    // Załóżmy, że odpowiedź zawiera obiekt zamówienia, w tym jego ID
+ 
     const orderId = response.id
 
     alert('Zamówienie dodane pomyślnie!')
-    // Przekierowanie na stronę szczegółów zamówienia
+
     router.push(`/order/${orderId}`)
   } catch (error) {
     alert('Błąd podczas dodawania zamówienia')

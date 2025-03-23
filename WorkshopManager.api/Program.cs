@@ -12,10 +12,9 @@ using WorkshopManager.api;
 var builder = WebApplication.CreateBuilder(args);
 var stripeSettings = builder.Configuration.GetSection("Stripe").Get<StripeSettings>();
 StripeConfiguration.ApiKey = stripeSettings.SecretKey;
-// Add services to the container.
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
 {
@@ -51,7 +50,6 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddDbContext<WorkshopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WorkshopManagerDatabase")));
 
-// Dodaj inne us³ugi
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options =>
@@ -65,7 +63,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-//builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<WorkshopContext>();
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<WorkshopContext>()
@@ -82,13 +80,9 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        //ValidateIssuer = true,
-        //ValidateAudience = true,
+
         ValidateLifetime = true,
-        //ValidateIssuerSigningKey = true,
-        //ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        //ValidAudience = builder.Configuration["Jwt:Audience"],
-        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
     };
 });
 builder.Services.AddAuthorization(options =>
@@ -125,7 +119,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    // Dodanie testowych u¿ytkowników
+
     var testUsers = new[]
     {
         new { UserName = "admin", Email = "admin@example.com", Role = "Administrator" },
@@ -143,7 +137,7 @@ using (var scope = app.Services.CreateScope())
             {
                 UserName = testUser.UserName,
                 Email = testUser.Email,
-                EmailConfirmed = true // Potwierdzenie e-mail, jeœli to konieczne
+                EmailConfirmed = true 
             };
             var result = await userManager.CreateAsync(user, "Qaz123!@");
 
@@ -156,10 +150,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-
-
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

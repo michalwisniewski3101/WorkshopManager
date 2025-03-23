@@ -44,15 +44,15 @@ public class MechanicControllerTests
     [Test]
     public async Task GetMechanicsList_ReturnsAllMechanics()
     {
-        // Arrange
+         
         _context.Mechanics.Add(CreateTestMechanic());
         _context.Mechanics.Add(CreateTestMechanic());
         await _context.SaveChangesAsync();
 
-        // Act
+         
         var result = await _controller.GetMechanicsList();
 
-        // Assert
+         
         Assert.IsInstanceOf<ActionResult<IEnumerable<Mechanic>>>(result);
         Assert.AreEqual(2, result.Value.Count());
     }
@@ -60,15 +60,15 @@ public class MechanicControllerTests
     [Test]
     public async Task GetMechanicById_ValidId_ReturnsMechanic()
     {
-        // Arrange
+         
         var mechanic = CreateTestMechanic();
         _context.Mechanics.Add(mechanic);
         await _context.SaveChangesAsync();
 
-        // Act
+         
         var result = await _controller.GetMechanic(mechanic.Id);
 
-        // Assert
+         
         Assert.IsInstanceOf<ActionResult<Mechanic>>(result);
         Assert.IsNotNull(result.Value);
         Assert.AreEqual(mechanic.Id, result.Value.Id);
@@ -77,23 +77,23 @@ public class MechanicControllerTests
     [Test]
     public async Task GetMechanicById_InvalidId_ReturnsNotFound()
     {
-        // Act
+         
         var result = await _controller.GetMechanic(Guid.NewGuid());
 
-        // Assert
+         
         Assert.IsInstanceOf<NotFoundResult>(result.Result);
     }
 
     [Test]
     public async Task PostMechanic_ValidMechanic_ReturnsCreatedResponse()
     {
-        // Arrange
+         
         var mechanic = CreateTestMechanic();
 
-        // Act
+         
         var result = await _controller.PostMechanic(mechanic);
 
-        // Assert
+         
         Assert.IsInstanceOf<CreatedAtActionResult>(result.Result);
         var createdResult = result.Result as CreatedAtActionResult;
         Assert.IsNotNull(createdResult);
@@ -103,16 +103,16 @@ public class MechanicControllerTests
     [Test]
     public async Task PutMechanic_ExistingMechanic_UpdatesSuccessfully()
     {
-        // Arrange
+         
         var mechanic = CreateTestMechanic();
         _context.Mechanics.Add(mechanic);
         await _context.SaveChangesAsync();
 
-        // Act
+         
         mechanic.ExperienceLevel = 10;
         var result = await _controller.PutMechanic(mechanic);
 
-        // Assert
+         
         Assert.IsInstanceOf<NoContentResult>(result);
         var updatedMechanic = await _context.Mechanics.FindAsync(mechanic.Id);
         Assert.AreEqual(10, updatedMechanic.ExperienceLevel);
@@ -121,28 +121,28 @@ public class MechanicControllerTests
     [Test]
     public async Task PutMechanic_NonExistingMechanic_ReturnsNotFound()
     {
-        // Arrange
+         
         var mechanic = CreateTestMechanic();
 
-        // Act
+         
         var result = await _controller.PutMechanic(mechanic);
 
-        // Assert
+         
         Assert.IsInstanceOf<NotFoundResult>(result);
     }
 
     [Test]
     public async Task DeleteMechanic_ValidId_RemovesMechanic()
     {
-        // Arrange
+         
         var mechanic = CreateTestMechanic();
         _context.Mechanics.Add(mechanic);
         await _context.SaveChangesAsync();
 
-        // Act
+         
         var result = await _controller.DeleteMechanic(mechanic.Id);
 
-        // Assert
+         
         Assert.IsInstanceOf<NoContentResult>(result);
         Assert.IsNull(await _context.Mechanics.FindAsync(mechanic.Id));
     }
@@ -150,10 +150,10 @@ public class MechanicControllerTests
     [Test]
     public async Task DeleteMechanic_InvalidId_ReturnsNotFound()
     {
-        // Act
+         
         var result = await _controller.DeleteMechanic(Guid.NewGuid());
 
-        // Assert
+         
         Assert.IsInstanceOf<NotFoundResult>(result);
     }
 

@@ -23,14 +23,14 @@ namespace WorkshopManager.api.Controllers
         [HttpPost("create-checkout-session")]
         public async Task<IActionResult> CreateCheckoutSession([FromBody] PaymentRequest request)
         {
-            // Pobranie zamówienia na podstawie identyfikatora
+
             var order = await _context.Orders.FindAsync(request.OrderId);
             if (order == null)
             {
                 return NotFound("Nie znaleziono zamówienia");
             }
 
-            // Pobranie wszystkich harmonogramów serwisowych powiązanych z zamówieniem
+ 
             var serviceSchedules = await _context.ServiceSchedules
                 .Where(ss => ss.OrderId == request.OrderId)
                 .ToListAsync();
@@ -44,9 +44,9 @@ namespace WorkshopManager.api.Controllers
 
 
 
-            // Pobierz listę stawek podatkowych
+        
             StripeList<TaxRate> taxRates = taxRateService.List(options1);
-            // Budowanie pozycji do sesji Stripe na podstawie OrderItems z harmonogramów
+    
             var lineItems = new List<SessionLineItemOptions>();
 
             foreach (var schedule in serviceSchedules)

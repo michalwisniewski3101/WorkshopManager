@@ -15,7 +15,6 @@ namespace WorkshopManager.api.Controllers
             _orderRepository = orderRepository;
         }
 
-        // GET: api/Order
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
@@ -23,7 +22,7 @@ namespace WorkshopManager.api.Controllers
             return Ok(orders);
         }
 
-        // GET: api/Order/{id}
+ 
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(Guid id)
         {
@@ -34,7 +33,7 @@ namespace WorkshopManager.api.Controllers
             }
             return Ok(order);
         }
-        // GET: api/Order/{id}
+   
         [HttpGet("ByCode/{code}")]
         public async Task<ActionResult<Order>> GetOrderByCode(string code)
         {
@@ -64,7 +63,7 @@ namespace WorkshopManager.api.Controllers
             return Ok(orders);
         }
 
-        // POST: api/Order
+  
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(CreateOrderDto orderDto)
         {
@@ -72,7 +71,7 @@ namespace WorkshopManager.api.Controllers
             return CreatedAtAction(nameof(GetOrder), new { id = newOrder.Id }, newOrder);
         }
 
-        // PUT: api/Order/{id}
+     
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(Guid id, Order order)
         {
@@ -89,7 +88,7 @@ namespace WorkshopManager.api.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Order/{id}
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(Guid id)
         {
