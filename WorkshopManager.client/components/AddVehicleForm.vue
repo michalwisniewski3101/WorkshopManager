@@ -14,18 +14,18 @@
             <v-form @submit.prevent="addVehicle">
               <v-row>
                 <v-col cols="6">
-                  <v-text-field
+                  <v-text-field variant="outlined"
                 label="Marka"
                 v-model="newVehicle.make"
                 required
               ></v-text-field>
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="Rok produkcji"
                 type="number"
                 v-model="newVehicle.year"
                 required
               ></v-text-field>
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="VIN"
                 v-model="newVehicle.vin"
                 required
@@ -39,12 +39,12 @@
 
 
                 <v-col cols="6">
-                  <v-text-field
+                  <v-text-field variant="outlined"
                 label="Model"
                 v-model="newVehicle.model"
                 required
               ></v-text-field>
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="Numer rejestracyjny"
                 v-model="newVehicle.licensePlate"
                 required
@@ -55,13 +55,13 @@
 
               <v-row>
                 <v-col cols="6">
-                  <v-text-field
+                  <v-text-field variant="outlined"
                 label="Imię i nazwisko właściciela"
                 v-model="newVehicle.ownerName"
                 required
               ></v-text-field>
   
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="Numer telefonu właściciela"
                 type="tel"
                 v-model="newVehicle.ownerPhoneNumber"
@@ -76,14 +76,14 @@
 
 
                 <v-col cols="6">
-                  <v-text-field
+                  <v-text-field variant="outlined"
                 label="Email właściciela"
                 type="email"
                 v-model="newVehicle.ownerEmail"
                 required
               ></v-text-field>
   
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="Adres właściciela"
                 v-model="newVehicle.ownerAddress"
                 required

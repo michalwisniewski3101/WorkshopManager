@@ -15,23 +15,23 @@
       <v-form @submit.prevent="addOrder">
         <v-row>
           <v-col>
-            <v-text-field v-model="newOrder.clientName" label="Imię i nazwisko klienta" required></v-text-field>
-            <v-text-field v-model="newOrder.clientPhoneNumber" label="Numer telefonu klienta" type="tel" required></v-text-field>
+            <v-text-field variant="outlined" v-model="newOrder.clientName" label="Imię i nazwisko klienta" required></v-text-field>
+            <v-text-field variant="outlined" v-model="newOrder.clientPhoneNumber" label="Numer telefonu klienta" type="tel" required></v-text-field>
           </v-col>
           <v-col>
-            <v-text-field v-model="newOrder.clientEmail" label="E-mail klienta" type="email"></v-text-field>
-            <v-text-field v-model="newOrder.clientAddress" label="Adres klienta"></v-text-field>
+            <v-text-field variant="outlined" v-model="newOrder.clientEmail" label="E-mail klienta" type="email"></v-text-field>
+            <v-text-field variant="outlined" v-model="newOrder.clientAddress" label="Adres klienta"></v-text-field>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <v-text-field v-model="newOrder.vin" label="Numer VIN" required></v-text-field>
-        <v-text-field v-model="newOrder.make" label="Marka pojazdu" required></v-text-field>
-        <v-text-field v-model="newOrder.model" label="Model pojazdu" required></v-text-field>
+            <v-text-field variant="outlined" v-model="newOrder.vin" label="Numer VIN" required></v-text-field>
+        <v-text-field variant="outlined" v-model="newOrder.make" label="Marka pojazdu" required></v-text-field>
+        <v-text-field variant="outlined" v-model="newOrder.model" label="Model pojazdu" required></v-text-field>
           </v-col>
           <v-col>
-            <v-text-field v-model="newOrder.year" label="Rok produkcji" type="number" required></v-text-field>
-        <v-text-field v-model="newOrder.licensePlate" label="Tablica rejestracyjna" required></v-text-field>
+            <v-text-field variant="outlined" v-model="newOrder.year" label="Rok produkcji" type="number" required></v-text-field>
+        <v-text-field variant="outlined" v-model="newOrder.licensePlate" label="Tablica rejestracyjna" required></v-text-field>
 
           </v-col>
         </v-row>

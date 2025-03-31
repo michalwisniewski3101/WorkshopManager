@@ -16,11 +16,10 @@
           <v-icon>mdi-plus</v-icon>Dodaj Serwis</v-btn>
       </v-col>
       <v-col  cols="6" class="text-right">
-        <v-text-field
+        <v-text-field variant="outlined"
         v-model="search"
         label="Szukaj"
         prepend-inner-icon="mdi-magnify"
-        variant="outlined"
         hide-details
         single-line
       ></v-text-field>
@@ -67,7 +66,7 @@
     <v-card-title class="headline">Dodaj Specjalność</v-card-title>
     <v-card-text>
       <form @submit.prevent="addSpecialty">
-        <v-text-field
+        <v-text-field variant="outlined"
           label="Nazwa specjalności"
           v-model="newSpecialty.specialtyName"
           required
@@ -114,19 +113,19 @@
     <v-card-title class="headline">Dodaj Serwis</v-card-title>
     <v-card-text>
       <form @submit.prevent="addService">
-        <v-text-field
+        <v-text-field variant="outlined"
           label="Opis serwisu"
           v-model="newService.serviceDescription"
           required
         ></v-text-field>
-        <v-text-field
+        <v-text-field variant="outlined"
           label="Koszt serwisu (PLN)"
           v-model.number="newService.serviceCost"
           type="number"
           step="0.01"
           required
         ></v-text-field>
-        <v-text-field
+        <v-text-field variant="outlined"
           label="Czas trwania serwisu (minuty)"
           v-model.number="newService.serviceDuration"
           type="number"
@@ -345,5 +344,27 @@ h1 {
 /* Hover dla efektu */
 .v-tab:hover {
   background-color: #c0c0c0;
+}
+:deep(.v-pagination .v-btn:not(.v-btn--active)) { 
+  background-color: #c0c0c0 !important; 
+  color: #000000 !important; 
+  margin: 0 2px; 
+}
+
+
+:deep(.v-pagination .v-pagination__item--active .v-btn) { 
+  background-color: #4caf50 !important; 
+  color: white !important; 
+}
+
+
+:deep(.v-pagination .v-pagination__navigation .v-btn[disabled]) {
+  background-color: #e0e0e0 !important; 
+  color: #a0a0a0 !important; 
+  opacity: 0.6; 
+}
+
+:deep(.v-pagination .v-btn:not(.v-btn--active):not([disabled]):hover) {
+  background-color: #a8a8a8 !important; 
 }
 </style>

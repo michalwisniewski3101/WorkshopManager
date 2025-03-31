@@ -13,31 +13,25 @@
         <v-row>
 
         <v-col>
-          <v-list>
-            <v-list-item
-              v-for="mechanic in mechanics"
-              :key="mechanic.id"
-            >
-              <v-list-item-content>
-                <v-list-item-title>
-                  <strong>{{ mechanic.firstName }} {{ mechanic.lastName }}</strong>                <NuxtLink :to="`/mechanic/${mechanic.id}`" class="clickable-icon">
-          
-          <v-icon>mdi-eye</v-icon>
-           
-      </NuxtLink>
-      <v-icon @click="editItem(item)" class="clickable-icon">mdi-pencil</v-icon>
-      <v-icon @click="deleteItem(item.id)" class="clickable-icon">mdi-delete</v-icon>
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                  Specjalność: {{ getSpecialtyName(mechanic.specialtyId) }}, Doświadczenie: {{ mechanic.experienceLevel }} lat
-               
 
-                </v-list-item-subtitle>
+    <v-row>
+      <v-col cols="12" md="6" v-for="mechanic in mechanics" :key="mechanic.id">
+        <v-list-item>
+            <v-list-item-title>
+              <strong>{{ mechanic.firstName }} {{ mechanic.lastName }}</strong>
+              <NuxtLink :to="`/mechanic/${mechanic.id}`" class="clickable-icon">
+                <v-icon>mdi-eye</v-icon>
+              </NuxtLink>
+              <v-icon @click="editItem(mechanic)" class="clickable-icon">mdi-pencil</v-icon>
+              <v-icon @click="deleteItem(mechanic.id)" class="clickable-icon">mdi-delete</v-icon>
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              Specjalność: {{ getSpecialtyName(mechanic.specialtyId) }}, Doświadczenie: {{ mechanic.experienceLevel }} lat
+            </v-list-item-subtitle>
+        </v-list-item>
+      </v-col>
+    </v-row>
 
-              </v-list-item-content>
-            </v-list-item>
-            
-          </v-list>
         </v-col>
         
        
@@ -54,17 +48,17 @@
 
               <v-row>
                 <v-col>
-                  <v-text-field
+                  <v-text-field variant="outlined"
                 label="Imię"
                 v-model="newMechanic.firstName"
                 required
               ></v-text-field>
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="Numer telefonu"
                 v-model="newMechanic.phoneNumber"
                 required
               ></v-text-field>
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="Poziom doświadczenia"
                 type="number"
                 v-model="newMechanic.experienceLevel"
@@ -72,12 +66,12 @@
               ></v-text-field>
                 </v-col>
                 <v-col>
-                  <v-text-field
+                  <v-text-field variant="outlined"
                 label="Nazwisko"
                 v-model="newMechanic.lastName"
                 required
               ></v-text-field>
-              <v-select
+              <v-select variant="outlined"
                 :items="specialties"
                 item-value="id"
                 item-title="specialtyName"
@@ -85,7 +79,7 @@
                 label="Specjalność"
                 required
               ></v-select>
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="Data zatrudnienia"
                 type="date"
                 v-model="newMechanic.dateJoined"

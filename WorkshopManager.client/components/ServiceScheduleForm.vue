@@ -10,7 +10,8 @@
           <v-form @submit.prevent="addServiceSchedule">
 
             <!-- Rodzaj naprawy -->
-            <v-select
+            <v-select variant="outlined"
+
               v-model="newServiceSchedule.serviceId"
               :items="services"
               item-title="serviceDescription"
@@ -22,7 +23,7 @@
             <div v-for="(mechanic, index) in newServiceSchedule.mechanics" :key="index" class="d-flex align-center mb-3">
              <v-row>
               <v-col cols="11">
-                <v-select
+                <v-select variant="outlined"
                 v-model="newServiceSchedule.mechanics[index]"
                 :items="mechanics"
                 item-title="firstName"
@@ -46,7 +47,7 @@
             <div v-for="(item, index) in newServiceSchedule.orderItems" :key="index" class="mt-4">
               <v-row>
                 <v-col cols="9">
-                  <v-select
+                  <v-select variant="outlined"
                 v-model="item.inventoryItemId"
                 :items="inventoryItems"
                 item-title="name"
@@ -55,7 +56,7 @@
                 required
               ></v-select></v-col>
               <v-col cols="2">
-                <v-text-field
+                <v-text-field variant="outlined"
                 v-model.number="item.quantity"
                 type="number"
                 label="Ilość"

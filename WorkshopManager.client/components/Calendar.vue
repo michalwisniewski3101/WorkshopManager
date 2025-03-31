@@ -6,6 +6,7 @@
         :events="orderEvents" 
         locale="pl" 
         events-on-month-view
+        :hide-weekends="true"
         style="height: 500px"
         @event-click="showOrderDetails"
       />

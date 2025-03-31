@@ -99,7 +99,17 @@ input[type="password"] {
   gap: 10px;
   margin-bottom: 20px;
 }
-
+.v-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
 
 
 .error {

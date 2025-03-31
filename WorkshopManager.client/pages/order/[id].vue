@@ -75,7 +75,7 @@
           <v-expansion-panel-text>
          
             <div v-if="schedule.showStatusChange">
-              <v-select v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'" label="Wybierz status" class="mr-4" />
+              <v-select variant="outlined" v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'" label="Wybierz status" class="mr-4" />
               <v-btn @click="updateServiceScheduleStatus(schedule.id)" color="success">Zapisz zmiany</v-btn>
               <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
             </div>
@@ -341,5 +341,27 @@ h1 {
   padding: 10px;
   margin-bottom: 10px;
   color: #000000;
+}
+:deep(.v-pagination .v-btn:not(.v-btn--active)) { 
+  background-color: #c0c0c0 !important; 
+  color: #000000 !important; 
+  margin: 0 2px; 
+}
+
+
+:deep(.v-pagination .v-pagination__item--active .v-btn) { 
+  background-color: #4caf50 !important; 
+  color: white !important; 
+}
+
+
+:deep(.v-pagination .v-pagination__navigation .v-btn[disabled]) {
+  background-color: #e0e0e0 !important; 
+  color: #a0a0a0 !important; 
+  opacity: 0.6; 
+}
+
+:deep(.v-pagination .v-btn:not(.v-btn--active):not([disabled]):hover) {
+  background-color: #a8a8a8 !important; 
 }
 </style>

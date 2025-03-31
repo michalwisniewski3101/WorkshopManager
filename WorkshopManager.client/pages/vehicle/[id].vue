@@ -7,12 +7,23 @@
       <v-col cols="12" class="text-left">
         <h1>Historia zamówień dla pojazdu</h1>
       </v-col>
+      
       <v-col cols="12" class="text-right">
-        <v-text-field
+        <v-select variant="outlined"
+          v-model="selectedStatus"
+          :items="statusOptions"
+          label="Filtruj po statusie"
+          item-title="text"
+          item-value="value"
+          @change="filterOrders"
+          clearable
+        ></v-select>
+      </v-col>
+      <v-col cols="12" class="text-right">
+        <v-text-field variant="outlined"
         v-model="search"
         label="Szukaj"
         prepend-inner-icon="mdi-magnify"
-        variant="outlined"
         hide-details
         single-line
       ></v-text-field>
@@ -103,7 +114,7 @@
           <v-expansion-panel-text>
          
             <div v-if="schedule.showStatusChange">
-              <v-select v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'" label="Wybierz status" class="mr-4" />
+              <v-select variant="outlined" v-model="schedule.selectedStatus" :items="statusOptions" :item-title="'name'" :item-value="'value'" label="Wybierz status" class="mr-4" />
               <v-btn @click="updateServiceScheduleStatus(schedule.id)" color="success">Zapisz zmiany</v-btn>
               <v-btn @click="schedule.showStatusChange = false" color="error">Anuluj</v-btn>
             </div>
@@ -342,5 +353,27 @@ h1 {
 }
 .v-breadcrumbs:deep() {
   color: #000000
+}
+:deep(.v-pagination .v-btn:not(.v-btn--active)) { 
+  background-color: #c0c0c0 !important; 
+  color: #000000 !important; 
+  margin: 0 2px; 
+}
+
+
+:deep(.v-pagination .v-pagination__item--active .v-btn) { 
+  background-color: #4caf50 !important; 
+  color: white !important; 
+}
+
+
+:deep(.v-pagination .v-pagination__navigation .v-btn[disabled]) {
+  background-color: #e0e0e0 !important; 
+  color: #a0a0a0 !important; 
+  opacity: 0.6; 
+}
+
+:deep(.v-pagination .v-btn:not(.v-btn--active):not([disabled]):hover) {
+  background-color: #a8a8a8 !important; 
 }
 </style>

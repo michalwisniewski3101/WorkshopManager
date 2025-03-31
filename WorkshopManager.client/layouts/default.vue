@@ -90,7 +90,7 @@ const menuItems = [
 
       <!-- Stopka -->
       <v-footer app>
-        <span>&copy; 2024 Workshop Manager</span>
+        <span>2025 Workshop Manager</span>
       </v-footer>
     </v-layout>
   </v-app>

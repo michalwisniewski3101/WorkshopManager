@@ -6,19 +6,29 @@
       <v-col cols="12" class="text-left">
         <h1>Lista zamówień</h1>
       </v-col>
-      <v-col cols="6" class="text-left">
+      <v-col cols="4" class="text-left">
         <NuxtLink to="/order/create">
       <v-btn style="background-color: #4caf50;" >
         <v-icon>mdi-plus</v-icon>Dodaj nowe zamówienie
       </v-btn>
     </NuxtLink>
       </v-col>
-      <v-col cols="6" class="text-right">
-        <v-text-field
+      <v-col cols="4" class="text-left">
+        <v-select variant="outlined"
+          v-model="selectedStatus"
+          :items="statusOptions"
+          label="Filtruj po statusie"
+          item-title="text"
+          item-value="value"
+          @change="filterOrders"
+          clearable
+        ></v-select>
+      </v-col>
+      <v-col cols="4" class="text-right">
+        <v-text-field variant="outlined"
         v-model="search"
         label="Szukaj"
         prepend-inner-icon="mdi-magnify"
-        variant="outlined"
         hide-details
         single-line
       ></v-text-field>
@@ -165,5 +175,26 @@ h1 {
   background: rgb(185, 185, 185);
   color: #000000;
 }
+:deep(.v-pagination .v-btn:not(.v-btn--active)) { 
+  background-color: #c0c0c0 !important; 
+  color: #000000 !important; 
+  margin: 0 2px; 
+}
 
+
+:deep(.v-pagination .v-pagination__item--active .v-btn) { 
+  background-color: #4caf50 !important; 
+  color: white !important; 
+}
+
+
+:deep(.v-pagination .v-pagination__navigation .v-btn[disabled]) {
+  background-color: #e0e0e0 !important; 
+  color: #a0a0a0 !important; 
+  opacity: 0.6; 
+}
+
+:deep(.v-pagination .v-btn:not(.v-btn--active):not([disabled]):hover) {
+  background-color: #a8a8a8 !important; 
+}
 </style>

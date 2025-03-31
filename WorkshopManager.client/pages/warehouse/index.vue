@@ -10,11 +10,10 @@
         <v-btn style="background-color: #4caf50;" @click="openInventoryModal" ><v-icon>mdi-plus</v-icon>Dodaj nowy element magazynu</v-btn>
       </v-col>
       <v-col cols="6" class="text-right">
-        <v-text-field
+        <v-text-field variant="outlined"
         v-model="search"
         label="Szukaj"
         prepend-inner-icon="mdi-magnify"
-        variant="outlined"
         hide-details
         single-line
       ></v-text-field>
@@ -43,19 +42,19 @@
           <v-form @submit.prevent="saveInventoryItem">
             <v-row>
               <v-col>
-                <v-text-field v-model="newInventoryItem.name" label="Nazwa" required></v-text-field>
-            <v-text-field v-model="newInventoryItem.description" label="Opis" required></v-text-field>
-            <v-text-field v-model="newInventoryItem.productNumber" label="Numer produktu" required></v-text-field>
+                <v-text-field variant="outlined" v-model="newInventoryItem.name" label="Nazwa" required></v-text-field>
+            <v-text-field variant="outlined" v-model="newInventoryItem.description" label="Opis" required></v-text-field>
+            <v-text-field variant="outlined" v-model="newInventoryItem.productNumber" label="Numer produktu" required></v-text-field>
               </v-col>
               <v-col>
-                <v-text-field v-model.number="newInventoryItem.unitPrice" label="Cena jednostkowa (PLN)" type="number" required></v-text-field>
-            <v-text-field v-model.number="newInventoryItem.reorderLevel" label="Poziom zamawiania" type="number" required></v-text-field>
-            <v-text-field v-model="newInventoryItem.supplier" label="Dostawca" required></v-text-field>
+                <v-text-field variant="outlined" v-model.number="newInventoryItem.unitPrice" label="Cena jednostkowa (PLN)" type="number" required></v-text-field>
+            <v-text-field variant="outlined" v-model.number="newInventoryItem.reorderLevel" label="Poziom zamawiania" type="number" required></v-text-field>
+            <v-text-field variant="outlined" v-model="newInventoryItem.supplier" label="Dostawca" required></v-text-field>
               </v-col>
             </v-row>
 
 
-            <v-select
+            <v-select variant="outlined"
               v-model.number="newInventoryItem.taxRate"
               :items="[23, 8, 5, 0]"
               label="Stawka Podatku"
@@ -77,9 +76,9 @@
         <v-card-title class="text-h6">Zmień ilość w magazynie</v-card-title>
         <v-card-text>
           <v-form @submit.prevent="updateQuantity">
-            <v-text-field :model-value="selectedInventoryItem.quantityInStock + addedQuantity" label="Aktualna ilość w magazynie"
-            type="number" readonly variant="outlined"></v-text-field>
-            <v-text-field v-model.number="addedQuantity" label="Ilość z dostawy" type="number" required></v-text-field>
+            <v-text-field variant="outlined" :model-value="selectedInventoryItem.quantityInStock + addedQuantity" label="Aktualna ilość w magazynie"
+            type="number" readonly ></v-text-field>
+            <v-text-field variant="outlined" v-model.number="addedQuantity" label="Ilość z dostawy" type="number" required></v-text-field>
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -285,5 +284,27 @@ h1 {
 }
 .v-breadcrumbs:deep() {
   color: #000000
+}
+:deep(.v-pagination .v-btn:not(.v-btn--active)) { 
+  background-color: #c0c0c0 !important; 
+  color: #000000 !important; 
+  margin: 0 2px; 
+}
+
+
+:deep(.v-pagination .v-pagination__item--active .v-btn) { 
+  background-color: #4caf50 !important; 
+  color: white !important; 
+}
+
+
+:deep(.v-pagination .v-pagination__navigation .v-btn[disabled]) {
+  background-color: #e0e0e0 !important; 
+  color: #a0a0a0 !important; 
+  opacity: 0.6; 
+}
+
+:deep(.v-pagination .v-btn:not(.v-btn--active):not([disabled]):hover) {
+  background-color: #a8a8a8 !important; 
 }
 </style>
